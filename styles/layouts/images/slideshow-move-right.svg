@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="22px" height="34px" viewBox="0 0 22 34" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 44.1 (41455) - http://www.bohemiancoding.com/sketch -->
+    <title>Move right</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Wireframes-v2---Lg-desktop" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Carousel-controls-study" transform="translate(-1138.000000, -175.000000)" fill-rule="nonzero">
+            <g id="Move-right" transform="translate(1148.646447, 191.646447) rotate(180.000000) translate(-1148.646447, -191.646447) translate(1137.646447, 174.646447)">
+                <polygon id="Combined-Shape" fill="#FFFFFF" points="17.0238231 33.2380367 0.485786438 16.7 17.0312764 0.154510087 19.8255779 0.154510087 18.4142136 1.57157288 3.29000092 16.7 19.8238244 33.2380367"></polygon>
+                <polygon id="Combined-Shape" fill="#000000" points="18.3566316 31.8238231 3.23280846 16.7 18.3640848 1.56872365 21.1583864 1.56872365 21.1612356 1.57157288 6.03280846 16.7 21.1566316 31.8238231"></polygon>
+            </g>
+        </g>
+    </g>
+</svg>

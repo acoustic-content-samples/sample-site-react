@@ -1,0 +1,20 @@
+$foundation-palette: (
+  primary: #1779ba,
+  secondary: #767676,
+  success: #3adb76,
+  warning: #ffae00,
+  alert: #cc4b37,
+);
+
+$titlebar-background: white;
+$titlebar-color: #5a5a5a;
+$titlebar-icon-color: #5a5a5a;
+
+$topbar-background: white;
+
+$dropdown-menu-item-color-active: #323232;
+$dropdownmenu-arrow-color: #323232;
+
+$button-palette: map-merge($foundation-palette, (
+	news-btn: #000
+)) !default;

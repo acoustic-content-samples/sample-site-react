@@ -1,0 +1,236 @@
+@import 'settings';
+@import '~foundation-sites/scss/foundation';
+
+@include foundation-everything;
+
+html,
+body {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+}
+
+app {
+	display: flex;
+	flex-direction: column;
+	flex: 1 1 auto;
+}
+
+.content-placeholder {
+	flex: 1;
+}
+
+/* Section classes that wrap components to maintain consistent spacing
+when dropping components into a page. */
+.section {
+	padding-top: 30px;
+	padding-bottom: 30px;
+	transition: all .3s ease-in-out;
+
+	&:first-of-type {
+		padding-top: 35px;
+	}
+}
+
+.section-small {
+	padding-top: 40px;
+	padding-bottom: 40px;
+}
+
+.sidebar-section {
+	border-bottom: 2px solid #6b6b6b;
+}
+
+.section-full-bg {
+	background: #f7f7f7;
+}
+
+/* Foundation overrides */
+body {
+	line-height: 1;
+}
+
+ul {
+	margin: 0;
+}
+
+@include breakpoint(medium) {
+	.section {
+		padding-top: 40px;
+		padding-bottom: 40px;
+	}
+
+	.section-small {
+		padding-top: 62px;
+		padding-bottom: 62px;
+	}
+}
+
+@include breakpoint (large) {
+	.section {
+		padding-top: 60px;
+		padding-bottom: 60px;
+	}
+}
+
+/*@media (min-width:768px) {
+	.section {
+		padding-bottom:30px;
+		padding-top:30px;
+	}
+}
+@media (min-width:1024px) {
+	.section {
+		padding-bottom:112px;
+		padding-top:112px;
+	}
+}*/
+
+
+/*.grid-container {
+	max-width:1800px;
+}
+@media screen and (min-width: 75em) {
+	.grid-container-padded {
+		padding-left: 15px;
+		padding-right: 15px;
+	}
+}*/
+
+/* End Foundation overrides */
+
+/* Custom font for certain headers: https://fonts.google.com/specimen/Vidaloka */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	width:100%; /* Prevent headers from shrinking to fit their content when contained
+	inside a flexbox */
+}
+
+h2,
+.text-headline {
+	font-size: 1.75rem; /*28px*/
+	font-family: 'Vidaloka', georgia, 'Times New Roman', serif;
+}
+h3,
+.text-section {
+	font-size: 1.875rem; /*30px*/
+	font-family: 'Vidaloka', georgia, 'Times New Roman', serif;
+	margin-bottom:3.125rem;
+}
+.feature h3,
+.feature .text-section {
+	margin-bottom:2.1875rem;
+}
+h4,
+.text-header {
+	font-size: 1.375rem; /*22px*/
+	font-family: Roboto, "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+	font-weight:500;
+}
+h5,
+.text-content {
+	font-size: 1rem; /*16px*/
+	font-family: Roboto, "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+}
+h5 {
+	font-weight:600;
+	margin-bottom:20px;
+}
+body {
+	font-family: Roboto, "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+}
+.article-lead-image .caption,
+.article-small-image .caption,
+.article-medium-image .caption,
+.article-large-image .caption {
+	font-size:1rem;
+	padding:10px 0;
+	line-height:1.4;
+	color:#9b9b9b;
+}
+@media (min-width:640px) {
+
+	h2,
+	.text-headline {
+	font-size:2.5rem; /*40px*/
+	}
+	.text-content {
+	font-size:1.125rem; /*18px*/
+	}
+}
+@media (min-width: 1024px) {
+
+}
+
+.view-all {
+	margin-top:30px;
+	text-align:center;
+}
+/*////////////////////// Buttons */
+.button {
+	background:transparent;
+	color:#4a4a4a;
+	border:2px solid #303030;
+	padding: 0.625rem 1.675rem;
+	text-transform: uppercase;
+	font-size:1rem;
+	transition:all .3s ease-in-out;
+}
+.button:hover,
+.button:focus {
+	background-color: transparent;
+	color:#000;
+}
+.button-view-all {
+	padding: 0.625rem 0;
+	width:370px;
+	max-width:100%
+}
+.button-dark {
+	background-color:#303030;
+	color:#fff;
+	border:0;
+}
+.button-dark:hover {
+	background-color:#303030;
+	color:#fff;
+}
+.hero-button {
+	background-color:#fff;
+	font-size: .8rem;
+	padding:.75em 1.5em;
+	border:none;
+}
+.hero-button:hover {
+	background-color: #fff;
+}
+.highlight {
+	 border-style: solid;
+		border-color: #2D74DA;
+}
+@media (min-width:640px) {
+
+}
+@media (min-width:1024px) {
+
+}
+
+body.is-reveal-open {
+	margin-right: 15px;
+}
+
+input[type="text"],
+input[type="text"]:focus,
+input[type="text"]:active,
+textarea,
+textarea:focus,
+textarea:active {
+	all: unset;
+    background: transparent;
+    border: none;
+    width: 100%;
+}

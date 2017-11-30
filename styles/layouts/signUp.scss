@@ -1,0 +1,111 @@
+
+	@import '~foundation-sites/scss/foundation';
+
+[type='text'] {
+  background-color: #fff;
+}
+
+.newsletter {
+  padding: 3% 0;
+  background-size: cover;
+
+  .call-to-action {
+	margin: 0 3% auto 3%;
+	text-align: center;
+
+	h4 {
+	  font-size: 18px;
+	  font-weight: 800;
+	  color: #fff;
+	  text-transform: uppercase;
+	  transition: font-size .2s ease-in-out;
+	}
+
+  }
+
+  .wrap-inputs {
+	width: 90%;
+	margin: 3% auto auto;
+	font-size: 14px;
+	background: #fff;
+	padding: 4px 10px;
+	border: 1px solid rgba(155, 155, 155, 40);
+	transition: width .3s ease-in-out;
+
+	form {
+	  display: flex;
+	  align-items: center;
+	}
+
+	input{
+	  margin: 0;
+	  border: none;
+	  box-shadow: none;
+	  flex-grow: 1;
+	  transition: height .3s ease-in-out;
+	}
+
+  }
+
+  .button {
+	height: 30px;
+	padding-top: 0;
+	padding-bottom: 0;
+	border: 0;
+	line-height: 30px;
+	margin-bottom: 0;
+  }
+
+}
+
+
+@include breakpoint(medium) {
+  .newsletter {
+	height: 0;
+	padding-top: 25%; /* (300/1200)*100=25 */
+  }
+
+  .newsletter .call-to-action {
+	margin-top: -17.5%;
+  }
+
+  .newsletter .call-to-action h4 {
+	font-size: 20px;
+  }
+
+  .newsletter .wrap-inputs {
+	width: 60.41666667%;
+	padding: 6px 20px;
+  }
+
+  .newsletter [type=text] {
+	text-indent: 20px;
+	background: url('images/icon-email.png') no-repeat 0 50%;
+  }
+}
+
+@include breakpoint(large) {
+  .newsletter .call-to-action {
+	margin-top: -17%;
+  }
+
+  .newsletter .call-to-action h4 {
+	font-size: 31.5px;
+  }
+
+  .newsletter .wrap-inputs {
+	width: 60.41666667%;
+  }
+
+}
+
+@media (max-width:640px)
+{
+	.reveal {
+		margin: 0 auto;
+		position: relative;
+		width: 75vw;
+		max-height: 30vh;
+		min-height: 10vh;
+	}
+}

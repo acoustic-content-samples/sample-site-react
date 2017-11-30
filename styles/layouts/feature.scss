@@ -1,0 +1,92 @@
+
+	.feature-img {
+		text-align: center;
+	}
+	.feature-img img {
+		max-width:100%;
+	}
+	.feature-img img:hover {
+		max-width:100%;
+	}
+	.feature-copy-content {
+		margin:auto 5.6338%;
+	}
+	.feature-copy {
+		margin-bottom: 1.5rem;
+		overflow: hidden; /* Contain the floated button. */
+	}
+
+	.feature-no-image-copy .feature-no-image-copy-content {
+		padding: 0;
+
+		.text-content {
+			font-size: 1rem;
+		}
+	}
+
+	@media (min-width: 414px) {
+		.feature-copy { /*Vertically and horizontally centering the inner text box.*/
+			display:flex;
+			justify-content:center;
+			align-items:center;
+		}
+		.feature-copy-content {
+			width:80%;
+		}
+	}
+	@media (min-width:640px) {
+		.feature {
+			display:flex;
+		}
+		.feature-copy {
+			flex-grow: 1;
+			margin-bottom:0;
+		}
+		.feature-img-left {
+			flex-direction:row-reverse; /*Reverse content but keep elements in correct DOM order.*/
+		}
+
+		.feature-img-left {
+			justify-content:flex-end;
+		}
+		.feature-img,
+		.feature-copy {
+			width:0;
+		}
+		.feature-small .feature-img {
+			width:31.6239%;
+		}
+		.feature-small .feature-copy-content {
+			width:75%;
+		}
+		.feature-medium .feature-img {
+			width:48.7179%;
+		}
+		.feature-medium .feature-copy-content {
+			width:70%;
+		}
+		.feature-large .feature-img {
+			width:65.8120%;
+		}
+		.feature-medium .feature-copy-content {
+			width:80%;
+		}
+	}
+	@media (min-width:1200px) {
+		.feature-small .feature-img {
+			width:31.5833%;
+		}
+		.feature-medium .feature-img {
+			width:48.6667%;
+		}
+		.feature-large .feature-img {
+			width:65.8333%;
+		}
+	}
+	/* Feature-specific button placement */
+	.feature .button {
+		margin:0;
+	}
+	.feature-img-right .button {
+		float:right;
+	}

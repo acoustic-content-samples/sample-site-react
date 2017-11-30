@@ -1,0 +1,61 @@
+$event-text-color-gray: #737373;
+
+.event {
+  padding: 0 0 20px 0;
+  overflow: hidden;
+  background: transparent;
+  //flex: 0 0 auto;
+}
+
+.event-content {
+  max-height: 100%;
+  overflow: hidden;
+}
+
+.event .event-date {
+  color: $event-text-color-gray;
+  font-weight: 500;
+  margin-bottom: 2px;
+}
+
+.event-title {
+  margin-bottom: 15px;
+}
+
+.event .description {
+  color: $event-text-color-gray;
+  overflow: hidden;
+}
+
+@media (min-width: 640px) {
+  .events {
+	display: flex;
+	flex-wrap: wrap;
+  }
+  .events > .event {
+	flex-basis: auto;
+  }
+  .event {
+	flex-basis: auto;
+  }
+  /*Three cards at 768px*/
+  .event {
+	padding: 20px;
+	//width:31.62393162%;
+	margin-right: 2.56410257%;
+  }
+  .event:nth-child(3n) {
+	margin-right: 0;
+  }
+}
+
+@media (max-width:640px)
+{
+	.reveal {
+		margin: 0 auto;
+		position: relative;
+		width: 75vw;
+		max-height: 75vh;
+		min-height: 10vh;
+	}
+}

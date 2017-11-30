@@ -1,0 +1,40 @@
+
+.summary-card:hover img {
+	transform:scale(1.15); /*Zoom effect*/
+}
+.summary-card-image img {
+	max-width:100%;
+	height:auto;
+	transition:all .4s ease-in; /*Zoom effect*/
+}
+.summary-card-image {
+	margin-bottom:10px;
+	overflow:hidden; /*Zoom effect*/
+}
+@media (min-width:768px) {
+	.summary-card-image img {
+	max-width:100%;
+	height:auto;
+	}
+}
+.summary-card a {
+	color:#222;
+}
+
+.summary-card {
+	color: #0a0a0a;
+	margin: 0 5px 10px 5px;
+}
+
+@media (max-width:640px) {
+	.summary-card {
+
+	img{
+		display: block;
+		margin: 0 auto;
+	}
+	p {
+		text-align: center;
+	}
+	}
+}

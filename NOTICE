@@ -1,0 +1,11 @@
+Watson Content Hub sample site single page application
+Copyright IBM Corp. 2016, 2017
+
+This project is licensed under the terms of the Apache 2.0 license.
+http://www.apache.org/licenses/LICENSE-2.0
+
+BY DOWNLOADING, INSTALLING, COPYING, ACCESSING, CLICKING ON AN “ACCEPT” BUTTON,
+OR OTHERWISE USING THE PROGRAM, LICENSEE AGREES TO THE TERMS OF THIS AGREEMENT
+
+This project depends on third party open source modules as listed in the
+dependencies in package.json in this folder.

@@ -1,0 +1,7 @@
+.section:nth-of-type(even) {
+  background-color: #f7f7f7;
+}
+
+.section:only-child {
+  background-color: #ffffff;
+}

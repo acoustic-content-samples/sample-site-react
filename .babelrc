@@ -1,0 +1,20 @@
+{
+	"plugins": [
+		"syntax-dynamic-import",
+		"transform-object-rest-spread"
+	],
+	"presets": [
+		"react",
+		["env", {
+			"modules": false,
+			"targets": {
+				"browsers": [
+					"last 2 Chrome versions",
+					"last 2 Safari versions",
+					"last 2 Firefox versions"
+				]
+			},
+			"useBuiltIns": true
+		}]
+	]
+}

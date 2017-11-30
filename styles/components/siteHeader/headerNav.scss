@@ -1,0 +1,38 @@
+.menu {
+	&.accordion-menu {
+		position: absolute;
+		z-index: 1;
+		min-width: 80%;
+
+		.is-accordion-submenu-parent:not(.has-submenu-toggle) > a::after {
+			border-color: #323232 transparent transparent;
+		}
+	}
+
+	a {
+		display: block;
+		text-decoration: none;
+		color: #323232;
+		margin-left:10px;
+		transition: .3s color;
+		font-size:18px;
+		line-height:30px;
+		font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+		&:hover {
+			color: #000;
+		}
+
+		&.active {
+			background-color: #fff;
+			color: #000;
+			cursor: default;
+			border-bottom: 1px solid #000;
+		}
+	}
+
+	.active > a {
+		background: transparent;
+		border-bottom: 1px solid #000;
+	}
+}
