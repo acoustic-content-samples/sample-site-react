@@ -7,6 +7,8 @@ This sample contains the Single Page Site Application implemented with react ins
 You can replace the default single page application with the react implementations in this repository. Note that this will overlay the default Angular 4 based application with the vue.js or react implementation.
 See the topic on Restoring the default Angular 4 based application in case you want to switch back.
 
+![react sample SPA](react-spa.png)
+
 Getting started
 ------------
 React README
