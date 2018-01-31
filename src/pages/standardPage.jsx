@@ -5,7 +5,6 @@ LICENSE: Apache License, Version 2.0
 import React, {Component} from 'react';
 import {loadContent, getContent, subscribe} from 'wch-flux-sdk';
 import {WchContent} from 'wch-flux-sdk/react';
-import {HeroImage} from '../layouts/heroImage';
 import 'styles/pages/standardPage.scss';
 
 export class StandardPageLayout extends Component {

@@ -16,7 +16,7 @@ import 'styles/app.scss';
 import { WchPage, registerComponent } from 'wch-flux-sdk/react';
 import {SiteHeader} from './components/siteHeader/siteHeader';
 import { SiteFooter} from './components/siteFooter/siteFooter';
-import {ErrorPage} from './pages';
+import {ErrorPage} from './pages/errorPage';
 import { setNavChangeFunction } from 'wch-flux-sdk';
 import {Toolbar} from './components/toolbar/toolbar';
 

@@ -14,7 +14,8 @@ module.exports = {
 			{
 				test: /\.jsx?$/,
 				loader: 'babel-loader',
-				query: {compact: false}
+				query: {compact: false},
+                exclude: /node_modules/
 			}, {
 				test: /\.s?css$/,
 				use: ExtractTextPlugin.extract({

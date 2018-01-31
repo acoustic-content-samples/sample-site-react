@@ -4,7 +4,7 @@ LICENSE: Apache License, Version 2.0
 */
 import React from 'react';
 import {loadContent, getContent, subscribe} from 'wch-flux-sdk';
-import { ViewAllButton } from '../components';
+import { ViewAllButton } from '../components/viewAllButton';
 import '../../styles/pages/errorPage.scss';
 
 export class ErrorPage extends React.Component {

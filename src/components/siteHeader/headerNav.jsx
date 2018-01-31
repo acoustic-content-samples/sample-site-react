@@ -18,11 +18,14 @@ export class HeaderNav extends Component {
 			this.setState({site: getSite()});
 		});
 
+		this.loaded = false;
+
 		loadSite();
 	}
 
 	componentDidMount () {
 		$('#site-header').foundation();
+        $('#header-nav-menu').foundation();
 	}
 
 	componentWillUnmount () {
@@ -30,26 +33,29 @@ export class HeaderNav extends Component {
 	}
 
 	componentWillUpdate () {
-		$('#header-nav-menu').foundation('_destroy');
 	}
 
 	componentDidUpdate () {
-		$('#header-nav-menu').foundation();
 	}
+
 
 	render () {
 		let topLevelPages = [];
 
+		const hasChildren = (page) => {
+			return (page.children.length > 0);
+		}
+
 		function childPages (page) {
 			if (page.children.length > 0 ) {
 				let childPages = page.children.map(child => (
-					<li key={child.id}>
+					<li key={child.id} className="wch-menu-item" role="menuitem">
 						<NavLink to={child.route}>{child.name}</NavLink>
 					</li>
 				));
 
 				return (
-					<ul className="vertical menu">
+					<ul className="wch-menu wch-sub-menu" role="menu">
 						{childPages}
 					</ul>
 				);
@@ -58,16 +64,18 @@ export class HeaderNav extends Component {
 		}
 
 		topLevelPages = this.state.site.pages.map(page => (
-			<li key={page.id} className="top-level-nav-item">
+			<li key={page.id} className={"wch-menu-item " + (hasChildren(page) ? 'has-children' : '')} role="menuitem">
 				<NavLink to={page.route}>{page.name}</NavLink>
 				{childPages(page)}
 			</li>
-		));
+			));
 
 		return (
-			<ul id="header-nav-menu" className="vertical medium-horizontal menu" data-responsive-menu="accordion medium-dropdown">
-				{topLevelPages}
-			</ul>
+			<div className="menu-container" >
+				<ul className="wch-menu" role="menubar">
+					{topLevelPages}
+				</ul>
+			</div>
 		);
 	}
 }

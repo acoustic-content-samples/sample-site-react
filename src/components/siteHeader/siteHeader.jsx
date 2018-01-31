@@ -7,7 +7,7 @@ import {withRouter, Redirect, Route} from 'react-router-dom';
 
 import {loadContent, subscribe, getContent, getImageUrl, setNavChangeFunction, setPageReloadFunction} from 'wch-flux-sdk';
 
-import 'styles/components/siteHeader/siteHeader.scss';
+import 'styles/components/siteHeader/siteHeaderNew.scss';
 import {HeaderNav} from './headerNav';
 
 export class SiteHeader extends Component {
@@ -16,7 +16,8 @@ export class SiteHeader extends Component {
 
 		this.state = {
 			contentData: {},
-			headerConfigId: '90d184ea-eb9c-4316-97a8-9d1ebc3029fc'
+			headerConfigId: '90d184ea-eb9c-4316-97a8-9d1ebc3029fc',
+			mobileNav: false
 		};
 
 		this.sub = subscribe('content', () => {
@@ -50,6 +51,11 @@ export class SiteHeader extends Component {
 
 	render () {
 		let url = '';
+
+		const toggleMobileNav = () => {
+			this.setState({mobileNav: !this.state.mobileNav});
+		}
+
 		if (this.state.contentData && this.state.contentData.elements) {
 			url = getImageUrl(this.state.contentData.elements.websiteLogo);
 		}
@@ -63,25 +69,27 @@ export class SiteHeader extends Component {
 
 		return (
 	<header id="site-header">
-		<nav>
-			<div className="title-bar" data-responsive-toggle="example-menu" data-hide-for="large">
-				<button className="menu-icon" type="button" data-toggle="example-menu"></button>
-				<div className="logo-container hide-for-large">
+		<nav className="wch-responsive-menu grid-container">
+			<div id="wch-toggleMenu" className="title-bar hide-for-large">
+				<button className="menu-icon" type="button" onClick={toggleMobileNav}></button>
+				<div className="logo-container">
 					<a href="#">
 						<h1 className="logo" style={logoStyle}></h1>
 					</a>
 				</div>
 			</div>
-			<div className="top-bar" id="example-menu">
+
+			<div className={"top-bar stacked-for-medium " + (this.state.mobileNav ? 'mobileNav' : '')} id="wch-nav-menu">
 				<div className="top-bar-left show-for-large">
-					<div className="logo-container show-for-large">
+					<div className="logo-container">
 						<a href="#">
 							<h1 className="logo" style={logoStyle}></h1>
 						</a>
 					</div>
 				</div>
-				<div className="top-bar-right">
-					<HeaderNav></HeaderNav>
+
+				<div className="top-bar-right" onClick={toggleMobileNav} >
+					<HeaderNav ></HeaderNav>
 				</div>
 			</div>
 		</nav>

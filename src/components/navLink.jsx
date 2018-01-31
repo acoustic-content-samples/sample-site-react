@@ -13,7 +13,7 @@ class NavLink extends React.Component {
 
         return(
             <Link className={className} {...this.props}>
-                {this.props.children}
+                <span className="limit-page-name">{this.props.children}</span>
             </Link>
         );
     }

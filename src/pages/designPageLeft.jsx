@@ -6,8 +6,8 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import {loadContent, getContent, subscribe, getRouteForContentId} from 'wch-flux-sdk';
 import {WchContent} from 'wch-flux-sdk/react';
-import {DesignArticleSummary} from '../components';
-import {DesignArticle} from '../layouts';
+import {DesignArticleSummary} from '../components/designArticleSummary';
+import {DesignArticle} from '../layouts/designArticle';
 import {VerticalList} from "../layouts/verticalList";
 import 'styles/pages/designPageLeft.scss';
 
