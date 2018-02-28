@@ -2,26 +2,27 @@
 <html lang="en">
 <head>
 	<script type='text/javascript'>
-        let possibleTenant = document.location.pathname.split('/')[1];
+        var possibleTenant = document.location.pathname.split('/')[1];
         console.warn('index.html: possible tenant is %o and base url is %o', possibleTenant, possibleTenant.search(/\w{8}\-\w{4}\-\w{4}\-\w{4}\-\w{12}/) === 0 ? '/' + possibleTenant + '/' : '/');
-        let baseUrl = possibleTenant.search(/\w{8}\-\w{4}\-\w{4}\-\w{4}\-\w{12}/) === 0 ? '/' + possibleTenant + '/' : '/';
+        var baseUrl = possibleTenant.search(/\w{8}\-\w{4}\-\w{4}\-\w{4}\-\w{12}/) === 0 ? '/' + possibleTenant + '/' : '/';
         console.log("baseUrl: ", baseUrl);
         document.write('<base href="' + baseUrl + '">');
 	</script>
 	<meta charset="utf-8">
-	<title>Oslo</title>
+	<title>Site</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link href="//vjs.zencdn.net/6.2.5/video-js.css" rel="stylesheet">
-	<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.css"/>
-	<link href="//fonts.googleapis.com/css?family=Vidaloka" rel="stylesheet">
-	<link href="//fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-
 </head>
 <body>
 	<div id="app"></div>
+	<script src="//ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>
+	<script>
+	WebFont.load({
+		google: {
+			families: ['Vidaloka', 'Roboto']
+		}
+	});
+	</script>
 	<script src="//code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-	<!-- <script src="//cdnjs.cloudflare.com/ajax/libs/foundation/6.4.3/js/foundation.min.js" crossorigin="anonymous"></script> -->
-	<script src="//vjs.zencdn.net/6.2.5/video.js"></script>
-	<script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/foundation/6.4.3/js/foundation.min.js" crossorigin="anonymous"></script>
 </body>
 </html>

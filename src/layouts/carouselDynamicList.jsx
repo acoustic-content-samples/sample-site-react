@@ -19,6 +19,28 @@ import {WchContent} from 'wch-flux-sdk/react';
 import 'styles/layouts/carouselDynamicList.scss';
 import {ViewAllButton} from '../components';
 
+const slickLoaded = new Promise((resolve, reject) => {
+	if (!document.getElementById('slick-script-tag')) {
+		let styleTag = document.createElement('link');
+		styleTag.href = '//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.css';
+		styleTag.rel = 'stylesheet';
+		styleTag.async =true;
+		document.head.appendChild(styleTag);
+
+		let scriptTag = document.createElement('script');
+		scriptTag.id = 'slick-script-tag';
+		scriptTag.type = 'application/javascript';
+		scriptTag.src = '//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.min.js';
+		scriptTag.async = true;
+		scriptTag.addEventListener('load', resolve);
+		scriptTag.addEventListener('error', () => reject('Error loading script.'));
+		scriptTag.addEventListener('abort', () => reject('Script loading aborted.'));
+		document.body.appendChild(scriptTag);
+	} else {
+		resolve();
+	}
+});
+
 export class CarouselDynamicList extends React.Component {
 	constructor (props) {
 		super(props);

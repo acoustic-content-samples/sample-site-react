@@ -7,7 +7,7 @@ const
 
 module.exports = {
 	entry: {
-		main: [path.resolve(__dirname, 'src/app.jsx')]
+		main: ['babel-polyfill', path.resolve(__dirname, 'src/app.jsx')]
 	},
 	module: {
 		rules: [
@@ -36,7 +36,7 @@ module.exports = {
 			}
 		]
 	},
-    devtool: 'source-map',
+    // devtool: 'source-map',
 	output: {
 		path: path.resolve(__dirname,'dist/assets'),
 		filename: '[name].js',
@@ -49,7 +49,7 @@ module.exports = {
 				NODE_ENV: JSON.stringify("development")
 			}
 		}),
-		// new BabelMinifyPlugin(),
+		new BabelMinifyPlugin(),
 		new webpack.optimize.CommonsChunkPlugin({
 			name: 'vendors',
 			minChunks: module => { return module.context && module.context.indexOf('node_modules') !== -1; }
@@ -62,6 +62,7 @@ module.exports = {
 	],
 	resolve: {
 		alias: {
+			'wch-flux-sdk': path.resolve(__dirname, './wch-flux-sdk'),
 			'styles': path.resolve(__dirname, './styles')
 		},
 		extensions: [ '.js', '.jsx' ]

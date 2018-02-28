@@ -2,6 +2,8 @@
 Copyright IBM Corporation 2017.
 LICENSE: Apache License, Version 2.0
 */
+import 'babel-polyfill';
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 
@@ -14,16 +16,16 @@ import {
 
 import 'styles/app.scss';
 import { WchPage, registerComponent } from 'wch-flux-sdk/react';
-import {SiteHeader} from './components/siteHeader/siteHeader';
-import { SiteFooter} from './components/siteFooter/siteFooter';
-import {ErrorPage} from './pages/errorPage';
 import { setNavChangeFunction } from 'wch-flux-sdk';
-import {Toolbar} from './components/toolbar/toolbar';
+import { SiteHeader } from './components/siteHeader/siteHeader';
+import { SiteFooter } from './components/siteFooter/siteFooter';
+import { ErrorPage } from './pages/errorPage';
+import { Toolbar } from './components/toolbar/toolbar';
 
-import 'script-loader!foundation-sites/dist/js/foundation.js';
+window.onerror = (error) => { document.innerHTML = error };
 
 // for running on local host we want to configure the WCH lib
-import {configWCH} from 'wch-flux-sdk';
+// import {configWCH} from 'wch-flux-sdk';
 // configWCH('your-domain-name.com', '0000000-0000-0000-0000-000000000000');
 
 // load components globally
@@ -56,6 +58,8 @@ console.warn('index.html: possible tenant is %o and base url is %o', possibleTen
 let baseUrl = possibleTenant.search(/\w{8}\-\w{4}\-\w{4}\-\w{4}\-\w{12}/) === 0 ? '/' + possibleTenant + '/' : '/';
 
 console.log("SPA framework: React");
+
+document.title = 'Oslo';
 
 ReactDOM.render(
 	<Router basename={baseUrl} >

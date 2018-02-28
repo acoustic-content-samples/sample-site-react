@@ -17,13 +17,14 @@
   },
   "license": "MIT",
   "dependencies": {
+    "babel-polyfill": "^6.26.0",
     "foundation-sites": "^6.4.4-rc1",
     "prop-types": "^15.6.0",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
     "react-router-dom": "^4.2.2",
     "react-slick": "^0.15.4",
-    "wch-flux-sdk": "file:wch-flux-sdk"
+    "remove": "^0.1.5"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
@@ -31,7 +32,6 @@
     "babel-minify-webpack-plugin": "^0.2.0",
     "babel-plugin-syntax-dynamic-import": "^6.18.0",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
-    "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.24.1",
     "css-loader": "^0.28.5",

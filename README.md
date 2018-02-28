@@ -81,6 +81,10 @@ Check which SPA framework is deployed
 To verify if the site is running the React or Vue SPA, load the live site and search the browser console for 
 "SPA framework". 
 
+Sample Content type and layout addition
+-------------
+We have shipped another sample you can install on top of this one to install a sample youtube rendering content type, layout and react component to see how you would create your own content types and components.
+[Youtube React component for WCH](https://github.com/ibm-wch/sample-youtube-component-react)
 
 Limitations
 -------------

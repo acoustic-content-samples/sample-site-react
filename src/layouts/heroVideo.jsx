@@ -6,6 +6,28 @@ import React from 'react';
 import {loadContent, getContent, subscribe, getVideoUrl} from 'wch-flux-sdk';
 import 'styles/layouts/heroVideo.scss';
 
+const videoJsLoaded = new Promise((resolve, reject) => {
+    if (!document.getElementById('videojs-script-tag')) {
+        let styleTag = document.createElement('link');
+        styleTag.href = '//vjs.zencdn.net/6.2.8/video-js.css';
+        styleTag.rel = 'stylesheet';
+        styleTag.async = true;
+        document.head.appendChild(styleTag);
+
+        let scriptTag = document.createElement('script');
+        scriptTag.id = 'videojs-script-tag';
+        scriptTag.type = 'application/javascript';
+        scriptTag.src = '//vjs.zencdn.net/6.2.8/video.js';
+        scriptTag.async = true;
+        scriptTag.addEventListener('load', resolve);
+        scriptTag.addEventListener('error', () => reject('Error loading script.'));
+        scriptTag.addEventListener('abort', () => reject('Script loading aborted.'));
+        document.body.appendChild(scriptTag);
+    } else {
+        resolve();
+    }
+});
+
 export class HeroVideo extends React.Component{
     constructor(props){
         super(props);
@@ -34,7 +56,7 @@ export class HeroVideo extends React.Component{
     }
 
     componentDidMount() {
-        this.player = videojs(this.videoElementId());
+        videoJsLoaded.then(() => this.player = videojs(this.videoElementId()));
     }
 
     componentWillReceiveProps (nextProps) {
