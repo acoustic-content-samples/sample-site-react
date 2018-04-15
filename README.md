@@ -1,11 +1,13 @@
 sample-site-react
 ==============
 
-As part of the Sites feature a single page application was implemented in WCH to serve web sites. The Single Page Application is hosted on WCH and stored as unmanaged assets. It leverages a set of content types, pages, categories, ... to render the Oslo sample application. The default single page application was implemented with Angular 4. The artifacts stored in WCH for Oslo are independent of the single page application. 
+As part of the Sites feature a single page application was implemented in WCH to serve web sites. The Single Page Application is hosted on WCH and stored as unmanaged assets. It leverages a set of content types, pages, categories, ... to render the Oslo sample application. The default single page application was implemented with Angular. The artifacts stored in WCH for Oslo are independent of the single page application. 
 This sample contains the Single Page Site Application implemented with react instead of the default angular site application. You can find more information about the default site application implemented with angular here: 
-[Angular 4 site application](https://github.com/ibm-wch/wch-site-application/).
-You can replace the default single page application with the react implementations in this repository. Note that this will overlay the default Angular 4 based application with the vue.js or react implementation.
-See the topic on Restoring the default Angular 4 based application in case you want to switch back.
+[Angular site application](https://github.com/ibm-wch/wch-site-application/).
+You can replace the default single page application with the react implementations in this repository. Note that this will overlay the default Angular based application with the vue.js or react implementation.
+See the topic on Restoring the default Angular based application in case you want to switch back.
+Update: At the beginning of April we have added Search functionality to the React Site SPA and also support now the ability to hide a page from the
+navigation.
 
 ![react sample SPA](react-spa.png)
 
@@ -91,6 +93,6 @@ Limitations
 * No CLI layout generation supported for new content types. Layouts need to be created manually.
 * Focus was on rendering. Draft content may not always render in preview. If draft content does not appear automatically, try refreshing the site preview.
 
-Restoring the default Angular 4 based application
+Restoring the default Angular based application
 -------------
-Clone the [Angular 4 site application](https://github.com/ibm-wch/wch-site-application/) , trigger a build and push to your tenant to overlay the react site application sample.
+Clone the [Angular site application](https://github.com/ibm-wch/wch-site-application/) , trigger a build and push to your tenant to overlay the react site application sample.
