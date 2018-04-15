@@ -63,12 +63,15 @@ export class HeaderNav extends Component {
 			return '';
 		}
 
-		topLevelPages = this.state.site.pages.map(page => (
-			<li key={page.id} className={"wch-menu-item " + (hasChildren(page) ? 'has-children' : '')} role="menuitem">
-				<NavLink to={page.route}>{page.name}</NavLink>
-				{childPages(page)}
-			</li>
-			));
+		topLevelPages = this.state.site.pages.map(function (page) {
+			if (!page.hideFromNavigation) {
+				return (<li key={page.id} className={"wch-menu-item " + (hasChildren(page) ? 'has-children' : '')} role="menuitem">
+					<NavLink to={page.route}>{page.name}</NavLink>
+					{childPages(page)}
+				</li>
+				);
+			}
+		});
 
 		return (
 			<div className="menu-container" >

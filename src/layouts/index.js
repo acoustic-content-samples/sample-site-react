@@ -11,3 +11,4 @@ export {DesignArticle} from './designArticle';
 export {SignUp} from './signUp';
 export {GalleryDynamicList} from './galleryDynamicList';
 export {Event} from './event';
+export {SearchResults} from './search-results/searchResults';

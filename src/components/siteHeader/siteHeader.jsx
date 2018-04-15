@@ -9,6 +9,8 @@ import {loadContent, subscribe, getContent, getImageUrl, setNavChangeFunction, s
 
 import 'styles/components/siteHeader/siteHeaderNew.scss';
 import {HeaderNav} from './headerNav';
+import {SearchBox} from './search-box/search-box';
+
 
 export class SiteHeader extends Component {
 	constructor (props) {
@@ -66,36 +68,35 @@ export class SiteHeader extends Component {
 
         // const { match, location, history } = this.props;
 
-
 		return (
-	<header id="site-header">
-		<nav className="wch-responsive-menu grid-container">
-			<div id="wch-toggleMenu" className="title-bar hide-for-large">
-				<button className="menu-icon" type="button" onClick={toggleMobileNav}></button>
-				<div className="logo-container">
-					<a href="#">
-						<h1 className="logo" style={logoStyle}></h1>
-					</a>
-				</div>
-			</div>
-
-			<div className={"top-bar stacked-for-medium " + (this.state.mobileNav ? 'mobileNav' : '')} id="wch-nav-menu">
-				<div className="top-bar-left show-for-large">
-					<div className="logo-container">
-						<a href="#">
-							<h1 className="logo" style={logoStyle}></h1>
-						</a>
+			<header id="site-header">
+				<nav className="wch-responsive-menu grid-container">
+					<div id="wch-toggleMenu" className="title-bar hide-for-large">
+						<button className="menu-icon" type="button" onClick={toggleMobileNav}></button>
+						<div className="logo-container">
+							<a href="#">
+								<h1 className="logo" style={logoStyle}></h1>	
+							</a>
+							<SearchBox history={this.props.history}></SearchBox>
+						</div>
 					</div>
-				</div>
-
-				<div className="top-bar-right" onClick={toggleMobileNav} >
-					<HeaderNav ></HeaderNav>
-				</div>
-			</div>
-		</nav>
-	</header>
+					<div className={"top-bar stacked-for-medium " + (this.state.mobileNav ? 'mobileNav' : '')} id="wch-nav-menu">
+						<div className="top-bar-left show-for-large">
+							<div className="logo-container">
+								<a href="#">
+									<h1 className="logo" style={logoStyle}></h1>
+								</a>
+							</div>
+						</div>
+						<div className="top-bar-right" onClick={toggleMobileNav} >
+							<HeaderNav ></HeaderNav>
+						</div>
+						<SearchBox history={this.props.history}></SearchBox>
+					</div>
+				</nav>
+			</header>
 		);
 	}
 }
 
-// export default withRouter(SiteHeader);
+//export default withRouter(SiteHeader);

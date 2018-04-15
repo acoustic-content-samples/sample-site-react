@@ -1,0 +1,133 @@
+@import '~foundation-sites/scss/foundation';
+
+.searchWrapper {
+
+  width: 260px;
+  padding-top: 18px;
+
+
+  input, input:focus {
+    float: left;
+    border: none;
+    box-shadow: none;
+    //max-width: 300px;
+    max-width: 200px;
+    padding: 0 0 0 10px;
+  }
+
+
+  .search-results-count {
+    font-weight: 500
+  }
+  .search-form {
+    position: relative;
+  }
+  .search-button {
+    position: absolute;
+    top: 4px;
+    height: 24px;
+    width: 30px;
+    //background: url(./images/search.svg) left center no-repeat;
+    background-size: 25px 25px;
+    cursor: pointer;
+    opacity: .5;
+  }
+
+  .search-input-clear {
+    position: absolute;
+    top: 10px;
+    //background: url(./images/search-input-clear.svg) center center no-repeat;
+    background-size: 22px 22px;
+    cursor: pointer;
+    height: 22px;
+    width: 30px;
+    left: 100%;
+    transition: all .2s ease-in-out;
+  }
+
+  .search-input-clear:not(.show-clear-button){
+    opacity: 0;
+    margin: 0;
+  }
+
+  .search-input-clear:active {
+    opacity: 1;
+  }
+
+
+  [type=search],
+  [type=search]:focus {
+    height: auto;
+    margin-top: 12px;
+    padding: 0 32px 6px 30px;
+    outline: none;
+    border: none;
+    border-bottom: 1px solid #cacaca;
+    box-shadow: none;
+    line-height: 1;
+    transition: width 0.5s ease-in-out;
+    width: 260px;
+  }
+
+  [type=search] {
+    width: 120px;
+  }
+  .active-input {
+    border-bottom: 1px solid #222;
+    width: 260px; /*Keeps search box wide when "active". Prevents shrinking on blur.*/
+  }
+  [type=search]:focus.active-input {
+    box-shadow: none;
+    border-bottom: 1px solid #222;
+    width: 260px; /*Transitions width of search input on focus*/
+  }
+  .active-input ~ .search-button {
+    opacity: 1;
+  }
+  .search-button {
+    right: auto;
+    left: 0;
+  }
+
+  .show-clear-button {
+    padding-top: 12px;
+  }
+
+  /* When the user inputs a search term and then leaves the search box we want
+  to keep the box looking like it still has focus. This next declaration duplicates
+  the styles used when the search input has focus so we can assign the .active-input
+  class to it onBlur.*/
+
+  .active-input ~ .search-input-clear.show-clear-button {
+    left: 100%;
+    margin-left: -90px;
+    transition: all 0.3s ease-in;
+    opacity: 1;
+  }
+
+  /* Marco: Styles for search results and controls, below */
+  .search-result-tools {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2em;
+  }
+
+  .search-result-tools * {
+    margin: 0
+  }
+  .search-result-tools select {
+    width: auto;
+    padding-left: 20px;
+  }  
+}
+
+@media screen and (min-width: 40em) {
+  /* Overrides for Search */
+  .top-bar .top-bar-right {
+    flex: 0 1 auto;
+    margin-left: auto;
+    padding-right: 8%;
+  }
+}

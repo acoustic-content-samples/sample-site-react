@@ -26,7 +26,7 @@ window.onerror = (error) => { document.innerHTML = error };
 
 // for running on local host we want to configure the WCH lib
 // import {configWCH} from 'wch-flux-sdk';
-// configWCH('your-domain-name.com', '0000000-0000-0000-0000-000000000000');
+// configWCH('your-domain-name.com', '0000000-0000-0000-0000-000000000000'); 
 
 // load components globally
 registerComponent('ArticleBodyImage', () => import(/* webpackChunkName: "articleBodyImage" */'./components/articleBodyImage'));
@@ -52,6 +52,8 @@ registerComponent('VerticalList', () => import(/* webpackChunkName: "verticalLis
 registerComponent('SignUp', () => import(/* webpackChunkName: "signUp" */'./layouts/signUp'));
 registerComponent('Event', () => import(/* webpackChunkName: "event" */'./layouts/event'));
 registerComponent('DesignArticle', () => import(/* webpackChunkName: "designArticle" */'./layouts/designArticle'));
+registerComponent('SearchResults', () => import(/* webpackChunkName: "searchResults" */'./layouts/search-results/searchResults'));
+
 
 let possibleTenant = document.location.pathname.split('/')[1];
 console.warn('index.html: possible tenant is %o and base url is %o', possibleTenant, possibleTenant.search(/\w{8}\-\w{4}\-\w{4}\-\w{4}\-\w{12}/) === 0 ? '/' + possibleTenant + '/' : '/');
