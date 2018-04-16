@@ -39,11 +39,15 @@ export class FooterNav extends React.Component {
     render() {
         // console.log(`I am here : ${JSON.stringify(this.state)}`);
 
-        let pageLinks = this.state.site.pages.map(page => (
-            <li key={page.id} className="top-level-nav-item">
-                <Link to={page.route}>{page.name}</Link>
-            </li>
-        ));
+
+        let pageLinks = this.state.site.pages.map(function (page) {
+            if (!page.hideFromNavigation) {
+                return (<li key={page.id} className="top-level-nav-item">
+                            <Link to={page.route}>{page.name}</Link>
+                        </li>
+                );
+            }
+        });
 
         return (
             <div>
