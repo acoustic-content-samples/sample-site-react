@@ -29,16 +29,18 @@ export class SearchResults extends React.Component {
         let cApiUrl = `${proto}//${host}/api/${tenant}`;                
 
         let apiUrl = (window.location.hostname === 'localhost') ? cApiUrl : `${window.location.protocol}//${window.location.hostname}/api/${window.location.pathname.split('/')[1]}`;
-
-        let textQuery = this.state.searchKeywords.reduce((query, currentVal) => `${query} AND (text:*${currentVal}* OR name:*${currentVal}*)`, '');
+        let deliveryQuery = 'delivery';
+        let textQuery = this.state.searchKeywords.reduce((query, currentVal,index) => {
+          return (index === 0) ? `${currentVal}~1` : `${query} AND ${currentVal}~1`;
+        },'');
         let typeQuery = this.state.searchTypes.reduce((types, currentVal, index) => {
-          return (index === 0) ? `&fq=type:"${currentVal}"` : `${types} OR type:"${currentVal}"`
+          return (index === 0) ? `&fq=type:"${currentVal}"` : `${types} OR type:"${currentVal}"`;
         }, '');
 
-        let searchURL = `${apiUrl}/delivery/v1/search?q=siteId:default`
+        let searchURL = `${apiUrl}/${deliveryQuery}/v1/search?q=classification:page`
           + typeQuery
-          + `&fq={!join from=id to=aggregatedContentIds}classification:content`
-          + textQuery
+          + `&fq={!join%20from=id%20to=aggregatedIds}`
+          + `text:(${textQuery})`
           + `&rows=${this.state.rowsPerRequest}&start=${this.state.start * this.state.rowsPerRequest}&fl=*`;
 
         this.state.start++;   

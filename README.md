@@ -33,8 +33,8 @@ Deploying to Content Hub
 Windows: npm install -g wchtools-cli
 Linux/Mac: sudo npm install -g wchtools-cli 
    * Note: make sure that you have initialized wchtools with your user and tenant API URL. You will be prompted for your user password when deploying to the tenant. For more information, refer to [wchtools-cli](https://github.com/ibm-wch/wchtools-cli).
-
-2. From the root directory, run `npm run build` and `npm run deploy`.
+2. In case you updated **src/app.jsx** with the tenant information for running locally comment the change again.
+3. From the root directory, run `npm run build` and `npm run deploy`.
 
 
 Changing the default (home) route
