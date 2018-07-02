@@ -153,7 +153,6 @@ Configure WCH and the sample SPA to be used as an external preview host
 Limitations
 -------------
 * No CLI layout generation supported for new content types. Layouts need to be created manually.
-* Focus was on rendering. Draft content may not always render in preview. If draft content does not appear automatically, try refreshing the site preview.
 
 Restoring the default Angular based application
 -------------
