@@ -1,0 +1,13 @@
+.article-medium-image.place-image-left,
+.article-small-image.place-image-left {
+  float:left;
+  margin-right:20px;
+}
+.article-medium-image.place-image-right,
+.article-small-image.place-image-right {
+  float:right;
+  margin-left:20px;
+}
+.article-small-image {
+  width:50%;
+}

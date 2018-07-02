@@ -5,8 +5,6 @@ LICENSE: Apache License, Version 2.0
 import React from 'react';
 import Slider from 'react-slick';
 import {
-	loadContent,
-	getContent,
 	subscribe,
 	getQueryString,
 	queryContent,
@@ -46,7 +44,6 @@ export class CarouselDynamicList extends React.Component {
 		super(props);
 
 		this.state = {
-			contentData: {},
 			items: {},
 			slickOptions: {
 				'speed': 500,
@@ -78,64 +75,28 @@ export class CarouselDynamicList extends React.Component {
 			}
 		};
 
-		this.sub = subscribe('content', () => {
-			let content = getContent(this.props.contentId);
-			if (content) {
-				this.setState({contentData: content});
-			}
-		});
-
         this.subquery = subscribe('queries', () => {
-            let type = this.state.contentData.elements.contentType ? this.state.contentData.elements.contentType : '';
+            let type = this.props.renderingContext.elements.contentType ? this.props.renderingContext.elements.contentType : '';
             let category = getFirstCategory(type);
-            let maxItems = this.state.contentData.elements.maxItem.value ? this.state.contentData.elements.maxItem.value : 10;
+            let maxItems = this.props.renderingContext.elements.maxItem.value ? this.props.renderingContext.elements.maxItem.value : 10;
             let queryString = getQueryString(category, maxItems);
             this.setState({items: getQuery(queryString)});
         });
-	}
-
-	componentWillMount () {
-		let content = getContent(this.props.contentId);
-		if (content) {
-			this.setState({contentData: content});
-		} else {
-			loadContent(props.contentId);
-		}
 	}
 
     componentDidMount() {
         this.query();
     }
 
-    shouldComponentUpdate(nextProps, nextState) {
-        if (nextState.items === undefined ) {
-            return false;
-        } else {
-            return true;
-        }
-    }
-
-    componentWillReceiveProps (nextProps) {
-        if (nextProps.contentId !== this.props.contentId) {
-            let content = getContent(nextProps.contentId);
-            if (content) {
-                this.setState({contentData: content});
-            } else {
-                loadContent(nextProps.contentId);
-            }
-        }
-    }
-
 	componentWillUnmount() {
-		this.sub.unsubscribe();
         this.subquery.unsubscribe();
 	}
 
 	query () {
-		if (this.state.contentData.elements) {
-			let type = this.state.contentData.elements.contentType ? this.state.contentData.elements.contentType : '';
+		if (this.props.renderingContext.elements) {
+			let type = this.props.renderingContext.elements.contentType ? this.props.renderingContext.elements.contentType : '';
 			let category = getFirstCategory(type);
-			let maxItems = this.state.contentData.elements.maxItem.value ? this.state.contentData.elements.maxItem.value : 10;
+			let maxItems = this.props.renderingContext.elements.maxItem.value ? this.props.renderingContext.elements.maxItem.value : 10;
 			queryContent(category, maxItems);
 		}
 	}
@@ -148,34 +109,39 @@ export class CarouselDynamicList extends React.Component {
         let type = '';
         let maxItems ='';
 
-		if (this.state.contentData.elements) {
-			listTitle = this.state.contentData.elements.listTitle.value;
-			viewAllLink = this.state.contentData.elements.viewAllLink ? this.state.contentData.elements.viewAllLink : {};
-            sortOrder = this.state.contentData.elements.sortOrder;
-            type = getFirstCategory(this.state.contentData.elements.contentType);
-            maxItems = this.state.contentData.elements.maxItem;
-		}
+		if (this.props.renderingContext.elements) {
+			listTitle = this.props.renderingContext.elements.listTitle.value;
+			viewAllLink = this.props.renderingContext.elements.viewAllLink ? this.props.renderingContext.elements.viewAllLink : {};
+			sortOrder = this.props.renderingContext.elements.sortOrder;
+			type = getFirstCategory(this.props.renderingContext.elements.contentType);
+			maxItems = this.props.renderingContext.elements.maxItem.value || null;
 
-		if (this.state.items && this.state.items.itemsContext) {
-            let sortField = (type === 'Alphabetical ascending' || type === 'Alphabetical descending') ? 'heading' : 'date';
-            let sortedItems = sortQueriedItems(this.state.items.itemsContext, sortField, getFirstCategory(sortOrder), maxItems);
 
-            carouselItems = sortedItems.map(item => (
-				<div id={item.id} key={item.id} className="carousel-item">
-					<WchContent contentId={item.id} summary={true} />
+			if (this.state.items && this.state.items.itemsContext) {
+				let sortField = (type === 'Alphabetical ascending' || type === 'Alphabetical descending') ? 'heading' : 'date';
+				let sortedItems = sortQueriedItems(this.state.items.itemsContext, sortField, getFirstCategory(sortOrder), maxItems);
+
+				carouselItems = sortedItems.map(item => (
+					<div id={item.id} key={item.id} className="carousel-item">
+						<WchContent contentId={item.id} summary={true}/>
+					</div>
+				));
+			}
+
+
+			return (
+				<div id={this.props.renderingContext.id} data-renderingcontext-id={this.props.renderingContext.id} className="query-carousel">
+					<h3 data-wch-inline-edit="elements.listTitle.value">{listTitle}</h3>
+					<Slider {...this.state.slickOptions} className="carousel">
+						{carouselItems}
+					</Slider>
+					<div data-wch-inline-edit="elements.viewAllLink">
+						<ViewAllButton link={viewAllLink}/>
+					</div>
 				</div>
-			));
+			)
+		} else {
+			return (<div></div>)
 		}
-
-
-		return (
-			<div id={this.state.contentData.id} className="query-carousel">
-				<h3>{listTitle}</h3>
-				<Slider {...this.state.slickOptions} className="carousel">
-					{carouselItems}
-				</Slider>
-				<ViewAllButton link={viewAllLink} />
-			</div>
-		)
 	}
 }

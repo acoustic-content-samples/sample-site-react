@@ -1,0 +1,13 @@
+.wch-edit-mode a.cke_button, .wch-edit-mode a.cke_button_off {
+	height: auto;
+}
+
+.wch-edit-mode .cke_combo .cke_combo_text, .wch-edit-mode .cke_combo .cke_combo_open {
+	height: 21px;
+}
+
+.wch-edit-mode .cke_top {
+	border-color: #777677!important;
+	border-bottom-width: 1px!important;
+	margin-bottom:2px;
+}

@@ -3,8 +3,11 @@ Copyright IBM Corporation 2017.
 LICENSE: Apache License, Version 2.0
 */
 import React from 'react';
-import {loadContent, getRoute, subscribe} from '../'
-import {ComponentRegistry} from './';
+import {changeNavEvent, loadContent, getContent, getRoute, subscribe, getPage} from '../'
+import {ComponentRegistry, ComponentIDRegistry} from './';
+import { SiteHeader } from '../../src/components/siteHeader/siteHeader';
+import { SiteFooter } from '../../src/components/siteFooter/siteFooter';
+import {WchContent} from "./wchContent";
 
 export class WchPage extends React.Component {
 	constructor (props) {
@@ -12,24 +15,14 @@ export class WchPage extends React.Component {
 		
 		this.state = {
 			route: {contentId: '', layoutId: ''},
+			page: {kind: []}
 		};
 
+		this.siteLoaded = false;
+
 		this.sub = subscribe('routes', () => {
-			this.setState((prevState, props) => ({route: getRoute(props.location.pathname)}));
-			
-			let name = this.state.route.layoutId.split('-').map(s => s.substring(0,1).toUpperCase()+s.substring(1)).reduce((s, v) => s + v, '');
-            if (name) {
-                if (ComponentRegistry[name]) {
-                    ComponentRegistry[name]().then(component => {
-                        this.setState({Component: component[name], status: '200'});
-                    });
-                } else {
-                    ComponentRegistry['ErrorPage']().then(component => {
-                        console.log('map to error page');
-                        this.setState({Component: component['ErrorPage'], status: '404'});
-                    });
-                }
-            }
+			this.siteLoaded = true;
+			this._setStateForRoute(getRoute(props.history.location.pathname));
 		});
 	}
 
@@ -37,31 +30,60 @@ export class WchPage extends React.Component {
 		this.sub.unsubscribe();
 	}
 
-	componentWillReceiveProps (nextProps) {
-		if (nextProps.location.pathname !== this.props.location.pathname) {
-			let route = getRoute(nextProps.location.pathname);
-
+	_setStateForRoute(route) {
+		if(this.siteLoaded) {
 			if (route) {
-				this.setState({route});
-				let name = route.layoutId.split('-').map(s => s.substring(0,1).toUpperCase()+s.substring(1)).reduce((s, v) => s + v, '');
+				let name = route.layoutId.replace('-layout', '').split('-').map(s => s.substring(0, 1).toUpperCase() + s.substring(1)).reduce((s, v) => s + v, '');
 				if (name) {
 					if (ComponentRegistry[name]) {
-                        ComponentRegistry[name]().then(component => {
-                            this.setState({Component: component[name], status: '200'});
-                        });
+						this.setState({
+							status: '200',
+							contentId: route.contentId,
+							Component: <WchContent contentId={route.contentId}/>,
+                        	page: getPage(route.contentId) ? getPage(route.contentId): {}
+						});
 					} else {
-                        ComponentRegistry['ErrorPage']().then(component => {
-                            this.setState({Component: component['ErrorPage'], status: '404'});
-                        });
-                    }
+						this._setErrorPage();
+					}
 				}
+			} else {
+				this._setErrorPage();
+
 			}
 		}
 	}
 
+	_setErrorPage () {
+		this.setState({
+			status: '404',
+			contentId: ComponentIDRegistry['ErrorPage'],
+			Component: <WchContent status={404} contentId={ComponentIDRegistry['ErrorPage']}/>
+		});
+
+	}
+
+	componentWillReceiveProps (nextProps) {
+		if (nextProps.location.pathname !== this.props.location.pathname) {
+			let route = getRoute(nextProps.location.pathname);
+			if(route) {
+				changeNavEvent(route.contentId);
+			}
+			this._setStateForRoute(route);
+		}
+	}
+
+
+
 	render () {
 		if (this.state.Component) {
-			return (<this.state.Component contentId={this.state.route.contentId} status={this.state.status}/>);
+			let hideHeaderFooter = !this.siteLoaded || (this.state.page.kind && this.state.page.kind.includes('landing-page')) ;
+			return (
+				<div>
+					{ hideHeaderFooter ? '': (<SiteHeader {...this.props} />) }
+					{ this.state.Component }
+					{ hideHeaderFooter ? '': (<SiteFooter />) }
+				</div>
+			);
 		}
 
 		return (<div></div>);

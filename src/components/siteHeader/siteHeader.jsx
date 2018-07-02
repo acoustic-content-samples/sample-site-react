@@ -3,7 +3,6 @@ Copyright IBM Corporation 2017.
 LICENSE: Apache License, Version 2.0
 */
 import React, { Component } from 'react';
-import {withRouter, Redirect, Route} from 'react-router-dom';
 
 import {loadContent, subscribe, getContent, getImageUrl, setNavChangeFunction, setPageReloadFunction} from 'wch-flux-sdk';
 
@@ -50,13 +49,12 @@ export class SiteHeader extends Component {
 		this.sub.unsubscribe();
 	}
 
-
 	render () {
 		let url = '';
 
 		const toggleMobileNav = () => {
 			this.setState({mobileNav: !this.state.mobileNav});
-		}
+		};
 
 		if (this.state.contentData && this.state.contentData.elements) {
 			url = getImageUrl(this.state.contentData.elements.websiteLogo);

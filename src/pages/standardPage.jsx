@@ -2,97 +2,72 @@
 Copyright IBM Corporation 2017.
 LICENSE: Apache License, Version 2.0
 */
-import React, {Component} from 'react';
-import {loadContent, getContent, subscribe} from 'wch-flux-sdk';
-import {WchContent} from 'wch-flux-sdk/react';
+import React from 'react';
+import {WchContent, WchLayout } from 'wch-flux-sdk/react';
 import 'styles/pages/standardPage.scss';
 
-export class StandardPageLayout extends Component {
-	constructor (props) {
-		super(props);
+export class StandardPage extends React.Component {
 
-		this.state = {page: {
-			banner: {values: []},
-			sectionOne: {values: []},
-			sectionTwo: {values: []}
-		}};
-
-		this.sub = subscribe('content', () => {
-            let content = getContent(this.props.contentId);
-            if (content) {
-                this.setState({
-                    page: content.elements
-                });
-            }
-		});
-
-		loadContent(props.contentId);
-	}
-
-	componentWillMount () {
-		let content = getContent(this.props.contentId);
-		if (content) {
-			this.setState({page: content.elements});
-		} else {
-            loadContent(this.props.contentId);
-		}
-	}
-
-	componentWillReceiveProps (nextProps) {
-		// console.log(`Standard Page: ${this.props.contentId} : ${nextProps.contentId}`);
-		// if (nextProps.contentId !== this.props.contentId) {
-			let content = getContent(nextProps.contentId);
-			if (content) {
-				this.setState({page: content.elements});
-			} else {
-				loadContent(nextProps.contentId);
-			}
-			loadContent(nextProps.contentId, true);
-		// }
-	}
-
-	componentWillUnmount () {
-		this.sub.unsubscribe();
-	}
 
 	render () {
-		let sectionOfBanner = cell => this.state.page[cell].values.map(s => <div className="section" key={s.id}><WchContent contentId={s.id}/></div>);
-		let sectionsOf = cell => this.state.page[cell].values.map(s => <div className="section" key={s.id}><div className="grid-container"><WchContent contentId={s.id}/></div></div>);
 
-        let bannerSection = '';
-		if (this.state.page.banner && this.state.page.banner.values && this.state.page.banner.values.length > 0) {
-			bannerSection = (
-				<div className="cell">
-					{/*<h1>Banner</h1>*/}
-					{sectionOfBanner('banner')}
-				</div>
-			);
-		}
+		//todo,  in edit mode can we render empty containers at the beginning and end of the page to more easily add new components?
 
+		let bannerSection = '';
 		let sectionOne = '';
-		if (this.state.page.sectionOne && this.state.page.sectionOne.values && this.state.page.sectionOne.values.length > 0) {
-			sectionOne = (
-				<div className="cell">
-					{sectionsOf('sectionOne')}
-				</div>
-			);
-		}
-
 		let sectionTwo = '';
-		if (this.state.page.sectionTwo && this.state.page.sectionTwo.values && this.state.page.sectionTwo.values.length > 0) {
-			sectionTwo = (
-				<div className="cell">
-					{sectionsOf('sectionTwo')}
+		if (this.props.renderingContext) {
+			let sectionOfBanner = cell => this.props.renderingContext.elements[cell].values.map((s, index) => {
+				let editAccessor = `elements.${cell}.values[${index}]`;
+				return <div data-wch-inline-edit={editAccessor} className="section" key={s.id}><WchContent
+					contentId={s.id}/></div>
+			});
+			let sectionsOf = cell => this.props.renderingContext.elements[cell].values.map((s, index) => {
+				let editAccessor = `elements.${cell}.values[${index}]`;
+				return <div data-wch-inline-edit={editAccessor} className="section" key={s.id}>
+					<div className="grid-container"><WchContent contentId={s.id}/></div>
 				</div>
-			);
+
+			});
+
+
+			if (this.props.renderingContext.elements && this.props.renderingContext.elements.banner && this.props.renderingContext.elements.banner.values && this.props.renderingContext.elements.banner.values.length > 0) {
+				bannerSection = (
+					<div className="cell">
+						{/*<h1>Banner</h1>*/}
+						{sectionOfBanner('banner')}
+					</div>
+				);
+			}
+
+
+			if (this.props.renderingContext.elements && this.props.renderingContext.elements.sectionOne && this.props.renderingContext.elements.sectionOne.values && this.props.renderingContext.elements.sectionOne.values.length > 0) {
+				sectionOne = (
+					<div className="cell">
+						{sectionsOf('sectionOne')}
+					</div>
+				);
+			}
+
+
+			if (this.props.renderingContext.elements && this.props.renderingContext.elements.sectionTwo && this.props.renderingContext.elements.sectionTwo.values && this.props.renderingContext.elements.sectionTwo.values.length > 0) {
+				sectionTwo = (
+					<div className="cell">
+						{sectionsOf('sectionTwo')}
+					</div>
+				);
+			}
 		}
 
-		return (
-			<div id={this.props.contentId} className="grid-x">
-				{bannerSection}
-				{sectionOne}
-				{sectionTwo}
-			</div>
-		);
+			return (
+				//TODO document this,  data.renderingcontext-id is needed to scope the elements to the renderingContext
+				<wch-page data-renderingcontext-id={this.props.contentId}  id={this.props.contentId} className="grid-x">
+					{bannerSection}
+					{sectionOne}
+					{sectionTwo}
+				</wch-page>
+			);
+
 	}
 }
+

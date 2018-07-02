@@ -1,94 +1,47 @@
 /*
-Copyright IBM Corporation 2017.
-LICENSE: Apache License, Version 2.0
-*/
+ Copyright IBM Corporation 2017.
+ LICENSE: Apache License, Version 2.0
+ */
 import React from 'react';
 import {Link} from 'react-router-dom';
-import {loadContent, getContent, subscribe, getImageUrl} from 'wch-flux-sdk';
+import {getImageUrl} from 'wch-flux-sdk';
+import {WchLayout} from 'wch-flux-sdk/react';
 import 'styles/layouts/heroImage.scss';
+import {of} from 'rxjs/add/observable/of';
 
 export class HeroImage extends React.Component {
-    constructor(props) {
-        super(props);
 
-        this.state = {
-            contentData: {},
-            random:''
-        };
+	render() {
+		let headline = '';
+		let altText = '';
+		let url = '';
+		let linkText = '';
+		let linkUrl = '';
+		let contentId = '';
+		let imageRendition = 'short';
+		let status = '';
 
-        this.sub = subscribe('content', () => {
-            let content = getContent(this.props.contentId);
-            if (content) {
-                this.setState({
-                    contentData: content
-                });
-            }
-        });
-    }
+		if (this.props.renderingContext) {
+			contentId = this.props.renderingContext.id;
+			status = this.props.renderingContext.status;
+			if (this.props.renderingContext.elements.image.renditions) {
+				url = getImageUrl(this.props.renderingContext.elements.image, imageRendition, status);
+			}
+			headline = this.props.renderingContext.elements.text.value ? this.props.renderingContext.elements.text.value : '';
+			altText = this.props.renderingContext.elements.image.altText ? this.props.renderingContext.elements.image.altText : '';
+			linkText = this.props.renderingContext.elements.link.linkText ? this.props.renderingContext.elements.link.linkText : '';
+			linkUrl = this.props.renderingContext.elements.link.linkURL ? this.props.renderingContext.elements.link.linkURL : '#';
+		}
 
-    componentWillMount() {
-        let content = getContent(this.props.contentId);
-        if (content) {
-            this.setState({contentData: content});
-        } else {
-            loadContent(this.props.contentId);
-        }
-    }
-
-    shouldComponentUpdate(nextProps, nextState) {
-        let currentModified = new Date(this.state.contentData.lastModified);
-        let newModified = new Date(nextState.contentData.lastModified);
-
-        return (currentModified.getTime() !== newModified.getTime());
-    }
-
-    componentWillReceiveProps (nextProps) {
-        if (nextProps.contentId !== this.props.contentId) {
-            let content = getContent(nextProps.contentId);
-            if (content) {
-                this.setState({contentData: content});
-            } else {
-                loadContent(nextProps.contentId);
-            }
-        }
-    }
-
-    componentWillUnmount() {
-        this.sub.unsubscribe();
-    }
-
-    render() {
-
-        // console.log('heroimage rendering');
-        let headline = '';
-        let altText = '';
-        let url = '';
-        let linkText = '';
-        let linkUrl = '';
-        let contentId = '';
-        let imageRendition = 'short';
-        let status = '';
-
-        if (this.state.contentData.elements) {
-            contentId = this.state.contentData.id;
-            status = this.state.contentData.status;
-            if(this.state.contentData.elements.image.renditions) {
-                url = getImageUrl(this.state.contentData.elements.image, imageRendition, status);
-            }
-            headline = this.state.contentData.elements.text.value ? this.state.contentData.elements.text.value : '';
-            altText = this.state.contentData.elements.image.altText ? this.state.contentData.elements.image.altText : '';
-            linkText = this.state.contentData.elements.link.linkText ? this.state.contentData.elements.link.linkText : '';
-            linkUrl = this.state.contentData.elements.link.linkURL ? this.state.contentData.elements.link.linkURL : '#';
-        }
-
-        return (
-            <div id={contentId} className="wch-hero-image">
-                <img src={url} title={altText} alt={altText}/>
-                <div className="hero-message">
-                    <h1 className="text-hero">{headline}</h1>
-                    <Link to={linkUrl} className="button hero-button">{linkText}</Link>
-                </div>
-            </div>
-        )
-    }
+		return (
+			<div id={contentId} data-renderingcontext-id={contentId}  className="wch-hero-image">
+				<img src={url} data-wch-inline-edit="elements.image" title={altText} alt={altText}/>
+				<div className="hero-message">
+					<h1 data-wch-inline-edit="elements.text.value" className="text-hero">{headline}</h1>
+					<Link data-wch-inline-edit="elements.link" title={linkText} to={linkUrl}
+						  className="button hero-button">{linkText}</Link>
+				</div>
+			</div>
+		)
+	}
 }

@@ -3,16 +3,11 @@ Copyright IBM Corporation 2017.
 LICENSE: Apache License, Version 2.0
 */
 import React from 'react';
-import {loadContent, getContent, subscribe} from 'wch-flux-sdk';
 import 'styles/components/shareSocial.scss';
 
 export class ShareSocial extends React.Component{
     constructor(props){
         super(props);
-
-        this.state = {
-            contentData:{}
-        };
 
         this.options = {
             tweetOptions: {
@@ -31,39 +26,8 @@ export class ShareSocial extends React.Component{
             }
         };
 
-        this.sub = subscribe('content', () => {
-            let content = getContent(this.props.contentId);
-            if (content) {
-                this.setState({
-                    contentData: content
-                });
-            }
-        });
     }
 
-    componentWillMount(){
-        let content = getContent(this.props.contentId);
-        if (content) {
-            this.setState({contentData: content});
-        } else {
-            loadContent(this.props.contentId);
-        }
-    }
-
-    componentWillReceiveProps (nextProps) {
-        if (nextProps.contentId !== this.props.contentId) {
-            let content = getContent(nextProps.contentId);
-            if (content) {
-                this.setState({contentData: content});
-            } else {
-                loadContent(nextProps.contentId);
-            }
-        }
-    }
-
-    componentWillUnmount() {
-        this.sub.unsubscribe();
-    }
 
     render(){
         let shareMsg = this.props.shareMsg;

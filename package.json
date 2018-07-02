@@ -4,8 +4,8 @@
   "description": "sample-site-react ==============",
   "main": "index.js",
   "scripts": {
-    "build": "webpack --config ./webpack.config.js --progress",
-    "start": "webpack-dev-server --port=4202",
+    "build": "NODE_ENV=production webpack --config ./webpack.config.js --progress",
+    "start": "NODE_ENV=development webpack-dev-server --port=4202",
     "test": "echo \"Error: no test specified\" && exit 1",
     "deploy": "wchtools push -A -v -f --dir dist",
     "build-deploy": "npm run build && npm run deploy"
@@ -19,13 +19,16 @@
   "dependencies": {
     "babel-polyfill": "^6.26.0",
     "foundation-sites": "^6.4.4-rc1",
+    "ibm-wch-sdk-api": "^5.0.325",
+    "ibm-wch-sdk-edit-api": "^5.0.325",
+    "jquery": "^3.3.1",
     "prop-types": "^15.6.0",
-    "react": "^16.0.0",
-    "react-dom": "^16.0.0",
+    "react": "^16.4.0",
+    "react-dom": "^16.4.0",
     "react-router-dom": "^4.2.2",
     "react-slick": "^0.15.4",
     "remove": "^0.1.5",
-    "rxjs": "^5.5.6"
+    "rxjs": "^5.5.10"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",

@@ -4,8 +4,6 @@ LICENSE: Apache License, Version 2.0
 */
 import React from 'react';
 import {
-    loadContent,
-    getContent,
     subscribe,
     getQueryString,
     getFirstCategory,
@@ -20,73 +18,33 @@ import {ViewAllButton} from '../components';
 export class GalleryDynamicList extends React.Component {
     constructor(props) {
         super(props);
-
         this.state = {
-            contentData: {},
             items: {}
         };
 
-        this.sub = subscribe('content', () => {
-            let content = getContent(this.props.contentId);
-            if (content) {
-                if(this.state.contentData.elements){
-                    if(this.state.contentData.elements.maxItem.value !== content.elements.maxItem.value){
-                        this.query(content.elements.maxItem.value);
-                    }
-                }
-                this.setState({contentData: content});
-            }
-        });
-
         this.subquery = subscribe('queries', () => {
-            let type = this.state.contentData.elements.contentType ? this.state.contentData.elements.contentType : '';
+            let type = this.props.renderingContext.elements.contentType ? this.props.renderingContext.elements.contentType : '';
             let category = getFirstCategory(type);
-            let maxItems = this.state.contentData.elements.maxItem.value ? this.state.contentData.elements.maxItem.value : 10;
+            let maxItems = this.props.renderingContext.elements.maxItem.value ? this.props.renderingContext.elements.maxItem.value : 10;
             let queryString = getQueryString(category, maxItems);
             this.setState({items: getQuery(queryString)});
         });
     }
 
-    componentWillMount () {
-        let content = getContent(this.props.contentId);
-        if (content) {
-            this.setState({contentData: content});
-        } else {
-            loadContent(this.props.contentId);
-        }
-    }
-
     componentDidMount() {
-        if (this.state.contentData.elements) {
-            this.query(this.state.contentData.elements.maxItem.value);
-        }
-    }
-
-    shouldComponentUpdate(nextProps, nextState) {
-        return !(nextState.items === undefined );
-    }
-
-    componentWillReceiveProps (nextProps) {
-        if (nextProps.contentId !== this.props.contentId) {
-            let content = getContent(nextProps.contentId);
-            if (content) {
-                this.setState({contentData: content});
-            } else {
-                loadContent(nextProps.contentId);
-            }
+        if (this.props.renderingContext.elements) {
+            this.query(this.props.renderingContext.elements.maxItem.value);
         }
     }
 
     componentWillUnmount() {
-        this.sub.unsubscribe();
         this.subquery.unsubscribe();
     }
 
-    query(maxItem=10) {
-        if (this.state.contentData.elements) {
-            let type = this.state.contentData.elements.contentType ? this.state.contentData.elements.contentType : '';
+    query(maxItems=10) {
+        if (this.props.renderingContext.elements) {
+            let type = this.props.renderingContext.elements.contentType ? this.props.renderingContext.elements.contentType : '';
             let category = getFirstCategory(type);
-            let maxItems = maxItem;
             queryContent(category, maxItems);
         }
     }
@@ -100,13 +58,13 @@ export class GalleryDynamicList extends React.Component {
         let type = '';
         let maxItems ='';
 
-        if (this.state.contentData.elements) {
-            contentId = this.state.contentData.id;
-            listTitle = this.state.contentData.elements.listTitle.value;
-            viewAllLink = this.state.contentData.elements.viewAllLink ? this.state.contentData.elements.viewAllLink : {};
-            sortOrder = this.state.contentData.elements.sortOrder;
-            type = getFirstCategory(this.state.contentData.elements.contentType);
-            maxItems = this.state.contentData.elements.maxItem;
+        if (this.props.renderingContext.elements) {
+            contentId = this.props.renderingContext.id;
+            listTitle = this.props.renderingContext.elements.listTitle.value;
+            viewAllLink = this.props.renderingContext.elements.viewAllLink ? this.props.renderingContext.elements.viewAllLink : {};
+            sortOrder = this.props.renderingContext.elements.sortOrder;
+            type = getFirstCategory(this.props.renderingContext.elements.contentType);
+            maxItems = this.props.renderingContext.elements.maxItem;
         }
 
         if (this.state.items && this.state.items.itemsContext) {
@@ -121,14 +79,16 @@ export class GalleryDynamicList extends React.Component {
         }
 
         return (
-            <div id={contentId} className="query-gallery">
-                <h3>{listTitle}</h3>
+            <div data-renderingcontext-id={this.props.renderingContext.id} id={contentId} className="query-gallery">
+                <h3 data-wch-inline-edit="elements.listTitle.value">{listTitle}</h3>
                 <div className="grid-container grid-container-padded">
                     <div className="grid-x grid-margin-x">
                         {galleryItems}
                     </div>
                 </div>
-                <ViewAllButton link={viewAllLink}/>
+                <div data-wch-inline-edit="elements.viewAllLink">
+                    <ViewAllButton link={viewAllLink}/>
+                </div>
             </div>
         )
     }

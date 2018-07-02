@@ -12,13 +12,11 @@ export class HeaderNav extends Component {
 	constructor (props) {
 		super(props);
 
-		this.state = { site: {pages: []}};
+		this.state = { site: getSite()};
 
 		this.sub = subscribe('site', () => {
 			this.setState({site: getSite()});
 		});
-
-		this.loaded = false;
 
 		loadSite();
 	}
@@ -38,13 +36,12 @@ export class HeaderNav extends Component {
 	componentDidUpdate () {
 	}
 
-
 	render () {
 		let topLevelPages = [];
 
 		const hasChildren = (page) => {
 			return (page.children.length > 0);
-		}
+		};
 
 		function childPages (page) {
 			if (page.children.length > 0 ) {
@@ -63,15 +60,18 @@ export class HeaderNav extends Component {
 			return '';
 		}
 
-		topLevelPages = this.state.site.pages.map(function (page) {
-			if (!page.hideFromNavigation) {
-				return (<li key={page.id} className={"wch-menu-item " + (hasChildren(page) ? 'has-children' : '')} role="menuitem">
-					<NavLink to={page.route}>{page.name}</NavLink>
-					{childPages(page)}
-				</li>
-				);
-			}
-		});
+		if(this.state.site.pages) {
+			topLevelPages = this.state.site.pages.map(function (page) {
+				if (!page.hideFromNavigation) {
+					return (<li key={page.id} className={"wch-menu-item " + (hasChildren(page) ? 'has-children' : '')}
+								role="menuitem">
+							<NavLink to={page.route}>{page.name}</NavLink>
+							{childPages(page)}
+						</li>
+					);
+				}
+			});
+		}
 
 		return (
 			<div className="menu-container" >

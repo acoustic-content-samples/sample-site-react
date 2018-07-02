@@ -12,3 +12,6 @@ export {SignUp} from './signUp';
 export {GalleryDynamicList} from './galleryDynamicList';
 export {Event} from './event';
 export {SearchResults} from './search-results/searchResults';
+export {ContestRules} from './contestRules';
+export {FormComponent} from './formComponent';
+export {SocialComponent} from './socialComponent';

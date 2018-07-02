@@ -3,53 +3,13 @@ Copyright IBM Corporation 2017.
 LICENSE: Apache License, Version 2.0
 */
 import React from 'react';
-import {loadContent, getContent, subscribe} from 'wch-flux-sdk';
-import {AuthorProfile, LeadImage, ArticleBodyImage} from '../components';
+import { layoutHOC } from 'wch-flux-sdk/react';
 import 'styles/layouts/designArticle.scss';
 import {ShareSocial} from "../components/shareSocial";
 import {DesignArticleSummary} from '../components';
+import {WchContent} from "../../wch-flux-sdk/react/wchContent";
 
 export class DesignArticle extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            contentData: {}
-        };
-
-        this.sub = subscribe('content', () => {
-            let content = getContent(this.props.contentId);
-            if (content) {
-                this.setState({
-                    contentData: content
-                });
-            }
-        });
-    }
-
-    componentWillMount() {
-        let content = getContent(this.props.contentId);
-        if (content) {
-            this.setState({contentData: content});
-        } else {
-            loadContent(this.props.contentId);
-        }
-    }
-
-    componentWillReceiveProps (nextProps) {
-        if (nextProps.contentId !== this.props.contentId) {
-            let content = getContent(nextProps.contentId);
-            if (content) {
-                this.setState({contentData: content});
-            } else {
-                loadContent(nextProps.contentId);
-            }
-        }
-    }
-
-    componentWillUnmount() {
-        this.sub.unsubscribe();
-    }
 
     render() {
         let heading = '';
@@ -59,50 +19,58 @@ export class DesignArticle extends React.Component {
         let date = '';
         let body = [];
         let bodyImages = [];
+        const DesignArticleSummaryWithLayout = layoutHOC(DesignArticleSummary);
 
-        if(this.state.contentData.elements){
-            heading = this.state.contentData.elements.heading.value;
-            leadImageId = this.state.contentData.elements.mainImage.value ? this.state.contentData.elements.mainImage.value.id : '';
-            author = this.state.contentData.elements.author.value;
-            authorBioId = this.state.contentData.elements.authorBio.value ? this.state.contentData.elements.authorBio.value.id : '';
-            date = new Date(this.state.contentData.elements.date.value).toDateString();
-            body = this.state.contentData.elements.body.values ? this.state.contentData.elements.body.values : [];
-            bodyImages = this.state.contentData.elements.bodyImage.values ? this.state.contentData.elements.bodyImage.values : [];
-        }
+        if(this.props.renderingContext) {
+			heading = this.props.renderingContext.elements.heading.value;
+			leadImageId = this.props.renderingContext.elements.mainImage.value ? this.props.renderingContext.elements.mainImage.value.id : '';
+			author = this.props.renderingContext.elements.author.value;
+			authorBioId = this.props.renderingContext.elements.authorBio.value ? this.props.renderingContext.elements.authorBio.value.id : '';
+			date = new Date(this.props.renderingContext.elements.date.value).toDateString();
+			body = this.props.renderingContext.elements.body.values ? this.props.renderingContext.elements.body.values : [];
+			bodyImages = this.props.renderingContext.elements.bodyImage.values ? this.props.renderingContext.elements.bodyImage.values : [];
 
-        function itemHTML(item) { return {__html: item}};
 
-        let articleBody = body.map((item, index) => {
-            return (<div key={index} className="article-body">
-                        <div dangerouslySetInnerHTML={itemHTML(item)}></div>
-                        {(index<bodyImages.length) ? (<ArticleBodyImage contentId={bodyImages[index].id} />) : ('')}
-                    </div>)
-        });
+			function itemHTML(item) {
+				return {__html: item}
+			};
 
-        let articleBodyImage = bodyImages.slice(body.length).map((image, index) => {
-            return (<div key={index} className="article-medium-image">
-                        <ArticleBodyImage contentId={image.id} />
-                    </div>)
-        });
+			let articleBody = body.map((item, index) => {
+				let bodyEditAccessor = `elements.body.values[${index}]`;
+				return (<div key={index} className="article-body">
+                    <div data-wch-inline-edit={bodyEditAccessor} dangerouslySetInnerHTML={itemHTML(item)}></div>
+					{(index < bodyImages.length) ? (<WchContent contentId={bodyImages[index].id}/>) : ('')}
+                </div>)
+			});
 
-        if (this.props.summary) {
-            return (<DesignArticleSummary contentId={this.state.contentData.id}/>)
-        } else {
-            return (
-                <div>
-                    {leadImageId.length>0 ? (<LeadImage contentId={leadImageId} summary={false}/>) : ('') }
-                    <h2 className="headline">{heading}</h2>
-                    <div className="article-details">
-                        <div className="byline-and-date">
-                            By <b className="author">{author}</b>, <span>{date}</span>
+			let articleBodyImage = bodyImages.slice(body.length).map((image, index) => {
+				let editAccessor = `elements.bodyImage.values[${index}]`;
+				return (<div key={index} data-wch-inline-edit={editAccessor} className="article-medium-image">
+                    <WchContent contentId={image.id}/>
+                </div>)
+			});
+
+			if (this.props.summary) {
+				return (<DesignArticleSummaryWithLayout renderingContext={this.props.renderingContext} contentId={this.props.renderingContext.id}/>);
+			} else {
+				return (
+                    <div data-renderingcontext-id={this.props.renderingContext.id}>
+						{leadImageId.length > 0 ? (<WchContent contentId={leadImageId} summary={false}/>) : ('') }
+                        <h2 className="headline" data-wch-inline-edit="elements.heading.value">{heading}</h2>
+                        <div className="article-details">
+                            <div className="byline-and-date">
+                                By <b className="author" data-wch-inline-edit="elements.author.value">{author}</b>, <span data-wch-inline-edit="elements.date.value">{date}</span>
+                            </div>
+							{(heading && author) ? (<ShareSocial shareMsg={heading} author={author}/>) : ('')}
                         </div>
-                        {(heading && author) ? (<ShareSocial shareMsg={heading} author={author} />):('')}
+						{body.length > 0 ? (articleBody) : ''}
+						{articleBodyImage}
+						{authorBioId ? (<WchContent contentId={authorBioId}/>) : ('')}
                     </div>
-                    {body.length>0 ? (articleBody) : ''}
-                    {articleBodyImage}
-                    {authorBioId ? (<AuthorProfile contentId={authorBioId} />):('')}
-                </div>
-            )
+				)
+			}
+		} else {
+            return <div></div>;
         }
 
     }

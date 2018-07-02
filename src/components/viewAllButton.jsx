@@ -4,7 +4,6 @@ LICENSE: Apache License, Version 2.0
 */
 import React from 'react';
 import {Link} from 'react-router-dom';
-import {loadContent, getContent, subscribe} from 'wch-flux-sdk';
 import 'styles/components/viewAllButton.scss';
 
 export class ViewAllButton extends React.Component {
@@ -35,7 +34,7 @@ export class ViewAllButton extends React.Component {
         function viewButton() {
             if (isButtonLinkSet)
                 return (<div className="view-all">
-                    <Link to={linkURL} className="button button-view-all">{linkText} </Link>
+                    <Link to={linkURL} title={linkText} className="button button-view-all">{linkText} </Link>
                 </div>);
             else
                 return (<div/>);

@@ -3,61 +3,15 @@ Copyright IBM Corporation 2017.
 LICENSE: Apache License, Version 2.0
 */
 import React from 'react';
-import {loadContent, getContent, subscribe, getImageUrl} from 'wch-flux-sdk';
+import {getImageUrl} from 'wch-flux-sdk';
 import 'styles/components/authorProfile.scss';
 
 export class AuthorProfile extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = {
-            contentData: {}
-        };
-
-        this.sub = subscribe('content', () => {
-            let content = getContent(this.props.contentId);
-            if (content) {
-                this.setState({
-                    contentData: content,
-                    gotContent: true
-                });
-            }
-        });
     }
 
-    componentWillMount() {
-        let content = getContent(this.props.contentId);
-        if (content) {
-            this.setState({
-                contentData: content,
-                gotContent: true
-            });
-        } else {
-            loadContent(this.props.contentId);
-        }
-    }
-
-    componentWillReceiveProps (nextProps) {
-        if (nextProps.contentId !== this.props.contentId) {
-            let content = getContent(nextProps.contentId);
-            if (content) {
-                this.setState({contentData: content});
-            } else {
-                loadContent(nextProps.contentId);
-            }
-        }
-    }
-
-    shouldComponentUpdate(nextProps, nextState) {
-        let currentModified = new Date(this.state.contentData.lastModified);
-        let newModified = new Date(nextState.contentData.lastModified);
-
-        return (currentModified.getTime() !== newModified.getTime());
-    }
-
-    componentWillUnmount() {
-        this.sub.unsubscribe();
-    }
 
     render() {
         let imageUrl='';
@@ -65,32 +19,34 @@ export class AuthorProfile extends React.Component {
         let name='';
         let shortBio='';
         let imageRendition='closeUp';
-        let status='';
 
-        if(this.state.contentData.elements) {
-            status = this.state.contentData.status;
-            if (this.state.contentData.elements.profilePicture.renditions) {
-                imageUrl = getImageUrl(this.state.contentData.elements.profilePicture, imageRendition, status);
-            }
-            altText = this.state.contentData.elements.altText;
-            name = this.state.contentData.elements.name.value;
-            shortBio = this.state.contentData.elements.shortBio.value;
-        }
+        if(this.props.renderingContext) {
 
-        function shortBioHTML() {
-            return {__html: shortBio}
-        }
+			if (this.props.renderingContext.elements.profilePicture.renditions) {
+				imageUrl = getImageUrl(this.props.renderingContext.elements.profilePicture, imageRendition);
+			}
+			altText = this.props.renderingContext.elements.altText;
+			name = this.props.renderingContext.elements.name.value;
+			shortBio = this.props.renderingContext.elements.shortBio.value;
 
-        return (
-            <div className="about-the-author">
-                <img src={imageUrl} alt={altText} title={altText} />
-                <div>
-                    <h5>
-                        {name}
-                    </h5>
-                    <div dangerouslySetInnerHTML={shortBioHTML()}/>
+
+			function shortBioHTML() {
+				return {__html: shortBio}
+			}
+
+			return (
+                <div data-renderingcontext-id={this.props.renderingContext.id} className="about-the-author">
+                    <img data-wch-inline-edit="elements.profilePicture" src={imageUrl} alt={altText} title={altText}/>
+                    <div>
+                        <h5 data-wch-inline-edit="elements.name.value">
+							{name}
+                        </h5>
+                        <div data-wch-inline-edit="elements.shortBio.value" dangerouslySetInnerHTML={shortBioHTML()}/>
+                    </div>
                 </div>
-            </div>
-        )
+			)
+		} else {
+            return <div></div>
+        }
     }
 }

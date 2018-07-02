@@ -4,62 +4,12 @@ LICENSE: Apache License, Version 2.0
 */
 import React from 'react';
 import {Link} from 'react-router-dom';
-import {loadContent, getContent, subscribe, getRouteForContentId} from 'wch-flux-sdk';
+import {getRouteForContentId} from 'wch-flux-sdk';
 import {WchContent} from 'wch-flux-sdk/react';
-import {DesignArticleSummary} from '../components/designArticleSummary';
-import {DesignArticle} from '../layouts/designArticle';
-import {VerticalList} from "../layouts/verticalList";
 import 'styles/pages/designPageRight.scss';
 
 export class DesignPageRight extends React.Component {
-    constructor(props) {
-        super(props);
 
-        this.state = {
-            contentData: {}
-        };
-
-        this.sub = subscribe('content', () => {
-            let content = getContent(this.props.contentId);
-            if (content) {
-                this.setState({
-                    contentData: getContent(this.props.contentId)
-                });
-            }
-        });
-    }
-
-    componentWillMount() {
-        let content = getContent(this.props.contentId);
-        if (content) {
-            this.setState({contentData: content});
-        } else {
-            loadContent(this.props.contentId);
-        }
-    }
-
-    componentWillReceiveProps (nextProps) {
-        if (nextProps.contentId !== this.props.contentId) {
-            let content = getContent(nextProps.contentId);
-            if (content) {
-                this.setState({contentData: content});
-            } else {
-                loadContent(nextProps.contentId);
-            }
-        // loadContent(nextProps.contentId, true);
-        }
-    }
-
-    shouldComponentUpdate(nextProps, nextState) {
-        let currentModified = new Date(this.state.contentData.lastModified);
-        let newModified = new Date(nextState.contentData.lastModified);
-
-        return (currentModified.getTime() !== newModified.getTime());
-    }
-
-    componentWillUnmount() {
-        this.sub.unsubscribe();
-    }
 
     render() {
 
@@ -68,42 +18,46 @@ export class DesignPageRight extends React.Component {
         let route = '';
         let summary = '';
 
-        if (this.state.contentData.elements) {
-            if (this.state.contentData.elements.designTopic) {
-                designTopicId = this.state.contentData.elements.designTopic.value ? this.state.contentData.elements.designTopic.value.id : '';
+        if (this.props.renderingContext) {
+            if (this.props.renderingContext.elements.designTopic) {
+                designTopicId = this.props.renderingContext.elements.designTopic.value ? this.props.renderingContext.elements.designTopic.value.id : '';
             }
-            if (this.state.contentData.elements.relatedArticles){
-                relatedArticlesId = this.state.contentData.elements.relatedArticles.value ? this.state.contentData.elements.relatedArticles.value.id : '';
+            if (this.props.renderingContext.elements.relatedArticles) {
+                relatedArticlesId = this.props.renderingContext.elements.relatedArticles.value ? this.props.renderingContext.elements.relatedArticles.value.id : '';
             }
-            route = getRouteForContentId(this.state.contentData.id) ? getRouteForContentId(this.state.contentData.id) : '#';
+            route = getRouteForContentId(this.props.renderingContext.id) ? getRouteForContentId(this.props.renderingContext.id) : '#';
             summary = this.props.summary;
-        }
 
-        if (summary) {
-            return (
-                <div>
-                    <Link to={route}>
-                        {designTopicId.length > 0 ? (<DesignArticleSummary contentId={designTopicId}/>) : ('') }
-                    </Link>
-                </div>
-            )
-        } else {
-            return (
-                <div className="grid-container section-small">
-                    <div id={this.state.contentData.id} className="grid-x grid-padding-x">
-                        <div className="medium-4 cell shrink">
-                            <div className="section">
-                                { relatedArticlesId.length > 0 ? (<VerticalList contentId={relatedArticlesId}/>) : ('') }
+
+			if (summary) {
+				return (
+                    <div data-renderingcontext-id={this.props.contentId}>
+                        <Link to={route}>
+							{designTopicId.length > 0 ? (<WchContent summary={true} contentId={designTopicId}/>) : ('') }
+                        </Link>
+                    </div>
+				)
+			} else {
+				return (
+                    <div data-renderingcontext-id={this.props.contentId} className="grid-container section-small">
+                        <div id={this.props.renderingContext.id} className="grid-x grid-padding-x">
+                            <div className="medium-4 cell shrink">
+                                <div data-wch-inline-edit='elements.relatedArticles.value' className="section">
+									{ relatedArticlesId.length > 0 ? (
+                                        <WchContent contentId={relatedArticlesId}/>) : ('') }
+                                </div>
                             </div>
-                        </div>
-                        <div className="medium-8 cell auto">
-                            <div className="section">
-                                { designTopicId.length > 0 ? (<DesignArticle contentId={designTopicId}/>) : ('') }
+                            <div className="medium-8 cell auto">
+                                <div data-wch-inline-edit='elements.designTopic.value' className="section">
+									{ designTopicId.length > 0 ? (<WchContent contentId={designTopicId}/>) : ('') }
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            )
+				)
+			}
+		} else {
+            return <div></div>;
         }
 
     }

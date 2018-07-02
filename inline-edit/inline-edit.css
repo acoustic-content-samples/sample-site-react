@@ -1,0 +1,189 @@
+.wch-edit-mode .wch-edit-element{
+	background: rgba(236, 236, 236, .5);
+	min-height: 30px;
+}
+
+.wch-edit-mode .wch-edit-element:hover,
+.wch-edit-mode .wch-edit-element.wch-edit-selected.wch-edit-selected-link-background{
+	background: rgba(236, 236, 236, .5);
+}
+
+.wch-edit-mode .wch-edit-element.wch-edit-selected{
+	outline: solid 2px;
+	background: transparent;
+}
+.wch-edit-mode .wch-edit-reference:focus.wch-inline-edit-border,
+.wch-edit-mode .wch-edit-reference:hover.wch-inline-edit-border {
+	box-shadow: 1px 2px 2px rgba(119, 118, 119, .85), -1px 2px 2px rgba(119, 118, 119, .85), 1px -2px 2px rgba(119, 118, 119, .85), -1px -2px 2px rgba(119, 118, 119, .85), 2px 1px 2px rgba(119, 118, 119, .85), -2px 1px 2px rgba(119, 118, 119, .85), 2px -1px 2px rgba(119, 118, 119, .85), -2px -1px 2px rgba(119, 118, 119, .85);
+	overflow: visible;
+}
+
+.wch-edit-reference.inline-banner-span-container{
+	display:block;
+}
+
+.wch-edit-reference .inline-banner-span{
+	display:none;
+}
+
+.wch-edit-page > .inline-banner-span{
+	display:none;
+}
+
+.media-banner-toggle-off {
+	display:none !important;
+}
+.wch-edit-reference .inline-media-banner-container{
+	display: none;
+}
+.wch-edit-mode .wch-edit-reference:focus .inline-media-banner-container,
+.wch-edit-mode .wch-edit-reference:hover .inline-media-banner-container,
+.wch-edit-mode .show-inline-media-banner-container {
+	display:block;
+	position:relative;
+}
+
+.wch-edit-mode .wch-edit-reference .inline-banner-container{
+	display:block;
+	position: absolute;
+}
+
+.wch-edit-mode .wch-edit-reference .inline-media-banner-wrapper{
+	display:block;
+}
+
+.wch-edit-mode .wch-edit-reference:hover .inline-media-banner-span,
+.wch-edit-mode .wch-edit-reference:focus .inline-media-banner-span ,.wch-edit-mode .show-inline-media-banner {
+	background: rgba(52,51,52,.85);
+	width: auto;
+	height: 44px;
+	display: inline-flex;
+	position: absolute;
+	z-index:2000;
+	box-shadow: 0 0 1px 1px rgba(0,0,0,.25);
+	right: 0;
+	padding-top: 1px;
+}
+
+.wch-edit-mode .wch-edit-reference:hover .inline-banner-span,
+.wch-edit-mode .wch-edit-reference:focus .inline-banner-span,
+.wch-edit-mode .wch-edit-reference .inline-banner-span:hover,
+.wch-edit-mode .wch-edit-reference.wch-edit-selected .inline-banner-span{
+	background: rgba(52,51,52,.85);
+	width: auto;
+	height: 44px;
+	display: inline-flex;
+	position: absolute;
+	z-index: 2000;
+	overflow:visible;
+	margin-top: -44px;
+	margin-left: -1px;
+	box-shadow: 0 0 1px 1px rgba(0,0,0,.25);
+}
+
+.wch-edit-mode .wch-edit-reference .inline-edit-btn,
+.wch-edit-mode .wch-edit-reference .inline-open-palette-btn,
+.wch-edit-mode .wch-edit-page > .inline-banner-span .inline-edit-btn{
+	height: 44px;
+	padding: 10px;
+	cursor: pointer;
+}
+
+.wch-edit-mode .wch-edit-reference .inline-open-palette-btn {
+	border: 0;
+	padding: 13px 10px;
+}
+
+.wch-edit-mode .wch-edit-reference .inline-open-palette-btn:focus, .wch-edit-mode .wch-edit-reference .inline-open-palette-btn:disabled {
+	background: #3151b7;
+}
+
+.wch-edit-mode .wch-edit-reference .inline-open-palette-btn svg{
+	pointer-events: none;
+}
+
+.wch-edit-mode .inline-approvals-btn{
+	height: 44px;
+	padding: 13px 10px 10px 10px;
+	cursor: pointer;
+}
+
+body.high-contrast.wch-edit-mode .inline-edit-btn svg path,
+body.high-contrast.wch-edit-mode .inline-approvals-btn svg path,
+body.high-contrast.wch-edit-mode .inline-open-palette-btn svg path {
+	fill: #3151b7;
+}
+
+body.high-contrast.wch-edit-mode .wch-edit-reference:hover .inline-banner-span,
+body.high-contrast.wch-edit-mode .wch-edit-reference:focus .inline-banner-span,
+body.high-contrast.wch-edit-mode .wch-edit-reference .inline-banner-span:hover,
+body.high-contrast.wch-edit-mode .wch-edit-reference.wch-edit-selected .inline-banner-span {
+	border: 1px solid #3151b7;
+}
+.wch-edit-mode .wch-edit-reference:hover .inline-banner-name-span,
+.wch-edit-mode .wch-edit-reference:focus .inline-banner-name-span,
+.wch-edit-mode .wch-edit-reference .inline-banner-name-span:hover,
+.wch-edit-mode .wch-edit-reference.wch-edit-selected .inline-banner-name-span{
+	color: #FFFFFF;
+	font-size: 15px;
+	line-height: 19px;
+	padding:13px 15px 10px 5px;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+}
+.wch-edit-mode .wch-edit-reference:hover .inline-banner-ref,
+.wch-edit-mode .wch-edit-reference:focus .inline-banner-ref,
+.wch-edit-mode .wch-edit-reference .inline-banner-ref,
+.wch-edit-mode .wch-edit-reference.wch-edit-selected .inline-banner-ref {
+	color: #FFFFFF;
+	font-size: 15px;
+	line-height: 19px;
+	border-left: 1px solid white;
+	padding: 13px 0 10px 15px;
+}
+
+.wch-edit-mode .wch-edit-page > .inline-banner-span{
+	background: rgba(52,51,52,.85);
+	width: auto;
+	height: 44px;
+	display: inline-flex;
+	position: relative;
+	z-index: 2000;
+	overflow:visible;
+	margin-top:-46px;
+	box-shadow: 0 0 1px 1px rgba(0,0,0,.25);
+	float:right;
+}
+
+.wch-edit-mode .wch-edit-page > .inline-banner-span .inline-banner-name-span{
+	color: #FFFFFF;
+	font-size: 15px;
+	line-height: 19px;
+	padding: 13px 20px 10px 5px;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+.wch-edit-mode .wch-edit-page > .inline-banner-span .page-icon{
+	height: 44px;
+	padding: 13px 0px 10px 10px;
+	border-left: 1px solid white;
+}
+
+.wch-edit-mode .wch-edit-page {
+	display: block;
+	border: solid 1px #417CBE;
+}
+
+.wch-edit-mode .inline-lock-btn{
+	display: none;
+}
+
+.wch-edit-mode .inline-banner-span.show-locked-icon .inline-edit-btn{
+	display: none;
+}
+.wch-edit-mode .inline-banner-span.show-locked-icon .inline-lock-btn{
+	display: block;
+}

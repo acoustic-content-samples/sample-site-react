@@ -3,7 +3,6 @@ Copyright IBM Corporation 2017.
 LICENSE: Apache License, Version 2.0
 */
 import React from 'react';
-import {Link} from 'react-router-dom'
 
 import {loadContent, subscribe, getContent, getImageUrl} from 'wch-flux-sdk';
 import 'styles/components/siteFooter/siteFooter.scss';
@@ -41,14 +40,12 @@ export class SiteFooter extends React.Component {
     }
 
     componentWillReceiveProps (nextProps) {
-        // if (nextProps.contentId !== this.props.contentId) {
             let content = getContent(nextProps.contentId);
             if (content) {
                 this.setState({contentData: content});
             } else {
                 loadContent(nextProps.contentId);
             }
-        // }
     }
 
     componentWillUnmount() {
@@ -56,7 +53,6 @@ export class SiteFooter extends React.Component {
     }
 
     render() {
-        // console.log(`this state ${JSON.stringify(this.state.content.elements)}`);
         let url = '';
         let salesLabel = '';
         let salesNumber = '';

@@ -10,49 +10,54 @@ import ReactDOM from 'react-dom';
 import {
 	BrowserRouter as Router,
 	Route,
-	Redirect,
-	withRouter
+	Redirect
 } from 'react-router-dom';
 
 import 'styles/app.scss';
-import { WchPage, registerComponent } from 'wch-flux-sdk/react';
-import { setNavChangeFunction } from 'wch-flux-sdk';
-import { SiteHeader } from './components/siteHeader/siteHeader';
-import { SiteFooter } from './components/siteFooter/siteFooter';
+import { WchPage, registerComponent, registerComponentContentId } from 'wch-flux-sdk/react';
+import { loadSite } from 'wch-flux-sdk';
 import { ErrorPage } from './pages/errorPage';
-import { Toolbar } from './components/toolbar/toolbar';
 
 window.onerror = (error) => { document.innerHTML = error };
 
 // for running on local host we want to configure the WCH lib
-// import {configWCH} from 'wch-flux-sdk';
-// configWCH('your-domain-name.com', '0000000-0000-0000-0000-000000000000'); 
+import {configWCH} from 'wch-flux-sdk';
+import { Constants } from "./Constants";
+// configWCH(Constants.DOMAIN_NAME, Constants.CONTENT_HUB_ID);
+// import { configExternalSPA } from "wch-flux-sdk";
+// configExternalSPA(Constants.DOMAIN_NAME, Constants.CONTENT_HUB_ID);
 
 // load components globally
-registerComponent('ArticleBodyImage', () => import(/* webpackChunkName: "articleBodyImage" */'./components/articleBodyImage'));
-registerComponent('AuthorProfile', () => import(/* webpackChunkName: "authorBio" */'./components/authorProfile'));
-registerComponent('DesignArticleSummary', () => import(/* webpackChunkName: "designArticleSummary" */'./components/designArticleSummary'));
-registerComponent('LeadImage', () => import(/* webpackChunkName: "leadImage" */'./components/leadImage'));
-registerComponent('ShareSocial', () => import(/* webpackChunkName: "shareSocial" */'./components/shareSocial'));
-registerComponent('ViewAllButton', () => import(/* webpackChunkName: "viewAllButton" */'./components/viewAllButton'));
+registerComponent('ArticleBodyImage', () => import(/* webpackChunkName: "articleBodyImage" */'./components/articleBodyImage'), '');
+registerComponent('AuthorProfile', () => import(/* webpackChunkName: "authorBio" */'./components/authorProfile'), 'author-profile-layout');
+registerComponent('DesignArticleSummary', () => import(/* webpackChunkName: "designArticleSummary" */'./components/designArticleSummary'), '');
+registerComponent('ImageWithInformation', () => import(/* webpackChunkName: "imageWithInformation" */'./components/imageWithInformation'), 'image-with-information-layout');
+registerComponent('LeadImageWithInformation', () => import(/* webpackChunkName: "leadImageWithInformation" */'./components/leadImageWithInformation'), 'lead-image-with-information-layout');
+registerComponent('ShareSocial', () => import(/* webpackChunkName: "shareSocial" */'./components/shareSocial'), '');
+registerComponent('ViewAllButton', () => import(/* webpackChunkName: "viewAllButton" */'./components/viewAllButton'), '');
 
 // load page components globally
-registerComponent('StandardPageLayout', () => import(/* webpackChunkName: "standardPage"*/'./pages/standardPage'));
-registerComponent('DesignPageLeft', () => import(/* webpackChunkName: "designPageLeft"*/'./pages/designPageLeft'));
-registerComponent('DesignPageRight', () => import(/* webpackChunkName: "designPageRight"*/'./pages/designPageRight'));
+registerComponent('StandardPage', () => import(/* webpackChunkName: "standardPage"*/'./pages/standardPage'), 'standard-page-layout');
+registerComponent('LandingPage', () => import(/* webpackChunkName: "landingPage"*/'./pages/landingPage'), 'landing-page-layout');
+registerComponent('DesignPageLeft', () => import(/* webpackChunkName: "designPageLeft"*/'./pages/designPageLeft'), 'design-page-left');
+registerComponent('DesignPageRight', () => import(/* webpackChunkName: "designPageRight"*/'./pages/designPageRight'), 'design-page-right');
 registerComponent('ErrorPage', () => import('./pages/errorPage'));
+registerComponentContentId('ErrorPage', 'fe3b25d4-5f96-4741-afc3-e27efe52f973');
 // load layouts dynamically
-registerComponent('CarouselDynamicList', () => import(/* webpackChunkName: "carouselDynamicList" */'./layouts/carouselDynamicList'));
-registerComponent('GalleryDynamicList', () => import(/* webpackChunkName: "galeryDynamicList" */'./layouts/galleryDynamicList'));
-registerComponent('GalleryList', () => import(/* webpackChunkName: "galleryList" */'./layouts/galleryList'));
-registerComponent('HeroImage', () => import(/* webpackChunkName: "heroImage" */'./layouts/heroImage'));
-registerComponent('HeroVideo', () => import(/* webpackChunkName: "heroVideo" */'./layouts/heroVideo'));
-registerComponent('Feature', () => import(/* webpackChunkName: "feature" */'./layouts/feature'));
-registerComponent('VerticalList', () => import(/* webpackChunkName: "verticalList" */'./layouts/verticalList'));
-registerComponent('SignUp', () => import(/* webpackChunkName: "signUp" */'./layouts/signUp'));
-registerComponent('Event', () => import(/* webpackChunkName: "event" */'./layouts/event'));
-registerComponent('DesignArticle', () => import(/* webpackChunkName: "designArticle" */'./layouts/designArticle'));
-registerComponent('SearchResults', () => import(/* webpackChunkName: "searchResults" */'./layouts/search-results/searchResults'));
+registerComponent('CarouselDynamicList', () => import(/* webpackChunkName: "carouselDynamicList" */'./layouts/carouselDynamicList'), 'carousel-dynamic-list');
+registerComponent('GalleryDynamicList', () => import(/* webpackChunkName: "galeryDynamicList" */'./layouts/galleryDynamicList'), 'gallery-dynamic-list');
+registerComponent('GalleryList', () => import(/* webpackChunkName: "galleryList" */'./layouts/galleryList'), 'gallery-list');
+registerComponent('HeroImage', () => import(/* webpackChunkName: "heroImage" */'./layouts/heroImage'), 'hero-image-layout');
+registerComponent('HeroVideo', () => import(/* webpackChunkName: "heroVideo" */'./layouts/heroVideo'), 'hero-video-layout');
+registerComponent('Feature', () => import(/* webpackChunkName: "feature" */'./layouts/feature'), 'feature-layout');
+registerComponent('VerticalList', () => import(/* webpackChunkName: "verticalList" */'./layouts/verticalList'), 'vertical-list');
+registerComponent('SignUp', () => import(/* webpackChunkName: "signUp" */'./layouts/signUp'), 'sign-up-layout');
+registerComponent('Event', () => import(/* webpackChunkName: "event" */'./layouts/event'), 'event-layout');
+registerComponent('DesignArticle', () => import(/* webpackChunkName: "designArticle" */'./layouts/designArticle'), 'design-article-layout');
+registerComponent('SearchResults', () => import(/* webpackChunkName: "searchResults" */'./layouts/search-results/searchResults'), 'search-results-layout');
+registerComponent('ContestRules', () => import(/* webpackChunkName: "contestRules" */'./layouts/contestRules'), 'contest-rules-layout');
+registerComponent('FormComponent', () => import(/* webpackChunkName: "formComponent" */'./layouts/formComponent'), 'form-component-layout');
+registerComponent('SocialComponent', () => import(/* webpackChunkName: "socialComponent" */'./layouts/socialComponent'),'social-component-layout');
 
 
 let possibleTenant = document.location.pathname.split('/')[1];
@@ -63,14 +68,13 @@ console.log("SPA framework: React");
 
 document.title = 'Oslo';
 
+loadSite();
+
 ReactDOM.render(
 	<Router basename={baseUrl} >
 		<div>
-			{/*<Route render={(props) => (<Toolbar {...props} />)} />*/}
-			<Route render={(props) => (<SiteHeader {...props} />)} />
-				<Route exact path='/' render={() => (<Redirect to="/home"/>)} />
-				<Route path='/*' component={WchPage} />
-			<SiteFooter />
+			<Route exact path='/' render={() => (<Redirect to="/home"/>)} />
+			<Route path='/*' component={WchPage} />
 		</div>
 	</Router>,
 	document.getElementById('app')

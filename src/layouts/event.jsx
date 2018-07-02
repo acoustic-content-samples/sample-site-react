@@ -3,7 +3,6 @@ Copyright IBM Corporation 2017.
 LICENSE: Apache License, Version 2.0
 */
 import React from 'react';
-import {loadContent, getContent, subscribe} from 'wch-flux-sdk';
 import 'styles/layouts/event.scss';
 
 export class Event extends React.Component {
@@ -11,60 +10,26 @@ export class Event extends React.Component {
         super(props);
 
         this.state = {
-            contentData: {},
-            eventId: 'event-'
+            eventId: 'event-' + Date.now() + '-' + this.props.contentId
         };
 
-        this.sub = subscribe('content', () => {
-            let content = getContent(this.props.contentId);
-            if (content) {
-                this.setState({
-                    contentData: content
-                });
-            }
-        });
-    }
-
-    componentWillMount() {
-        // this.state.eventId = `event-${this.state.contentData.id}`;
-        let content = getContent(this.props.contentId);
-        if (content) {
-            this.setState({
-                contentData: content,
-                eventId: 'event-' + Date.now() + '-' + content.id
-            });
-        } else {
-            loadContent(this.props.contentId);
-        }
     }
 
     componentDidMount() {
         $(`#${this.state.eventId}`).foundation();
     }
 
-    shouldComponentUpdate(nextProps, nextState) {
-        let currentModified = new Date(this.state.contentData.lastModified);
-        let newModified = new Date(nextState.contentData.lastModified);
+	componentDidUpdate(){
+		//component was update so update the foundation plugin
+		$(`#${this.state.eventId}`).foundation();
+	}
 
-        return (currentModified.getTime() !== newModified.getTime());
-    }
 
-    componentWillReceiveProps (nextProps) {
-        if (nextProps.contentId !== this.props.contentId) {
-            let content = getContent(nextProps.contentId);
-            if (content) {
-                this.setState({contentData: content});
-            } else {
-                loadContent(nextProps.contentId);
-            }
-        }
-    }
 
     componentWillUnmount() {
         let signupModal = $(`#${this.state.eventId}`);
         signupModal.foundation('_destroy');
         signupModal.remove();
-        this.sub.unsubscribe();
     }
 
     render() {
@@ -76,52 +41,55 @@ export class Event extends React.Component {
         let eventDetails = '';
         let contentId = '';
 
-        if (this.state.contentData.elements) {
-            contentId = this.state.contentData.id;
-            eventTitle = this.state.contentData.elements.heading.value;
-            eventDate = new Date(this.state.contentData.elements.date.value).toDateString();
-            eventLocation = this.state.contentData.elements.eventLocation.value;
-            eventDescription = this.state.contentData.elements.body.value;
-            eventDetails = this.state.contentData.elements.eventDetails.value;
-        }
+        if (this.props.renderingContext) {
+			contentId = this.props.renderingContext.id;
+			eventTitle = this.props.renderingContext.elements.heading.value;
+			eventDate = new Date(this.props.renderingContext.elements.date.value).toDateString();
+			eventLocation = this.props.renderingContext.elements.eventLocation.value;
+			eventDescription = this.props.renderingContext.elements.body.value;
+			eventDetails = this.props.renderingContext.elements.eventDetails.value;
 
-        function eventDetailsHTML() {
-            return {__html: eventDetails}
-        }
 
-        function eventDescriptionHTML() {
-            return {__html: eventDescription}
-        }
+			function eventDetailsHTML() {
+				return {__html: eventDetails}
+			}
 
-        function eventLocationHTML() {
-            return {__html: eventLocation}
-        }
+			function eventDescriptionHTML() {
+				return {__html: eventDescription}
+			}
 
-        return (
-            <div id={contentId}>
-                <div className="reveal" id={this.state.eventId} data-reveal={""}>
-                    <h2 className="event-popup-title" id="popup-title">{eventTitle}</h2>
-                    <p className="event-popup-description" id="popup-description"><span
-                        dangerouslySetInnerHTML={eventDetailsHTML()}/></p>
-                    <p>Location:
-                        <span dangerouslySetInnerHTML={eventLocationHTML()}></span>
-                    </p>
-                    <button className="close-button" data-close={""} type="button" aria-label="Close modal">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
+			function eventLocationHTML() {
+				return {__html: eventLocation}
+			}
 
-                <section>
-                    <div className="event">
-                        <div className="event-content">
-                            <time className="event-date text-content" dateTime={eventDate}>{eventDate}</time>
-                            <h5 className="event-title text-header">{eventTitle}</h5>
-                            <p className="event-description text-content"><span
-                                dangerouslySetInnerHTML={eventDescriptionHTML()}/></p>
-                            <a className="button" data-open={this.state.eventId}>Details</a>
-                        </div>
+			return (
+                <div data-renderingcontext-id={this.props.renderingContext.id} id={contentId}>
+                    <div className="reveal" id={this.state.eventId} data-reveal={""}>
+                        <h2 data-wch-inline-edit="elements.heading.value" className="event-popup-title" id="popup-title">{eventTitle}</h2>
+                        <p className="event-popup-description" id="popup-description">
+                            <div data-wch-inline-edit="elements.eventDetails.value" dangerouslySetInnerHTML={eventDetailsHTML()}/></p>
+                        <p>Location:
+                            <div data-wch-inline-edit="elements.eventLocation.value" dangerouslySetInnerHTML={eventLocationHTML()}/>
+                        </p>
+                        <button className="close-button" data-close={""} type="button" aria-label="Close modal">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                     </div>
-                </section>
-            </div>)
+
+                    <section>
+                        <div className="event">
+                            <div className="event-content">
+                                <time data-wch-inline-edit="elements.date.value" className="event-date text-content" dateTime={eventDate}>{eventDate}</time>
+                                <h5 data-wch-inline-edit="elements.heading.value" className="event-title text-header">{eventTitle}</h5>
+                                <p className="event-description text-content">
+                                    <div data-wch-inline-edit="elements.body.value" dangerouslySetInnerHTML={eventDescriptionHTML()}/></p>
+                                <a className="button" data-open={this.state.eventId}>Details</a>
+                            </div>
+                        </div>
+                    </section>
+                </div>)
+		} else {
+            return <div></div>
+        }
     }
 }

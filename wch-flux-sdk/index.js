@@ -7,7 +7,7 @@ let
 	host = window.location.hostname,
 	tenant = window.location.pathname.split('/')[1],
 	protocol = window.location.protocol,
-	inPreview = (host.includes('-preview') && host.includes('.ibm.com')) ? true : false;
+    inPreview = (host.includes('-preview') && host.includes('.ibm.com')) ||  getQueryVariable('x-ibm-x-preview') === 'true';
 
 window.WchSdk = {};
 
@@ -32,9 +32,13 @@ function receiveMessage (event) {
 	if (event.data.type !== 'WchSdk.router.activeRoute.subscribe') {
 		console.info('wch-flux-sdk', event.data);
 	}
-	switch (event.data.type) {
+
+	const action = event.data.type || event.data.action;
+
+	switch (action) {
 		case "WchSdk.refresh": {
 			let flag = true;
+			/*
 			Object.keys(WchStore.content).forEach(key => {
 				if(WchStore.content[key].hasOwnProperty('draftId') && WchStore.content[key].draftId === event.data.id){
 				flag = false;
@@ -48,6 +52,14 @@ function receiveMessage (event) {
 				// }
 				loadSite('default', true);
 			}
+			*/
+			if(event.data.id) {
+				//TODO should not need to the draft status here
+				const id = event.data.id.split(':')[0];
+				loadContent(id, true);
+			} else {
+				loadSite('default', true);
+			}
 			break;
 		}
 		case "WchSdk.router.navigateByPath":
@@ -56,16 +68,38 @@ function receiveMessage (event) {
 		case 'WchSdk.router.activeRoute.subscribe':
 			window.parent.postMessage({type: 'WchSdk.router.activeRoute.subscribeResponse'}, event.origin);
 			break;
+		case "inlineedit.pageChanged":
+			loadSite('default', true);
+			break;
 		default:
 			console.info('wch-flux-sdk: Unhandled event', event.data.type);
 			break;
 	}
 }
 
+export function isPreview() {
+	return inPreview;
+}
+
+export function changeNavEvent(pageId) {
+	window.parent.postMessage(
+		{type: 'WchSdk.router.activeRoute',
+			page: getPage(pageId)
+		}, '*');
+}
+
 export function configWCH (hostname=window.location.hostname, tenantId=window.location.pathname.split('/')[1]) {
-	host = hostname;
-	tenant = tenantId;
-	inPreview = (host.match(/-preview\.ibm\.com/)) ? true : false;
+	if (process.env.NODE_ENV !== "production") {
+		host = hostname;
+		tenant = tenantId;
+        inPreview = (host.includes('-preview') && host.includes('.ibm.com')) ||  getQueryVariable('x-ibm-x-preview') === 'true';
+	}
+}
+
+export function configExternalSPA(hostname, tenantId) {
+	const indicator = hostname.includes('-stage') ? '-': '.';
+    tenant = tenantId;
+    host = inPreview ? hostname.substring(0, hostname.indexOf(indicator)) + '-preview' + hostname.substring(hostname.indexOf(indicator)) : hostname;
 }
 
 export function getHost () {    
@@ -116,6 +150,8 @@ subscribe('content', () => localStorage.setItem('WchStore.site', JSON.stringify(
 export function updateContent(content) {
 	WchStore.content = Object.assign({}, WchStore.content, {[content.id]: content});
 	subscriptions.content.forEach(sub => sub('update-content', content));
+
+
 }
 
 export function createDraftImageUrl(image, rendition) {
@@ -135,11 +171,10 @@ export function loadContent (id, force=false, onError) {
 		return;
 	}
 
+
 	// let contentApi = (inPreview) ? 'delivery/v1/rendering/context' : 'delivery/v1/content';
 	if (!contentPromises[id] || force) {
-		contentPromises[id] = fetch(`${protocol}//${host}/api/${tenant}/delivery/v1/rendering/context/${id}`, {
-			credentials: 'include'
-		}).then(res => {
+		contentPromises[id] = fetch(`${protocol}//${host}/api/${tenant}/delivery/v1/rendering/context/${id}`, getRequestHeaders()).then(res => {
 			if (!res.ok && onError) {
 				onError(res.status, res.statusText);
 			}
@@ -149,6 +184,8 @@ export function loadContent (id, force=false, onError) {
 
 	contentPromises[id].then(content => {
 		for (let element in content.elements) {
+
+			/*
 			if (content.elements[element].elementType === 'reference' && content.elements[element].value) {
 				if (!content.elements[element].value.classification) {
 					break;
@@ -158,56 +195,33 @@ export function loadContent (id, force=false, onError) {
 				contentPromises[c.id] = Promise.resolve(c);
 				loadContent(c.id);
 			}
-		}
-
-		WchStore.content = Object.assign({}, WchStore.content, {[id]: content});
-		subscriptions.content.forEach(sub => sub('load-content', content));
-	});
-}
-
-export function loadContentDraft (id, force=false, onError) {
-	if (!force && contentPromises[id] && WchStore.content[id] || !id) {
-		return;
-	}
-
-	// let contentApi = (inPreview) ? 'delivery/v1/rendering/context' : 'delivery/v1/content';
-
-	if (!contentPromises[id] || force) {
-		contentPromises[id] = fetch(`${protocol}//${host}/api/${tenant}/delivery/v1/rendering/context/${id}`, {
-				credentials: 'include'
-			}).then(res => {
-				if (!res.ok && onError) {
-			onError(res.status, res.statusText);
-		}
-		return res.json();
-	});
-	}
-
-	contentPromises[id].then(content => {
-				for (let element in content.elements) {
-			if (content.elements[element].elementType === 'reference' && content.elements[element].value) {
-				if (!content.elements[element].value.classification) {
-					break;
+			*/
+			let values = _getReferenceValues(content, element);
+			values.forEach((value) => {
+				if (value && value.classification) {
+					const c = Object.assign({}, value);
+					contentPromises[c.id] = Promise.resolve(c);
+					loadContent(c.id, force);
 				}
-
-				const c = Object.assign({}, content.elements[element].value);
-				contentPromises[c.id] = Promise.resolve(c);
-				loadContent(c.id);
-			}
+			})
 		}
-		if(content.hasOwnProperty('kind') && content.kind[0] === 'page') {
-		loadSite('default', true);
-		return 'page';
+
+		if(!content.errors) {
+			WchStore.content = Object.assign({}, WchStore.content, {[id]: content});
+			subscriptions.content.forEach(sub => sub('load-content', content));
+		}
+	});
+}
+
+function _getReferenceValues(content, element) {
+	if(content.elements[element].elementType === 'reference') {
+		let values = content.elements[element].values || [content.elements[element].value];
+		return values;
 	}
 
-	// content.id = content.linkedDocId;
-	// let temp = {};
-	// $.extend(true, temp, WchStore.content[content.id], content);
-	// WchStore.content[content.id] = temp;
-	WchStore.content = Object.assign({}, WchStore.content, {[id]: content});
-	subscriptions.content.forEach(sub => sub('load-content', content));
-});
+	return [];
 }
+
 
 export function getContent (id) {
 	return WchStore.content[id];
@@ -232,8 +246,7 @@ export function loadSite (siteName='default', force=false) {
 	}
 
 	if (!sitePromise || force) {
-		sitePromise = fetch(`${protocol}//${host}/api/${tenant}/delivery/v1/rendering/sites/${siteName}`,
-				{credentials: 'include'}).then(res => res.json());
+		sitePromise = fetch(`${protocol}//${host}/api/${tenant}/delivery/v1/rendering/sites/${siteName}`, getRequestHeaders()).then(res => res.json());
 	}
 
 	sitePromise.then(site => {
@@ -249,8 +262,16 @@ export function getSite () {
 	return WchStore.site;
 }
 
+
+
 export function getRoute (route) {
 	return WchStore.routes[route];
+}
+
+export function getPage (contentId) {
+	return getSite().pages.find((page) => {
+		return page.contentId === contentId;
+	})
 }
 
 export function getRouteForContentId (id) {
@@ -261,9 +282,14 @@ export function getQueryString (type, rows) {
 	return `q=type:%22${type}%22&fq=classification:(content)&fq=isManaged:(%22true%22)&sort=lastModified desc&fl=document:%5Bjson%5D,lastModified&rows=${rows}`;
 }
 
+export function getAPIUrl() {
+	return `${protocol}//${host}/api/${tenant}/delivery/v1/`;
+}
+
 export function queryContent (type, rows) {
+
 	let searchQuery = getQueryString(type, rows);
-	fetch(`${protocol}//${host}/api/${tenant}/delivery/v1/search?${searchQuery}`, {credentials: 'include'}).then(res => {
+	fetch(`${protocol}//${host}/api/${tenant}/delivery/v1/rendering/search?${searchQuery}`, getRequestHeaders()).then(res => {
 		res.json().then(results => {
 			if (results.numFound > 0) {
 				results.documents.map(item => item.document).forEach(item => {
@@ -309,9 +335,9 @@ export function getVideoUrl (video) {
 }
 
 export function getFirstCategory (element, defaultValue='medium') {
-	if(element.categories) {
-		return element.categories[0].split('/').pop().toLowerCase();
-	}
+    if(element.categories) {
+        return element.categories[0].split('/').pop().toLowerCase();
+    }
 
 	return defaultValue;
 }
@@ -355,4 +381,19 @@ function sortGeneric(a, b){
 		return 1;
 	}
 	return 0;
+}
+
+function getRequestHeaders() {
+    return  inPreview ? { credentials: 'include'} : {};
+}
+
+function getQueryVariable(variable)
+{
+    const query = window.location.search.substring(1);
+    const vars = query.split("&");
+    for (let i=0;i<vars.length;i++) {
+        const pair = vars[i].split("=");
+        if(pair[0] === variable){return pair[1];}
+    }
+    return(false);
 }
