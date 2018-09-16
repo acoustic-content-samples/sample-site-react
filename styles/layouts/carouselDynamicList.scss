@@ -13,9 +13,9 @@
 $slick-arrow-color: white !default;
 $slick-dot-color: black !default;
 $slick-dot-color-active: $slick-dot-color !default;
-$slick-prev-character: "\2190" !default;
-$slick-next-character: "\2192" !default;
-$slick-dot-character: "\2022" !default;
+$slick-prev-character: '\2190' !default;
+$slick-next-character: '\2192' !default;
+$slick-dot-character: '\2022' !default;
 $slick-dot-size: 6px !default;
 $slick-opacity-default: 0.75 !default;
 $slick-opacity-on-hover: 1 !default;
@@ -49,7 +49,8 @@ $slick-opacity-not-active: 0.25 !default;
 	padding: 0;
 	border: none;
 	outline: none;
-	&:hover, &:focus {
+	&:hover,
+	&:focus {
 		outline: none;
 		background: transparent;
 		color: transparent;
@@ -73,13 +74,13 @@ $slick-opacity-not-active: 0.25 !default;
 
 .slick-prev {
 	left: -25px;
-	[dir="rtl"] & {
+	[dir='rtl'] & {
 		left: auto;
 		right: -25px;
 	}
 	&:before {
 		content: $slick-prev-character;
-		[dir="rtl"] & {
+		[dir='rtl'] & {
 			content: $slick-next-character;
 		}
 	}
@@ -87,13 +88,13 @@ $slick-opacity-not-active: 0.25 !default;
 
 .slick-next {
 	right: -25px;
-	[dir="rtl"] & {
+	[dir='rtl'] & {
 		left: -25px;
 		right: auto;
 	}
 	&:before {
 		content: $slick-next-character;
-		[dir="rtl"] & {
+		[dir='rtl'] & {
 			content: $slick-prev-character;
 		}
 	}
@@ -134,7 +135,8 @@ $slick-opacity-not-active: 0.25 !default;
 			color: transparent;
 			padding: 5px;
 			cursor: pointer;
-			&:hover, &:focus {
+			&:hover,
+			&:focus {
 				outline: none;
 				&:before {
 					opacity: $slick-opacity-on-hover;
@@ -164,7 +166,6 @@ $slick-opacity-not-active: 0.25 !default;
 	}
 }
 
-
 /* Slick override */
 
 .slick-dots {
@@ -173,9 +174,9 @@ $slick-opacity-not-active: 0.25 !default;
 
 .slick-dots li button:before {
 	font-size: 40px;
-
 }
-.slick-dots li.slick-active button:before, .slick-dots li button:before {
+.slick-dots li.slick-active button:before,
+.slick-dots li button:before {
 	color: white;
 }
 
@@ -190,36 +191,40 @@ $slick-opacity-not-active: 0.25 !default;
 .carousel {
 	overflow-x: hidden;
 
-	.slick-next, .slick-prev {
+	.slick-next,
+	.slick-prev {
 		position: absolute;
 		width: 45px;
 		height: 50%;
 	}
 
-	.slick-prev:before, .slick-next:before {
+	.slick-prev:before,
+	.slick-next:before {
 		content: none;
 	}
 
 	.slick-next {
-		background: rgba(255, 255, 255, .80) url('images/slideshow-move-right.svg') no-repeat 50% 50%;
+		background: rgba(255, 255, 255, 0.8)
+			url('images/slideshow-move-right.svg') no-repeat 50% 50%;
 		background-size: 40% auto;
 		right: 0;
 	}
 
 	.slick-prev {
-		background: rgba(255, 255, 255, .80) url('images/slideshow-move-left.svg') no-repeat 50% 50%;
+		background: rgba(255, 255, 255, 0.8)
+			url('images/slideshow-move-left.svg') no-repeat 50% 50%;
 		background-size: 40% auto;
 		left: 0;
 		z-index: 1;
 	}
 
 	.slick-next:hover {
-		transition: all .3s ease-in-out;
+		transition: all 0.3s ease-in-out;
 		background-color: #fff;
 	}
 
 	.slick-prev:hover {
-		transition: all .3s ease-in-out;
+		transition: all 0.3s ease-in-out;
 		background-color: #fff;
 	}
 
@@ -230,21 +235,20 @@ $slick-opacity-not-active: 0.25 !default;
 
 /* General */
 
-
 .carousel .button {
-	margin-top:3%;
-	background:#fff;
-	color:#222;
-	transition: all .3s ease-in;
+	margin-top: 3%;
+	background: #fff;
+	color: #222;
+	transition: all 0.3s ease-in;
 }
-@media (min-width:1024px) {
+@media (min-width: 1024px) {
 	.carousel .button {
-		margin-top:64px;
+		margin-top: 64px;
 	}
 }
 .carousel {
 	div:focus {
-		outline:none;
+		outline: none;
 	}
 	.button:hover {
 		background: #eaeaea;
@@ -255,6 +259,3 @@ $slick-opacity-not-active: 0.25 !default;
 .query-carousel h3 {
 	text-align: center;
 }
-
-
-

@@ -133,18 +133,19 @@ export function subscribe (to, callback) {
 	};
 }
 
-// load the store from localhost
-const localContent = JSON.parse(localStorage.getItem('WchStore.content'));
-if (localContent) {
-	WchStore.content = localContent;
-}
-const localSite = JSON.parse(localStorage.getItem('WchStore.site'));
-if (localContent) {
-	WchStore.site = localSite;
-}
-// subscribe to store so we can save changes
-subscribe('content', () => localStorage.setItem('WchStore.content', JSON.stringify(WchStore.content)));
-subscribe('content', () => localStorage.setItem('WchStore.site', JSON.stringify(WchStore.site)));
+/* Comment out localstorage due to content refresh issues */
+// // load the store from localhost
+// const localContent = JSON.parse(localStorage.getItem('WchStore.content'));
+// if (localContent) {
+// 	WchStore.content = localContent;
+// }
+// const localSite = JSON.parse(localStorage.getItem('WchStore.site'));
+// if (localContent) {
+// 	WchStore.site = localSite;
+// }
+// // subscribe to store so we can save changes
+// subscribe('content', () => { try { localStorage.setItem('WchStore.content', JSON.stringify(WchStore.content)) } catch(e) { console.warn(`Cannot set content in localstorage: ${e.message}`) } });
+// subscribe('content', () => { try { localStorage.setItem('WchStore.site', JSON.stringify(WchStore.site)) } catch(e) { console.warn(`Cannot set content in localstorage: ${e.message}`) } });
 
 
 export function updateContent(content) {
@@ -313,18 +314,22 @@ export function getQuery (queryString) {
 	return WchStore.queries[queryString];
 }
 
-export function getImageUrl (image, rendition='default', status='ready') {
+export function getImageUrl (image, rendition='default') {
 
-	if (image) {
-		let url = image.renditions.default.url;
+  if (image && image.renditions) {
+    let url = image.renditions.default.url;
+    if (image.renditions[rendition]) {
+      url = image.renditions[rendition].url;
+    }
+    return `${protocol}//${host}${url}`;
+  }
 
-		if (image.renditions[rendition]) {
-			url = image.renditions[rendition].url;
-		}
+  if (image && image.url) {
+    let url = image.url;
+    return `${protocol}//${host}${url}`;
+  }
 
-		return `${protocol}//${host}${url}`;
-	}
-	return '';
+  return '';
 }
 
 export function getVideoUrl (video) {
@@ -332,6 +337,13 @@ export function getVideoUrl (video) {
 		return `${protocol}//${host}${video.url}`;
 	}
 	return '';
+}
+
+export function getFileUrl (file) {
+  if (file) {
+    return `${protocol}//${host}${file.url}`;
+  }
+  return '';
 }
 
 export function getFirstCategory (element, defaultValue='medium') {

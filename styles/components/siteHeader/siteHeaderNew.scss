@@ -10,77 +10,75 @@ $logo-width-medium: 170px;
 $logo-width-small: 85px;
 $logo-height-medium: 80px;
 
-
 .wch-responsive-menu {
+	header {
+		border-bottom: 1px solid $header-border-bottom-color;
+	}
 
-  header {
-    border-bottom: 1px solid $header-border-bottom-color;
-  }
+	.title-bar .logo-container {
+		margin: auto;
+		position: relative;
+		left: -12px;
+	}
 
-  .title-bar .logo-container {
-    margin: auto;
-    position: relative;
-    left: -12px;
-  }
+	.logo-container {
+		width: $logo-width-small;
+	}
 
-  .logo-container {
-    width: $logo-width-small;
-  }
+	.logo {
+		height: 0;
+		padding-top: $logo-height-medium/$logo-width-medium * 100%;
+		overflow: hidden;
+		background-size: 100%;
+		background-repeat: no-repeat;
+		margin: 0;
+	}
 
-  .logo {
-    height: 0;
-    padding-top: $logo-height-medium/$logo-width-medium*100%;
-    overflow: hidden;
-    background-size: 100%;
-    background-repeat: no-repeat;
-    margin: 0;
-  }
+	.searchBox {
+		height: 54px;
+		width: 340px;
+		margin-left: 26px;
+	}
 
-  .searchBox {
-    height: 54px;
-    width: 340px;
-    margin-left: 26px;
-  }
+	.limit-page-name {
+		text-overflow: ellipsis;
+		max-width: 300px;
+		overflow: hidden;
+		white-space: nowrap;
+		display: block;
+	}
 
-  .limit-page-name {
-    text-overflow: ellipsis;
-    max-width: 300px;
-    overflow: hidden;
-    white-space: nowrap;
-    display: block;
-  }
+	/* classes for the hamburger nav */
+	#wch-nav-menu {
+		display: none;
+	}
 
-  /* classes for the hamburger nav */
-  #wch-nav-menu {
-    display: none;
-  }
+	#wch-nav-menu.mobileNav {
+		display: flex;
+	}
 
-  #wch-nav-menu.mobileNav {
-    display: flex;
-  }
+	.wch-menu,
+	.wch-sub-menu {
+		margin: 0;
+		padding: 0;
+	}
 
-  .wch-menu,
-  .wch-sub-menu {
-    margin: 0;
-    padding: 0;
-  }
+	// Quick border settings
+	.wch-menu-item,
+	.wch-sub-menu {
+		border: 0 solid;
+	}
 
-  // Quick border settings
-  .wch-menu-item,
-  .wch-sub-menu {
-    border: 0 solid;
-  }
-
-  /* show search box while using mobile navigation */
-  .menu-container > .wch-menu {
-    //margin-top: 54px;
-  }
+	/* show search box while using mobile navigation */
+	.menu-container > .wch-menu {
+		//margin-top: 54px;
+	}
 }
 
 @media screen and (min-width: 40em) {
-  .wch-responsive-menu {
-    .logo-container {
-      width: 170px;
-    }
-  }
+	.wch-responsive-menu {
+		.logo-container {
+			width: 170px;
+		}
+	}
 }

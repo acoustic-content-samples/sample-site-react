@@ -1,0 +1,21 @@
+{
+	"parser": "babel-eslint",
+	"parserOptions": {
+		"ecmaVersion": 2018,
+		"sourceType": "module",
+		"ecmaFeatures": {
+			"jsx": true
+		}
+	},
+	"env": {
+		"browser": true,
+		"node": true,
+		"jquery": true
+	},
+
+	"rules": {
+		"space-before-function-paren": "warn"
+	},
+
+	"settings": {}
+}

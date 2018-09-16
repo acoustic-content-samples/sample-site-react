@@ -15,20 +15,22 @@ export class WchContent extends Component {
 
 		this.sub = subscribe('content', (action, content) => {
 			if(content && content.id === this.props.contentId) {
-				this.setLayout(content, this.props.contentId)
+				this.setLayout(content, this.props.contentId, this.props.layoutId)
 			}
 		});
 	}
 
-	setLayout (content, id) {
+	setLayout (content, id, layoutId = null) {
 		//let content = getContent(this.props.contentId);
 		if (content) {
 			//let name = (content.selectedLayouts) ? content.selectedLayouts[0].layout.id.replace('-layout','') : content.type.toLowerCase().replace(' ', '-');
-			let layout = '';
-			if(content.selectedLayouts) {
-				layout = content.selectedLayouts[0].layout.id;
-			} else {
-				layout = content.layouts.default.template;
+			let layout = layoutId || '';
+			if(!layout) {
+				if(content.selectedLayouts) {
+					layout = content.selectedLayouts[0].layout.id;
+				} else {
+					layout = content.layouts.default.template;
+				}
 			}
 
 			let component = ComponentRegistryByLayout[layout];
@@ -51,12 +53,12 @@ export class WchContent extends Component {
 	}
 
 	componentWillReceiveProps(nextProp) {
-		this.setLayout(getContent(nextProp.contentId), nextProp.contentId);
+		this.setLayout(getContent(nextProp.contentId), nextProp.contentId, nextProp.layoutId);
 	}
 
 
 	componentWillMount () {
-		this.setLayout(getContent(this.props.contentId), this.props.contentId);
+		this.setLayout(getContent(this.props.contentId), this.props.contentId, this.props.layoutId);
 	}
 
 

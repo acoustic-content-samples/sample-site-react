@@ -1,57 +1,80 @@
 {
-  "name": "sample-site-react",
-  "version": "1.0.0",
-  "description": "sample-site-react ==============",
-  "main": "index.js",
-  "scripts": {
-    "build": "NODE_ENV=production webpack --config ./webpack.config.js --progress",
-    "start": "NODE_ENV=development webpack-dev-server --port=4202",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "deploy": "wchtools push -A -v -f --dir dist",
-    "build-deploy": "npm run build && npm run deploy"
-  },
-  "author": "",
-  "repository": {
-    "type": "git",
-    "url": "git@github.ibm.com:DX/sample-site-react.git"
-  },
-  "license": "MIT",
-  "dependencies": {
-    "babel-polyfill": "^6.26.0",
-    "foundation-sites": "^6.4.4-rc1",
-    "ibm-wch-sdk-api": "^5.0.325",
-    "ibm-wch-sdk-edit-api": "^5.0.325",
-    "jquery": "^3.3.1",
-    "prop-types": "^15.6.0",
-    "react": "^16.4.0",
-    "react-dom": "^16.4.0",
-    "react-router-dom": "^4.2.2",
-    "react-slick": "^0.15.4",
-    "remove": "^0.1.5",
-    "rxjs": "^5.5.10"
-  },
-  "devDependencies": {
-    "babel-core": "^6.26.0",
-    "babel-loader": "^7.1.2",
-    "babel-minify-webpack-plugin": "^0.2.0",
-    "babel-plugin-syntax-dynamic-import": "^6.18.0",
-    "babel-plugin-transform-object-rest-spread": "^6.26.0",
-    "babel-preset-env": "^1.6.1",
-    "babel-preset-react": "^6.24.1",
-    "css-loader": "^0.28.5",
-    "extract-text-webpack-plugin": "^3.0.2",
-    "file-loader": "^1.1.5",
-    "html-webpack-plugin": "^2.30.1",
-    "lucene-escape-query": "^1.0.1",
-    "lucene-query-string-builder": "0.0.2",
-    "node-sass": "^4.5.3",
-    "sass-loader": "^6.0.6",
-    "script-loader": "^0.7.0",
-    "style-loader": "^0.19.0",
-    "svg-loader": "^0.0.2",
-    "svg-sprite-loader": "^3.4.1",
-    "url-loader": "^0.6.2",
-    "webpack": "^3.8.1",
-    "webpack-dev-server": "^2.9.4"
-  }
+	"name": "sample-site-react",
+	"version": "1.0.0",
+	"description": "sample-site-react ==============",
+	"main": "index.js",
+	"scripts": {
+		"build": "NODE_ENV=production webpack --config ./webpack.config.js --progress",
+		"start": "NODE_ENV=development webpack-dev-server --port=4202",
+		"start-dev-tools": "node node_modules/wch-site-developer-tools/server/main.js",
+		"test": "echo \"WARNING: no test specified\" && exit 0",
+		"deploy": "wchtools push -tlmIv --dir src/wchLayouts && wchtools push -A -v -f --dir dist",
+		"build-deploy": "npm run build && npm run deploy",
+		"create-layout": "echo Pulling the content types. Enter the user password for your WCH tenant: && wchtools pull -tlmIv --dir src/wchLayouts && echo Creating the layout, layout mapping, and the react component template. && ibm-wch-sdk-cli create layout --data src/wchLayouts --scss --react --src ."
+	},
+	"author": "",
+	"repository": {
+		"type": "git",
+		"url": "git@github.ibm.com:DX/sample-site-react.git"
+	},
+	"license": "MIT",
+	"dependencies": {
+		"babel-polyfill": "^6.26.0",
+		"dom-to-image": "^2.6.0",
+		"file-saver": "^1.3.8",
+		"foundation-sites": "^6.4.4-rc1",
+		"ibm-wch-sdk-api": "^5.0.325",
+		"ibm-wch-sdk-edit-api": "^5.0.325",
+		"jquery": "^3.3.1",
+		"prop-types": "^15.6.0",
+		"react": "^16.4.0",
+		"react-dom": "^16.4.0",
+		"react-router-dom": "^4.2.2",
+		"react-slick": "^0.15.4",
+		"remove": "^0.1.5",
+		"rxjs": "^6.2.1",
+		"rxjs-compat": "^6.2.1"
+	},
+	"devDependencies": {
+		"@ibm-wch-sdk/cli": "6.0.383",
+		"@ibm-wch/cli-create-layout-react-vue":"^1.0.14",
+		"babel-core": "^6.26.0",
+		"babel-eslint": "^9.0.0",
+		"babel-loader": "^7.1.2",
+		"babel-minify-webpack-plugin": "^0.2.0",
+		"babel-plugin-syntax-dynamic-import": "^6.18.0",
+		"babel-plugin-transform-object-rest-spread": "^6.26.0",
+		"babel-preset-env": "^1.6.1",
+		"babel-preset-react": "^6.24.1",
+		"css-loader": "^0.28.5",
+		"extract-text-webpack-plugin": "^3.0.2",
+		"file-loader": "^1.1.5",
+		"html-webpack-plugin": "^2.30.1",
+		"husky": "^1.0.0-rc.14",
+		"lint-staged": "^7.2.2",
+		"lucene-escape-query": "^1.0.1",
+		"lucene-query-string-builder": "0.0.2",
+		"node-sass": "^4.5.3",
+		"prettier": "1.14.2",
+		"sass-loader": "^6.0.6",
+		"script-loader": "^0.7.0",
+		"style-loader": "^0.19.0",
+		"svg-loader": "^0.0.2",
+		"svg-sprite-loader": "^3.4.1",
+		"url-loader": "^0.6.2",
+		"wch-site-developer-tools": "latest",
+		"webpack": "^3.8.1",
+		"webpack-dev-server": "^2.9.4"
+	},
+	"lint-staged": {
+		"*.{js,jsx}": [
+			"prettier --write",
+			"eslint --fix",
+			"git add"
+		],
+		"*.{ts,json,css,md}": [
+			"prettier --write",
+			"git add"
+		]
+	}
 }

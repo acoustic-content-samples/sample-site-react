@@ -16,9 +16,9 @@ $logo-height-medium: 80px;
 
 .logo {
 	height: 0;
-	padding-top: $logo-height-medium/$logo-width-medium*100%;
+	padding-top: $logo-height-medium/$logo-width-medium * 100%;
 	overflow: hidden;
-	background-size:100%;
+	background-size: 100%;
 	background-repeat: no-repeat;
 	margin: 0;
 }

@@ -1,15 +1,15 @@
 .share-buttons {
-	display:flex;
-	align-items:flex-start;
+	display: flex;
+	align-items: flex-start;
 }
 @media (min-width: 768px) {
 	.share-buttons {
-		float:right;
+		float: right;
 	}
 }
 .fb-share-button,
 .twitter-share-button {
-	margin-right:10px;
+	margin-right: 10px;
 }
 
 .twitter iframe {

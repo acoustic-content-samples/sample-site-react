@@ -25,7 +25,7 @@ when dropping components into a page. */
 .section {
 	padding-top: 30px;
 	padding-bottom: 30px;
-	transition: all .3s ease-in-out;
+	transition: all 0.3s ease-in-out;
 
 	&:first-of-type {
 		padding-top: 35px;
@@ -66,7 +66,7 @@ ul {
 	}
 }
 
-@include breakpoint (large) {
+@include breakpoint(large) {
 	.section {
 		padding-top: 60px;
 		padding-bottom: 60px;
@@ -85,7 +85,6 @@ ul {
 		padding-top:112px;
 	}
 }*/
-
 
 /*.grid-container {
 	max-width:1800px;
@@ -106,7 +105,7 @@ h3,
 h4,
 h5,
 h6 {
-	width:100%; /* Prevent headers from shrinking to fit their content when contained
+	width: 100%; /* Prevent headers from shrinking to fit their content when contained
 	inside a flexbox */
 }
 
@@ -119,118 +118,117 @@ h3,
 .text-section {
 	font-size: 1.875rem; /*30px*/
 	font-family: 'Vidaloka', georgia, 'Times New Roman', serif;
-	margin-bottom:3.125rem;
+	margin-bottom: 3.125rem;
 }
 .feature h3,
 .feature .text-section {
-	margin-bottom:2.1875rem;
+	margin-bottom: 2.1875rem;
 }
 h4,
 .text-header {
 	font-size: 1.375rem; /*22px*/
-	font-family: Roboto, "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-	font-weight:500;
+	font-family: Roboto, 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande',
+		sans-serif;
+	font-weight: 500;
 }
 h5,
 .text-content {
 	font-size: 1rem; /*16px*/
-	font-family: Roboto, "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+	font-family: Roboto, 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande',
+		sans-serif;
 }
 h5 {
-	font-weight:600;
-	margin-bottom:20px;
+	font-weight: 600;
+	margin-bottom: 20px;
 }
 body {
-	font-family: Roboto, "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+	font-family: Roboto, 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande',
+		sans-serif;
 }
 .article-lead-image .caption,
 .article-small-image .caption,
 .article-medium-image .caption,
 .article-large-image .caption {
-	font-size:1rem;
-	padding:10px 0;
-	line-height:1.4;
-	color:#9b9b9b;
+	font-size: 1rem;
+	padding: 10px 0;
+	line-height: 1.4;
+	color: #9b9b9b;
 }
-@media (min-width:640px) {
-
+@media (min-width: 640px) {
 	h2,
 	.text-headline {
-	font-size:2.5rem; /*40px*/
+		font-size: 2.5rem; /*40px*/
 	}
 	.text-content {
-	font-size:1.125rem; /*18px*/
+		font-size: 1.125rem; /*18px*/
 	}
 }
 @media (min-width: 1024px) {
-
 }
 
 .view-all {
-	margin-top:30px;
-	text-align:center;
+	margin-top: 30px;
+	text-align: center;
 }
 /*////////////////////// Buttons */
 .button {
-	background:transparent;
-	color:#4a4a4a;
-	border:2px solid #303030;
+	background: transparent;
+	color: #4a4a4a;
+	border: 2px solid #303030;
 	padding: 0.625rem 1.675rem;
 	text-transform: uppercase;
-	font-size:1rem;
-	transition:all .3s ease-in-out;
+	font-size: 1rem;
+	transition: all 0.3s ease-in-out;
 }
 .button:hover,
 .button:focus {
 	background-color: transparent;
-	color:#000;
+	color: #000;
 }
 .button-view-all {
 	padding: 0.625rem 0;
-	width:370px;
-	max-width:100%
+	width: 370px;
+	max-width: 100%;
 }
 .button-dark {
-	background-color:#303030;
-	color:#fff;
-	border:0;
+	background-color: #303030;
+	color: #fff;
+	border: 0;
 }
 .button-dark:hover {
-	background-color:#303030;
-	color:#fff;
+	background-color: #303030;
+	color: #fff;
 }
 .hero-button {
-	background-color:#fff;
-	font-size: .8rem;
-	padding:.75em 1.5em;
-	border:none;
+	background-color: #fff;
+	font-size: 0.8rem;
+	padding: 0.75em 1.5em;
+	border: none;
 }
 .hero-button:hover {
 	background-color: #fff;
 }
 .highlight {
-	 border-style: solid;
-		border-color: #2D74DA;
+	border-style: solid;
+	border-color: #2d74da;
 }
-@media (min-width:640px) {
-
+@media (min-width: 640px) {
 }
-@media (min-width:1024px) {
-
+@media (min-width: 1024px) {
 }
 
 body.is-reveal-open {
 	margin-right: 15px;
 }
 
-input[type="text"],
-input[type="text"]:focus,
-input[type="text"]:active,
+input[type='text'],
+input[type='text']:focus,
+input[type='text']:active,
 textarea,
 textarea:focus,
 textarea:active {
 	all: unset;
-    background: transparent;
-    border: none;
-    width: 100%;
+	background: transparent;
+	border: none;
+	width: 100%;
 }

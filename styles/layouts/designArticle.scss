@@ -1,26 +1,25 @@
 .article-details {
 	margin: 40px 0 30px 0;
 }
-@media (min-width:768px) {
+@media (min-width: 768px) {
 	.article-details {
-	display:flex;
-	justify-content:space-between;
+		display: flex;
+		justify-content: space-between;
 	}
 }
 .byline-and-date {
-	margin-bottom:20px;
-	font-weight:500;
-	text-transform:uppercase;
-	font-feature-settings: "smcp" 1;
-	color:#737373;
+	margin-bottom: 20px;
+	font-weight: 500;
+	text-transform: uppercase;
+	font-feature-settings: 'smcp' 1;
+	color: #737373;
 }
 
 .article-body {
-	font-size:17.5px;
+	font-size: 17.5px;
 }
 .article-body:after {
-	content:" ";
-	display:block;
-	clear:both;
+	content: ' ';
+	display: block;
+	clear: both;
 }
-

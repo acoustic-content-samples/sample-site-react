@@ -1,198 +1,193 @@
 .menu-container > .wch-menu {
-  //margin-top: 54px;
+	//margin-top: 54px;
 }
 
 .menu-container {
-  display: flex;
-  //padding-right: 14%;
+	display: flex;
+	//padding-right: 14%;
 
-  .wch-menu,
-  .wch-sub-menu {
-    margin: 0;
-    padding: 0;
-  }
+	.wch-menu,
+	.wch-sub-menu {
+		margin: 0;
+		padding: 0;
+	}
 
+	.limit-page-name {
+		text-overflow: ellipsis;
+		max-width: 300px;
+		overflow: hidden;
+		white-space: nowrap;
+		display: block;
+	}
 
-  .limit-page-name {
-    text-overflow: ellipsis;
-    max-width:300px;
-    overflow: hidden;
-    white-space: nowrap;
-    display: block;
-  }
+	.wch-menu {
+		margin-top: 0;
+		position: absolute;
+		z-index: 1028;
+		min-width: 80%;
 
-  .wch-menu {
-    margin-top: 0;
-    position: absolute;
-    z-index: 1028;
-    min-width: 80%;
+		display: flex;
+		list-style: none;
+		flex-wrap: wrap;
+		flex-direction: row;
 
-    display: flex;
-    list-style: none;
-    flex-wrap: wrap;
-    flex-direction: row;
+		li {
+			width: 100%;
+		}
 
-    li {
-      width: 100%
-    }
+		li.has-children > a::after {
+			display: block;
+			width: 0;
+			height: 0;
+			border: inset 6px;
+			content: '';
+			border-bottom-width: 0;
+			border-top-style: solid;
+			border-color: #323232 transparent transparent;
+			right: 5px;
+			left: auto;
+			margin-top: -3px;
+			position: absolute;
+			top: 50%;
+		}
 
-    li.has-children > a::after {
-      display: block;
-      width: 0;
-      height: 0;
-      border: inset 6px;
-      content: '';
-      border-bottom-width: 0;
-      border-top-style: solid;
-      border-color: #323232 transparent transparent;
-      right: 5px;
-      left: auto;
-      margin-top: -3px;
-      position: absolute;
-      top: 50%;
-    }
+		li.has-children[aria-expanded='true'] > a::after {
+			//transform: rotate(180deg);
+			//transform-origin: 50% 50%;
+		}
 
-    li.has-children[aria-expanded="true"] > a::after {
-      //transform: rotate(180deg);
-      //transform-origin: 50% 50%;
-    }
+		li.has-children:hover > a::after {
+			transform: rotate(180deg);
+			transform-origin: 50% 50%;
+		}
 
-    li.has-children:hover > a::after{
-      transform: rotate(180deg);
-      transform-origin: 50% 50%;
-    }
+		li.has-children > a::after {
+			//transform: rotate(180deg);
+			//transform-origin: 50% 50%;
+		}
 
-    li.has-children > a::after{
-      //transform: rotate(180deg);
-      //transform-origin: 50% 50%;
-    }
+		li.has-children > a {
+			position: relative;
+			padding-right: 1.5rem;
+		}
 
-    li.has-children > a {
-      position: relative;
-      padding-right: 1.5rem;
+		.wch-sub-menu {
+			position: static;
+			margin-left: 15px;
+			display: none;
+		}
 
-    }
+		.wch-menu-item:hover {
+			.wch-sub-menu {
+				display: block;
+			}
+		}
 
-    .wch-sub-menu {
-      position: static;
-      margin-left: 15px;
-      display: none;
-    }
+		.wch-menu-item {
+			display: block;
 
-    .wch-menu-item:hover {
-      .wch-sub-menu {
-        display: block;
-      }
-    }
+			a.active {
+				color: #000;
+				border-bottom: 1px solid #000000;
+			}
 
-    .wch-menu-item {
-      display: block;
+			a:hover {
+				color: #000;
+			}
 
-      a.active {
-        color: #000;
-        border-bottom: 1px solid #000000;
-      }
+			&.has-children {
+				&,
+				.wch-menu-item {
+					position: relative;
+				}
+			}
 
-      a:hover {
-        color: #000;
-      }
+			a {
+				padding: 0.7rem 1rem;
+				display: block;
+				text-decoration: none;
+				color: #323232;
+				margin-left: 10px;
+				transition: 0.3s color;
+				font-size: 18px;
+				line-height: 30px;
+				font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+				cursor: pointer;
+			}
+		}
+	}
 
-      &.has-children {
-        &, .wch-menu-item {
-          position: relative;
-        }
-      }
-
-      a {
-        padding: 0.7rem 1rem;
-        display: block;
-        text-decoration: none;
-        color: #323232;
-        margin-left: 10px;
-        transition: .3s color;
-        font-size: 18px;
-        line-height: 30px;
-        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-        cursor: pointer;
-
-      }
-    }
-  }
-
-  .wch-menu-item,
-  .wch-sub-menu {
-    border: 0 solid;
-  }
+	.wch-menu-item,
+	.wch-sub-menu {
+		border: 0 solid;
+	}
 }
 
 /* Medium and up */
 @media screen and (min-width: 40em) {
-  .wch-responsive-menu {
-    .logo-container {
-      width: 170px;
-    }
-  }
+	.wch-responsive-menu {
+		.logo-container {
+			width: 170px;
+		}
+	}
 }
 
 /* Large and up */
 @media screen and (min-width: 64em) {
+	.wch-responsive-menu {
+		.logo-container {
+			width: 170px;
+		}
 
-  .wch-responsive-menu {
+		#wch-nav-menu {
+			display: flex;
+		}
 
-    .logo-container {
-      width: 170px;
-    }
+		.searchBox {
+			margin: 10px 0 0 16px;
+		}
 
-    #wch-nav-menu {
-      display: flex;
-    }
+		/* search box moved */
+		.menu-container > .wch-menu {
+			margin-top: 0;
+		}
 
-    .searchBox {
-      margin: 10px 0 0 16px;
-    }
+		.wch-menu {
+			flex-wrap: wrap;
+			flex-direction: row;
+			position: relative;
+			min-width: 67%;
 
-    /* search box moved */
-    .menu-container > .wch-menu {
-      margin-top: 0;
-    }
+			li.wch-menu-item.has-children[aria-expanded='true'] > a::after {
+				transform: rotate(0deg);
+				transform-origin: 50% 50%;
+			}
 
-    .wch-menu {
-      flex-wrap: wrap;
-      flex-direction: row;
-      position: relative;
-      min-width: 67%;
+			li.wch-menu-item.has-children[aria-expanded='true'] {
+				.wch-sub-menu {
+					display: flex;
+				}
+			}
 
-      li.wch-menu-item.has-children[aria-expanded="true"] > a::after {
-        transform: rotate(0deg);
-        transform-origin: 50% 50%;
-      }
+			.wch-menu-item {
+				width: auto;
 
-      li.wch-menu-item.has-children[aria-expanded="true"] {
-        .wch-sub-menu {
-          display: flex;
-        }
-      }
+				.wch-sub-menu {
+					list-style: none;
+					top: 100%;
+					right: 0;
+					left: auto;
+					position: absolute;
+					z-index: 1;
+					display: none;
+					min-width: 200px;
+					border: 1px solid #cacaca;
+					background: #fefefe;
 
-      .wch-menu-item {
-        width: auto;
-
-        .wch-sub-menu {
-          list-style: none;
-          top: 100%;
-          right: 0;
-          left: auto;
-          position: absolute;
-          z-index: 1;
-          display: none;
-          min-width: 200px;
-          border: 1px solid #cacaca;
-          background: #fefefe;
-
-          flex-wrap: nowrap;
-          flex-direction: column;
-        }
-
-      }
-    }
-  }
+					flex-wrap: nowrap;
+					flex-direction: column;
+				}
+			}
+		}
+	}
 }

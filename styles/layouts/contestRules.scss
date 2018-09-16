@@ -1,11 +1,11 @@
-.rule-section{
+.rule-section {
+	display: flex;
+	align-items: center;
+	justify-content: center;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  h2,headline{
-    color: #45567A;
-    text-align: center;
-  }
+	h2,
+	headline {
+		color: #45567a;
+		text-align: center;
+	}
 }

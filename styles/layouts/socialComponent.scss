@@ -1,20 +1,19 @@
-.social-component{
+.social-component {
+	h2,
+	headline {
+		color: #45567a;
+		text-align: center;
+	}
 
-  h2,headline{
-    color: #45567A;
-    text-align: center;
-  }
+	.icons-group {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
 
-  .icons-group{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .social-icon{
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
+	.social-icon {
+		display: block;
+		margin-left: auto;
+		margin-right: auto;
+	}
 }
