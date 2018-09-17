@@ -88,6 +88,7 @@ const wrapper = (WrappedComponent) => {
 		}
 
 	}
+
 	WchLayoutHOC.displayName = `WchLayoutHOC(${getDisplayName(WrappedComponent)})`;
 
 	return WchLayoutHOC

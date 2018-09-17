@@ -79,14 +79,14 @@ export class Event extends React.Component {
 						<p
 							className="event-popup-description"
 							id="popup-description">
-							<div
+							<span
 								data-wch-inline-edit="elements.eventDetails.value"
 								dangerouslySetInnerHTML={eventDetailsHTML()}
 							/>
 						</p>
 						<p>
 							Location:
-							<div
+							<span
 								data-wch-inline-edit="elements.eventLocation.value"
 								dangerouslySetInnerHTML={eventLocationHTML()}
 							/>
@@ -115,7 +115,7 @@ export class Event extends React.Component {
 									{eventTitle}
 								</h5>
 								<p className="event-description text-content">
-									<div
+									<span
 										data-wch-inline-edit="elements.body.value"
 										dangerouslySetInnerHTML={eventDescriptionHTML()}
 									/>

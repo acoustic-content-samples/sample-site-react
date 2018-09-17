@@ -4,7 +4,7 @@ LICENSE: Apache License, Version 2.0
 */
 import React from 'react';
 import {changeNavEvent, loadContent, getContent, getRoute, subscribe, getPage} from '../'
-import {ComponentRegistry, ComponentIDRegistry} from './';
+import {getComponentByName, getComponentByLayout} from './';
 import { SiteHeader } from '../../src/components/siteHeader/siteHeader';
 import { SiteFooter } from '../../src/components/siteFooter/siteFooter';
 import {WchContent} from "./wchContent";
@@ -35,6 +35,7 @@ export class WchPage extends React.Component {
 			if (route) {
 				let name = route.layoutId.replace('-layout', '').split('-').map(s => s.substring(0, 1).toUpperCase() + s.substring(1)).reduce((s, v) => s + v, '');
 				if (name) {
+					/*
 					if (ComponentRegistry[name]) {
 						this.setState({
 							status: '200',
@@ -45,8 +46,22 @@ export class WchPage extends React.Component {
 					} else {
 						this._setErrorPage();
 					}
+					*/
+
+					getComponentByName(name).then(() => {
+						this.setState({
+							status: '200',
+							contentId: route.contentId,
+							Component: <WchContent contentId={route.contentId}/>,
+                        	page: getPage(route.contentId) ? getPage(route.contentId): {}
+						});	
+					}).catch(err => {this._setErrorPage()})
+
+
+
 				}
 			} else {
+				console.error(`RRW Route not set`)
 				this._setErrorPage();
 
 			}

@@ -7,13 +7,13 @@ let
 	host = window.location.hostname,
 	tenant = window.location.pathname.split('/')[1],
 	protocol = window.location.protocol,
-    inPreview = (host.includes('-preview') && host.includes('.ibm.com')) ||  getQueryVariable('x-ibm-x-preview') === 'true';
+	inPreview = (host.includes('-preview') && host.includes('.ibm.com')) || getQueryVariable('x-ibm-x-preview') === 'true';
 
 window.WchSdk = {};
 
 let sitePromise = null;
 let siteDraftPromise = null;
-let navChangeFunc = () => {};
+let navChangeFunc = () => { };
 let contentPromises = {};
 let subscriptions = {
 	content: [],
@@ -22,13 +22,13 @@ let subscriptions = {
 	site: []
 };
 
-console.log(`We are ${(inPreview)?'':'NOT '}in Preview`);
+console.log(`We are ${(inPreview) ? '' : 'NOT '}in Preview`);
 
 if (inPreview) {
 	window.addEventListener("message", receiveMessage, false);
 }
 
-function receiveMessage (event) {
+function receiveMessage(event) {
 	if (event.data.type !== 'WchSdk.router.activeRoute.subscribe') {
 		console.info('wch-flux-sdk', event.data);
 	}
@@ -53,7 +53,7 @@ function receiveMessage (event) {
 				loadSite('default', true);
 			}
 			*/
-			if(event.data.id) {
+			if (event.data.id) {
 				//TODO should not need to the draft status here
 				const id = event.data.id.split(':')[0];
 				loadContent(id, true);
@@ -66,7 +66,7 @@ function receiveMessage (event) {
 			navChangeFunc(event.data.path);
 			break;
 		case 'WchSdk.router.activeRoute.subscribe':
-			window.parent.postMessage({type: 'WchSdk.router.activeRoute.subscribeResponse'}, event.origin);
+			window.parent.postMessage({ type: 'WchSdk.router.activeRoute.subscribeResponse' }, event.origin);
 			break;
 		case "inlineedit.pageChanged":
 			loadSite('default', true);
@@ -83,34 +83,35 @@ export function isPreview() {
 
 export function changeNavEvent(pageId) {
 	window.parent.postMessage(
-		{type: 'WchSdk.router.activeRoute',
+		{
+			type: 'WchSdk.router.activeRoute',
 			page: getPage(pageId)
 		}, '*');
 }
 
-export function configWCH (hostname=window.location.hostname, tenantId=window.location.pathname.split('/')[1]) {
+export function configWCH(hostname = window.location.hostname, tenantId = window.location.pathname.split('/')[1]) {
 	if (process.env.NODE_ENV !== "production") {
 		host = hostname;
 		tenant = tenantId;
-        inPreview = (host.includes('-preview') && host.includes('.ibm.com')) ||  getQueryVariable('x-ibm-x-preview') === 'true';
+		inPreview = (host.includes('-preview') && host.includes('.ibm.com')) || getQueryVariable('x-ibm-x-preview') === 'true';
 	}
 }
 
 export function configExternalSPA(hostname, tenantId) {
-	const indicator = hostname.includes('-stage') ? '-': '.';
-    tenant = tenantId;
-    host = inPreview ? hostname.substring(0, hostname.indexOf(indicator)) + '-preview' + hostname.substring(hostname.indexOf(indicator)) : hostname;
+	const indicator = hostname.includes('-stage') ? '-' : '.';
+	tenant = tenantId;
+	host = inPreview ? hostname.substring(0, hostname.indexOf(indicator)) + '-preview' + hostname.substring(hostname.indexOf(indicator)) : hostname;
 }
 
-export function getHost () {    
-    return host;
+export function getHost() {
+	return host;
 }
 
-export function getTenant () {    
-    return tenant;
+export function getTenant() {
+	return tenant;
 }
 
-export function setNavChangeFunction (func) {
+export function setNavChangeFunction(func) {
 	navChangeFunc = func;
 }
 
@@ -121,7 +122,7 @@ export let WchStore = {
 	site: {}
 };
 
-export function subscribe (to, callback) {
+export function subscribe(to, callback) {
 	if (!subscriptions.hasOwnProperty(to)) {
 		subscriptions[to] = [];
 	}
@@ -129,7 +130,7 @@ export function subscribe (to, callback) {
 	let index = subscriptions[to].push(callback) - 1;
 
 	return {
-		unsubscribe () { delete subscriptions[to][index]; }
+		unsubscribe() { delete subscriptions[to][index]; }
 	};
 }
 
@@ -148,8 +149,9 @@ export function subscribe (to, callback) {
 // subscribe('content', () => { try { localStorage.setItem('WchStore.site', JSON.stringify(WchStore.site)) } catch(e) { console.warn(`Cannot set content in localstorage: ${e.message}`) } });
 
 
+
 export function updateContent(content) {
-	WchStore.content = Object.assign({}, WchStore.content, {[content.id]: content});
+	WchStore.content = Object.assign({}, WchStore.content, { [content.id]: content });
 	subscriptions.content.forEach(sub => sub('update-content', content));
 
 
@@ -167,7 +169,7 @@ export function createDraftImageUrl(image, rendition) {
 	return '';
 }
 
-export function loadContent (id, force=false, onError) {
+export function loadContent(id, force = false, onError) {
 	if (!force && contentPromises[id] && WchStore.content[id] || !id) {
 		return;
 	}
@@ -207,15 +209,15 @@ export function loadContent (id, force=false, onError) {
 			})
 		}
 
-		if(!content.errors) {
-			WchStore.content = Object.assign({}, WchStore.content, {[id]: content});
+		if (!content.errors) {
+			WchStore.content = Object.assign({}, WchStore.content, { [id]: content });
 			subscriptions.content.forEach(sub => sub('load-content', content));
 		}
 	});
 }
 
 function _getReferenceValues(content, element) {
-	if(content.elements[element].elementType === 'reference') {
+	if (content.elements[element].elementType === 'reference') {
 		let values = content.elements[element].values || [content.elements[element].value];
 		return values;
 	}
@@ -224,24 +226,26 @@ function _getReferenceValues(content, element) {
 }
 
 
-export function getContent (id) {
+export function getContent(id) {
 	return WchStore.content[id];
 }
 
-function mapNav (pages) {
-	for (let i=0; i < pages.length; i++) {
-		WchStore.routes = Object.assign({}, WchStore.routes, {[pages[i].route]: {
-			contentId: pages[i].contentId,
-			layoutId: pages[i].layoutId
-		}});
+function mapNav(pages) {
+	for (let i = 0; i < pages.length; i++) {
+		WchStore.routes = Object.assign({}, WchStore.routes, {
+			[pages[i].route]: {
+				contentId: pages[i].contentId,
+				layoutId: pages[i].layoutId
+			}
+		});
 
-		if (pages[i].children) {
+		if (pages[i].children && pages[i].children.length > 0) {
 			mapNav(pages[i].children);
 		}
 	}
 }
 
-export function loadSite (siteName='default', force=false) {
+export function loadSite(siteName = 'default', force = false) {
 	if (!force && sitePromise && Object.keys(WchStore.site).length !== 0) {
 		return;
 	}
@@ -252,34 +256,33 @@ export function loadSite (siteName='default', force=false) {
 
 	sitePromise.then(site => {
 		mapNav(site.pages);
-
-	WchStore.site = Object.assign({}, WchStore.site, site);
-	subscriptions.site.forEach(sub => sub('load-site'));
-	subscriptions.routes.forEach(sub => sub('load-site'));
-});
+		WchStore.site = Object.assign({}, WchStore.site, site);
+		subscriptions.site.forEach(sub => sub('load-site'));
+		subscriptions.routes.forEach(sub => sub('load-site'));
+	});
 }
 
-export function getSite () {
+export function getSite() {
 	return WchStore.site;
 }
 
 
 
-export function getRoute (route) {
+export function getRoute(route) {
 	return WchStore.routes[route];
 }
 
-export function getPage (contentId) {
+export function getPage(contentId) {
 	return getSite().pages.find((page) => {
 		return page.contentId === contentId;
 	})
 }
 
-export function getRouteForContentId (id) {
+export function getRouteForContentId(id) {
 	return Object.keys(WchStore.routes).find(key => WchStore.routes[key].contentId === id);
 }
 
-export function getQueryString (type, rows) {
+export function getQueryString(type, rows) {
 	return `q=type:%22${type}%22&fq=classification:(content)&fq=isManaged:(%22true%22)&sort=lastModified desc&fl=document:%5Bjson%5D,lastModified&rows=${rows}`;
 }
 
@@ -287,7 +290,7 @@ export function getAPIUrl() {
 	return `${protocol}//${host}/api/${tenant}/delivery/v1/`;
 }
 
-export function queryContent (type, rows) {
+export function queryContent(type, rows) {
 
 	let searchQuery = getQueryString(type, rows);
 	fetch(`${protocol}//${host}/api/${tenant}/delivery/v1/rendering/search?${searchQuery}`, getRequestHeaders()).then(res => {
@@ -300,21 +303,23 @@ export function queryContent (type, rows) {
 				});
 			}
 
-			WchStore.queries = Object.assign({}, WchStore.queries, {[searchQuery]: {
+			WchStore.queries = Object.assign({}, WchStore.queries, {
+				[searchQuery]: {
 					numFound: results.numFound,
 					itemIds: results.documents.map(item => item.document.id),
 					itemsContext: results.documents.map(item => item.document)
-			}});
+				}
+			});
 			subscriptions.queries.forEach(sub => sub('query-content'));
 		});
 	});
 }
 
-export function getQuery (queryString) {
+export function getQuery(queryString) {
 	return WchStore.queries[queryString];
 }
 
-export function getImageUrl (image, rendition='default') {
+export function getImageUrl(image, rendition = 'default') {
 
   if (image && image.renditions) {
     let url = image.renditions.default.url;
@@ -332,44 +337,44 @@ export function getImageUrl (image, rendition='default') {
   return '';
 }
 
-export function getVideoUrl (video) {
+export function getVideoUrl(video) {
 	if (video) {
 		return `${protocol}//${host}${video.url}`;
 	}
 	return '';
 }
 
-export function getFileUrl (file) {
-  if (file) {
-    return `${protocol}//${host}${file.url}`;
-  }
-  return '';
+export function getFileUrl(file) {
+	if (file) {
+		return `${protocol}//${host}${file.url}`;
+	}
+	return '';
 }
 
-export function getFirstCategory (element, defaultValue='medium') {
-    if(element.categories) {
-        return element.categories[0].split('/').pop().toLowerCase();
-    }
+export function getFirstCategory(element, defaultValue = 'medium') {
+	if (element.categories) {
+		return element.categories[0].split('/').pop().toLowerCase();
+	}
 
 	return defaultValue;
 }
 
-export function sortQueriedItems (items, field, sortOrder, maxItemsToDisplay) {
+export function sortQueriedItems(items, field, sortOrder, maxItemsToDisplay) {
 	let itemType = (items && items[0] && items[0].elements[field]) ? items[0].elements[field].elementType : "";
 	//only sort if there is a valid field to sort on
-	if(itemType) {
+	if (itemType) {
 		items.sort((a, b) => {
 			let itemA = a.elements[field].value;
-		let itemB = b.elements[field].value;
-		switch (itemType) {
-			case 'datetime': {
-				return sortGeneric(new Date(itemA), new Date(itemB));
+			let itemB = b.elements[field].value;
+			switch (itemType) {
+				case 'datetime': {
+					return sortGeneric(new Date(itemA), new Date(itemB));
+				}
+				default: {
+					return sortGeneric(itemA, itemB);
+				}
 			}
-			default: {
-				return sortGeneric(itemA, itemB);
-			}
-		}
-	});
+		});
 
 		/*
 		 reverse Date so the latest dates are first in the list
@@ -378,7 +383,7 @@ export function sortQueriedItems (items, field, sortOrder, maxItemsToDisplay) {
 			items.reverse();
 		}
 
-		if(maxItemsToDisplay){
+		if (maxItemsToDisplay) {
 			items = items.slice(0, maxItemsToDisplay);
 		}
 	}
@@ -386,26 +391,25 @@ export function sortQueriedItems (items, field, sortOrder, maxItemsToDisplay) {
 	return (items);
 }
 
-function sortGeneric(a, b){
-	if(a < b) {
+function sortGeneric(a, b) {
+	if (a < b) {
 		return -1;
-	} else if(a > b) {
+	} else if (a > b) {
 		return 1;
 	}
 	return 0;
 }
 
 function getRequestHeaders() {
-    return  inPreview ? { credentials: 'include'} : {};
+	return inPreview ? { credentials: 'include' } : {};
 }
 
-function getQueryVariable(variable)
-{
-    const query = window.location.search.substring(1);
-    const vars = query.split("&");
-    for (let i=0;i<vars.length;i++) {
-        const pair = vars[i].split("=");
-        if(pair[0] === variable){return pair[1];}
-    }
-    return(false);
+function getQueryVariable(variable) {
+	const query = window.location.search.substring(1);
+	const vars = query.split("&");
+	for (let i = 0; i < vars.length; i++) {
+		const pair = vars[i].split("=");
+		if (pair[0] === variable) { return pair[1]; }
+	}
+	return (false);
 }
