@@ -178,9 +178,11 @@ Configure WCH and the sample SPA to be used as an external preview host
 5. Add the externalPreviewURL and externalURL domains as trusted domains for CORS
    * Hub setup > General settings > Security > "https://my-external-site-preview.com/" > Add > Save
 
-Limitations
--------------
-* CLI layout generation does not support the 'multiple' option for elements.
+Limitations and Disclaimers
+---------------------------
+* This sample is intended primarily to demonstrate how the Content Hub delivery APIs can be used with any SPA framework.
+* This SPA sample and the small Flux SDK it uses are available as-is and do not necessarily represent recommended coding best practices. Also note that this sample may not be updated to use the latest versions dependency libraries.
+* The CLI layout generation tool does not support the 'multiple' option for elements.
 
 Restoring the default Angular based application
 -------------
