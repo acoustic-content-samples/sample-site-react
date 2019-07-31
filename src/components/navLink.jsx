@@ -8,9 +8,11 @@ import PropTypes from 'prop-types';
 
 class NavLink extends React.Component {
 	render () {
-		let isActive = this.context.router.route.location.pathname
-			.toString()
-			.includes(this.props.to.toString());
+		let isActive = this.context.router
+			? this.context.router.route.location.pathname
+					.toString()
+					.includes(this.props.to.toString())
+			: '';
 		let className = isActive ? 'active' : '';
 
 		return (

@@ -2,10 +2,15 @@
 <html lang="en">
 <head>
 	<script type='text/javascript'>
-        var possibleTenant = document.location.pathname.split('/')[1];
-       // console.warn('index.html: possible tenant is %o and base url is %o', possibleTenant, possibleTenant.search(/\w{8}\-\w{4}\-\w{4}\-\w{4}\-\w{12}/) === 0 ? '/' + possibleTenant + '/' : '/');
-        var baseUrl = possibleTenant.search(/\w{8}\-\w{4}\-\w{4}\-\w{4}\-\w{12}/) === 0 ? '/' + possibleTenant + '/' : '/';
-        console.log("baseUrl: ", baseUrl);
+		var baseUrlRegex = new RegExp('^(?:\\/api)?(?:\\/([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}))?(?:(?:\\/dxsites\\/)([\\w\\d_\\-%]+))?(?:\\/)?(?:.*)$');
+		var [total, tenantId, siteId] = baseUrlRegex.exec(document.location.pathname);
+		var baseUrl = window.location.hostname === 'localhost' ? '/' // local development
+			: tenantId ? siteId
+				? '/' + tenantId + '/dxsites/' + siteId + '/' // site and tenant
+				: '/' + tenantId + '/' // just tenant
+			: siteId
+				? '/dxsites/' + siteId + '/' // just site
+				: '/'; // no IDs
         document.write('<base href="' + baseUrl + '">');
 	</script>
 	<meta charset="utf-8">

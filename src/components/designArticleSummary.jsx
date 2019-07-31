@@ -34,7 +34,7 @@ export class DesignArticleSummary extends React.Component {
 					lead_image,
 					lead_imageRendition
 				);
-				const lead_altText = lead_image.altText;
+				const lead_altText = lead_image ? lead_image.altText : '';
 
 				return (
 					<div className="article-lead-image">

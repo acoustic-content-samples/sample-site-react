@@ -6,7 +6,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { getRouteForContentId } from 'wch-flux-sdk';
 import 'styles/pages/designPageLeft.scss';
-import { WchContent } from '../../wch-flux-sdk/react/wchContent';
+import { WchContent } from 'wch-flux-sdk/react/wchContent';
 
 export class DesignPageLeft extends React.Component {
 	render () {

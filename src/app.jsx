@@ -20,7 +20,7 @@ import {
 	registerComponent,
 	registerComponentContentId,
 } from 'wch-flux-sdk/react';
-import { loadSite } from 'wch-flux-sdk';
+import { loadSite, getBaseUrl } from 'wch-flux-sdk';
 import { PreviewComponent } from './components/previewComponent';
 import { ErrorPage } from './pages/errorPage';
 
@@ -31,9 +31,7 @@ window.onerror = error => {
 // for running on local host we want to configure the WCH lib
 import { configWCH } from 'wch-flux-sdk';
 import { Constants } from './Constants';
-configWCH(Constants.DOMAIN_NAME, Constants.CONTENT_HUB_ID);
-// import { configExternalSPA } from "wch-flux-sdk";
-// configExternalSPA(Constants.DOMAIN_NAME, Constants.CONTENT_HUB_ID);
+configWCH(Constants.DOMAIN_NAME, Constants.CONTENT_HUB_ID, Constants.SITE_ID);
 
 // load components globally
 registerComponent(
@@ -87,9 +85,38 @@ registerComponent(
 
 // load page components globally
 registerComponent(
+	'AllTypesPage',
+	() => import(/* webpackChunkName: "allTypesPage"*/ './pages/allTypesPage'),
+	'all-types-page-layout'
+);
+registerComponent(
+	'AllTypesPageHero2Blocks',
+	() =>
+		import(/* webpackChunkName: "AllTypesPageHero2Blocks"*/ './pages/allTypesPageHero2Blocks'),
+	'all-types-page-hero-2-blocks'
+);
+registerComponent(
+	'AllTypesPageHero4Blocks',
+	() =>
+		import(/* webpackChunkName: "AllTypesPageHero4Blocks"*/ './pages/allTypesPageHero4Blocks'),
+	'all-types-page-hero-4-blocks'
+);
+registerComponent(
 	'StandardPage',
 	() => import(/* webpackChunkName: "standardPage"*/ './pages/standardPage'),
 	'standard-page-layout'
+);
+registerComponent(
+	'StandardPageHero2Blocks',
+	() =>
+		import(/* webpackChunkName: "StandardPageHero2Blocks"*/ './pages/standardPageHero2BlocksLayout'),
+	'standard-page-hero-2-blocks'
+);
+registerComponent(
+	'StandardPageHero4Blocks',
+	() =>
+		import(/* webpackChunkName: "StandardPageHero4Blocks"*/ './pages/standardPageHero4BlocksLayout'),
+	'standard-page-hero-4-blocks'
 );
 registerComponent(
 	'LandingPage',
@@ -114,19 +141,6 @@ registerComponentContentId('ErrorPage', 'fe3b25d4-5f96-4741-afc3-e27efe52f973');
 // load layouts dynamically
 import './registration';
 
-let possibleTenant = document.location.pathname.split('/')[1];
-console.warn(
-	'index.html: possible tenant is %o and base url is %o',
-	possibleTenant,
-	possibleTenant.search(/\w{8}\-\w{4}\-\w{4}\-\w{4}\-\w{12}/) === 0
-		? '/' + possibleTenant + '/'
-		: '/'
-);
-let baseUrl =
-	possibleTenant.search(/\w{8}\-\w{4}\-\w{4}\-\w{4}\-\w{12}/) === 0
-		? '/' + possibleTenant + '/'
-		: '/';
-
 console.log('SPA framework: React');
 
 document.title = 'Oslo';
@@ -134,7 +148,7 @@ document.title = 'Oslo';
 loadSite();
 
 ReactDOM.render(
-	<Router basename={baseUrl}>
+	<Router basename={getBaseUrl()}>
 		<Switch>
 			<Route exact path="/" render={() => <Redirect to="/home" />} />
 			<Route path="/component-preview" component={PreviewComponent} />

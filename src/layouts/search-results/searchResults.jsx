@@ -5,16 +5,15 @@ LICENSE: Apache License, Version 2.0
 import React from 'react';
 import {
 	loadContent,
-	getHost,
-	getTenant,
 	getContent,
 	subscribe,
 	getRouteForContentId,
+	getApiUrl,
 } from 'wch-flux-sdk';
 import { WchContent } from 'wch-flux-sdk/react';
 import 'styles/layouts/search-results/searchResultsLayout.scss';
 import { Subscription } from 'rxjs/Subscription';
-import { Observable } from 'rxjs/Observable';
+import { fromEvent } from 'rxjs';
 import 'rxjs/add/observable/fromEvent';
 import { throttle } from 'rxjs/operators';
 import { interval } from 'rxjs/observable/interval';
@@ -24,18 +23,7 @@ import * as _ from 'lodash';
 
 export class SearchResults extends React.Component {
 	_search () {
-		let host = getHost();
-		let tenant = getTenant();
-		let proto = `${window.location.protocol}`;
-		let cApiUrl = `${proto}//${host}/api/${tenant}`;
-
-		let apiUrl =
-			window.location.hostname === 'localhost'
-				? cApiUrl
-				: `${window.location.protocol}//${
-						window.location.hostname
-				  }/api/${window.location.pathname.split('/')[1]}`;
-		let deliveryQuery = 'delivery';
+		let apiUrl = getApiUrl();
 		let textQuery = this.state.searchKeywords.reduce(
 			(query, currentVal, index) => {
 				return index === 0
@@ -54,7 +42,7 @@ export class SearchResults extends React.Component {
 		);
 
 		let searchURL =
-			`${apiUrl}/${deliveryQuery}/v1/search?q=classification:page` +
+			`${apiUrl}/delivery/v1/search?q=classification:page` +
 			typeQuery +
 			`&fq={!join%20from=id%20to=aggregatedIds}` +
 			`text:(${textQuery})` +
@@ -185,7 +173,7 @@ export class SearchResults extends React.Component {
 		}
 
 		//throttle the scroll event to improve performance
-		let scroll = Observable.fromEvent(window, 'scroll');
+		let scroll = fromEvent(window, 'scroll');
 		scroll = scroll.pipe(throttle(value => interval(300)));
 		this.scrollEvent = scroll.subscribe(() => this._scrollHandler());
 	}

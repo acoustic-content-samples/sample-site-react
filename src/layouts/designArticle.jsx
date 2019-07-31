@@ -7,7 +7,7 @@ import { layoutHOC } from 'wch-flux-sdk/react';
 import 'styles/layouts/designArticle.scss';
 import { ShareSocial } from '../components/shareSocial';
 import { DesignArticleSummary } from '../components';
-import { WchContent } from '../../wch-flux-sdk/react/wchContent';
+import { WchContent } from 'wch-flux-sdk/react/wchContent';
 import { getImageUrl, getFirstCategory } from 'wch-flux-sdk';
 
 export class DesignArticle extends React.Component {
