@@ -184,7 +184,7 @@ We have shipped another sample you can install on top of this one to install a s
 ## Limitations and Disclaimers
 
 -   This sample is intended primarily to demonstrate how the Content Hub delivery APIs can be used with any SPA framework.
--   This SPA sample and the small Flux SDK it uses are available as-is and do not necessarily represent recommended coding best practices. Also note that this sample may not be updated to use the latest versions dependency libraries.
+-   This SPA sample and the small Flux SDK (https://github.com/acoustic-content-samples/wch-flux-sdk) it uses are available as-is and do not necessarily represent recommended coding best practices. Also note that this sample may not be updated to use the latest versions dependency libraries.
 -   The CLI layout generation tool does not support the 'multiple' option for elements.
 
 ## Restoring the default Angular based application
