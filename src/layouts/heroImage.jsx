@@ -4,8 +4,8 @@
  */
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { getImageUrl } from 'wch-flux-sdk';
-import { WchLayout } from 'wch-flux-sdk/react';
+import { getImageUrl } from '@acoustic-content-sdk/wch-flux-sdk';
+import { WchLayout } from '@acoustic-content-sdk/wch-flux-sdk/react';
 import 'styles/layouts/heroImage.scss';
 import { of } from 'rxjs/add/observable/of';
 

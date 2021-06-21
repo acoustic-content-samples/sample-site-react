@@ -4,7 +4,11 @@ LICENSE: Apache License, Version 2.0
 */
 import React, { Component } from 'react';
 import NavLink from '../navLink';
-import { loadSite, subscribe, getSite } from 'wch-flux-sdk';
+import {
+	loadSite,
+	subscribe,
+	getSite,
+} from '@acoustic-content-sdk/wch-flux-sdk';
 
 import 'styles/components/siteHeader/headerNav.scss';
 

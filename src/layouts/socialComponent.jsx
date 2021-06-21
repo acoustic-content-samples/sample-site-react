@@ -3,7 +3,7 @@ Copyright IBM Corporation 2017.
 LICENSE: Apache License, Version 2.0
 */
 import React from 'react';
-import { getImageUrl } from 'wch-flux-sdk';
+import { getImageUrl } from '@acoustic-content-sdk/wch-flux-sdk';
 import 'styles/layouts/socialComponent.scss';
 
 export class SocialComponent extends React.Component {

@@ -1,7 +1,11 @@
 import React from 'react';
 import 'styles/pages/allTypesPageHero2Blocks.scss';
-import { getImageUrl, getVideoUrl, getFileUrl } from 'wch-flux-sdk';
-import { WchContent } from 'wch-flux-sdk/react/wchContent';
+import {
+	getImageUrl,
+	getVideoUrl,
+	getFileUrl,
+} from '@acoustic-content-sdk/wch-flux-sdk';
+import { WchContent } from '@acoustic-content-sdk/wch-flux-sdk/react/wchContent';
 export class AllTypesPageHero2Blocks extends React.Component {
 	render () {
 		//todo,  in edit mode can we render empty containers at the beginning and end of the page to more easily add new components?

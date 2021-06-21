@@ -11,8 +11,8 @@ import {
 	getQuery,
 	getFirstCategory,
 	sortQueriedItems,
-} from 'wch-flux-sdk';
-import { WchContent } from 'wch-flux-sdk/react';
+} from '@acoustic-content-sdk/wch-flux-sdk';
+import { WchContent } from '@acoustic-content-sdk/wch-flux-sdk/react';
 
 import 'styles/layouts/carouselDynamicList.scss';
 import { ViewAllButton } from '../components';

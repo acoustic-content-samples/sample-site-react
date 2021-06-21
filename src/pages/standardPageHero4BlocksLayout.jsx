@@ -3,7 +3,10 @@ Copyright IBM Corporation 2017.
 LICENSE: Apache License, Version 2.0
 */
 import React from 'react';
-import { WchContent, WchLayout } from 'wch-flux-sdk/react';
+import {
+	WchContent,
+	WchLayout,
+} from '@acoustic-content-sdk/wch-flux-sdk/react';
 import 'styles/pages/standardPageHero4BlocksLayout.scss';
 
 export class StandardPageHero4Blocks extends React.Component {

@@ -9,8 +9,8 @@ import {
 	subscribe,
 	getRouteForContentId,
 	getApiUrl,
-} from 'wch-flux-sdk';
-import { WchContent } from 'wch-flux-sdk/react';
+} from '@acoustic-content-sdk/wch-flux-sdk';
+import { WchContent } from '@acoustic-content-sdk/wch-flux-sdk/react';
 import 'styles/layouts/search-results/searchResultsLayout.scss';
 import { Subscription } from 'rxjs/Subscription';
 import { fromEvent } from 'rxjs';

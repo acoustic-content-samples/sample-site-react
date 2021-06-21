@@ -3,7 +3,7 @@ Copyright IBM Corporation 2017.
 LICENSE: Apache License, Version 2.0
 */
 import React from 'react';
-import { loadSite } from 'wch-flux-sdk';
+import { loadSite } from '@acoustic-content-sdk/wch-flux-sdk';
 import 'styles/components/siteHeader/search-box/search-box.scss';
 import { SearchGlass } from './images/search-glass';
 import { SearchInputClear } from './images/search-input-clear';

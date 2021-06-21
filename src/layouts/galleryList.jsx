@@ -4,7 +4,7 @@ LICENSE: Apache License, Version 2.0
 */
 import React from 'react';
 import { ViewAllButton } from '../components';
-import { WchContent } from 'wch-flux-sdk/react';
+import { WchContent } from '@acoustic-content-sdk/wch-flux-sdk/react';
 import 'styles/layouts/galleryList.scss';
 
 export class GalleryList extends React.Component {

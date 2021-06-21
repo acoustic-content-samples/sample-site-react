@@ -11,7 +11,7 @@ import {
 	getImageUrl,
 	setNavChangeFunction,
 	setPageReloadFunction,
-} from 'wch-flux-sdk';
+} from '@acoustic-content-sdk/wch-flux-sdk';
 
 import 'styles/components/siteHeader/siteHeaderNew.scss';
 import { HeaderNav } from './headerNav';

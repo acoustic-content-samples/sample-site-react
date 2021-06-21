@@ -8,7 +8,7 @@ import {
 	WchContent,
 	ComponentRegistry,
 	ComponentRegistryByLayout,
-} from 'wch-flux-sdk/react';
+} from '@acoustic-content-sdk/wch-flux-sdk/react';
 import FileSaver from 'file-saver';
 import domtoimage from '../../node_modules/dom-to-image/dist/dom-to-image.min';
 

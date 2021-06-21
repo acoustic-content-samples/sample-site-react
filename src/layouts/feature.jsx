@@ -4,7 +4,7 @@ LICENSE: Apache License, Version 2.0
 */
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { getImageUrl } from 'wch-flux-sdk';
+import { getImageUrl } from '@acoustic-content-sdk/wch-flux-sdk';
 import 'styles/layouts/feature.scss';
 
 export class Feature extends React.Component {

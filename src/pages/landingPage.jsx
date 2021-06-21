@@ -3,8 +3,8 @@ Copyright IBM Corporation 2017.
 LICENSE: Apache License, Version 2.0
 */
 import React from 'react';
-import { getImageUrl } from 'wch-flux-sdk';
-import { WchContent } from 'wch-flux-sdk/react';
+import { getImageUrl } from '@acoustic-content-sdk/wch-flux-sdk';
+import { WchContent } from '@acoustic-content-sdk/wch-flux-sdk/react';
 import 'styles/pages/landingPage.scss';
 
 export class LandingPage extends React.Component {

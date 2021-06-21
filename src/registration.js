@@ -3,7 +3,7 @@
  *
  * This file is for registering components to ComponentRegistry and ComponentRegistryByLayout via registerComponent()
  */
-import { registerComponent } from 'wch-flux-sdk/react';
+import { registerComponent } from '@acoustic-content-sdk/wch-flux-sdk/react';
 registerComponent(
 	'CarouselDynamicList',
 	() =>
