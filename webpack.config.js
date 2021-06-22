@@ -16,7 +16,10 @@ module.exports = {
 				query: { compact: false },
 				include: [
 					path.resolve(__dirname, 'src'),
-					path.resolve(__dirname, 'node_modules/wch-flux-sdk'),
+					path.resolve(
+						__dirname,
+						'node_modules/@acoustic-content-sdk/wch-flux-sdk'
+					),
 				],
 			},
 			{
