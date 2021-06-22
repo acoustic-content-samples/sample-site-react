@@ -4,7 +4,12 @@ LICENSE: Apache License, Version 2.0
 */
 import React from 'react';
 
-import { loadContent, subscribe, getContent, getImageUrl } from 'wch-flux-sdk';
+import {
+	loadContent,
+	subscribe,
+	getContent,
+	getImageUrl,
+} from '@acoustic-content-sdk/wch-flux-sdk';
 import 'styles/components/siteFooter/siteFooter.scss';
 import { FooterNav } from './footerNav';
 import { FbLogo } from '../../images/fbLogo';

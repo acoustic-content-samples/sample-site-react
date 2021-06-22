@@ -4,7 +4,7 @@ LICENSE: Apache License, Version 2.0
 */
 import React, { Component } from 'react';
 import { Router } from 'react-router-dom';
-import { WchStore } from 'wch-flux-sdk';
+import { WchStore } from '@acoustic-content-sdk/wch-flux-sdk';
 
 export class Toolbar extends Component {
 	constructor (props) {

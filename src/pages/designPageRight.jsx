@@ -4,8 +4,8 @@ LICENSE: Apache License, Version 2.0
 */
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { getRouteForContentId } from 'wch-flux-sdk';
-import { WchContent } from 'wch-flux-sdk/react';
+import { getRouteForContentId } from '@acoustic-content-sdk/wch-flux-sdk';
+import { WchContent } from '@acoustic-content-sdk/wch-flux-sdk/react';
 import 'styles/pages/designPageRight.scss';
 
 export class DesignPageRight extends React.Component {

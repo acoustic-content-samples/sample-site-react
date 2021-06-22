@@ -19,8 +19,8 @@ import {
 	WchPage,
 	registerComponent,
 	registerComponentContentId,
-} from 'wch-flux-sdk/react';
-import { loadSite, getBaseUrl } from 'wch-flux-sdk';
+} from '@acoustic-content-sdk/wch-flux-sdk/react';
+import { loadSite, getBaseUrl } from '@acoustic-content-sdk/wch-flux-sdk';
 import { PreviewComponent } from './components/previewComponent';
 import { ErrorPage } from './pages/errorPage';
 
@@ -29,7 +29,7 @@ window.onerror = error => {
 };
 
 // for running on local host we want to configure the WCH lib
-import { configWCH } from 'wch-flux-sdk';
+import { configWCH } from '@acoustic-content-sdk/wch-flux-sdk';
 import { Constants } from './Constants';
 configWCH(Constants.DOMAIN_NAME, Constants.CONTENT_HUB_ID, Constants.SITE_ID);
 

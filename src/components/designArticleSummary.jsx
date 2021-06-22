@@ -4,7 +4,7 @@ LICENSE: Apache License, Version 2.0
 */
 import React from 'react';
 import 'styles/components/designArticleSummary.scss';
-import { getImageUrl } from 'wch-flux-sdk';
+import { getImageUrl } from '@acoustic-content-sdk/wch-flux-sdk';
 
 export class DesignArticleSummary extends React.Component {
 	constructor (props) {

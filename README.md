@@ -92,7 +92,7 @@ When using the registerComponent function of the SDK the component will be wrapp
 
 1. Import the layoutHOC:
 
-    `import { layoutHOC } from 'wch-flux-sdk/react';`
+    `import { layoutHOC } from '@acoustic-content-sdk/wch-flux-sdk/react';`
 
 2. Wrap the component
 
@@ -162,7 +162,7 @@ We have shipped another sample you can install on top of this one to install a s
     2. Edit src/app.jsx and uncomment the lines of code:
     ```
     // import { Constants } from "./Constants";
-    // import { configExternalSPA } from "wch-flux-sdk";
+    // import { configExternalSPA } from "@acoustic-content-sdk/wch-flux-sdk";
     // configExternalSPA(Constants.DOMAIN_NAME, Constants.CONTENT_HUB_ID);
     ```
 3. Build the app and deploy it to the external hosting site
@@ -184,7 +184,7 @@ We have shipped another sample you can install on top of this one to install a s
 ## Limitations and Disclaimers
 
 -   This sample is intended primarily to demonstrate how the Content Hub delivery APIs can be used with any SPA framework.
--   This SPA sample and the small Flux SDK (https://github.com/acoustic-content-samples/wch-flux-sdk) it uses are available as-is and do not necessarily represent recommended coding best practices. Also note that this sample may not be updated to use the latest versions dependency libraries.
+-   This SPA sample and the small Flux SDK (https://github.com/acoustic-content-samples/@acoustic-content-sdk/wch-flux-sdk) it uses are available as-is and do not necessarily represent recommended coding best practices. Also note that this sample may not be updated to use the latest versions dependency libraries.
 -   The CLI layout generation tool does not support the 'multiple' option for elements.
 
 ## Restoring the default Angular based application

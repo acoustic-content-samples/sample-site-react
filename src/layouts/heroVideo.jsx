@@ -3,7 +3,7 @@ Copyright IBM Corporation 2017.
 LICENSE: Apache License, Version 2.0
 */
 import React from 'react';
-import { getVideoUrl } from 'wch-flux-sdk';
+import { getVideoUrl } from '@acoustic-content-sdk/wch-flux-sdk';
 import 'styles/layouts/heroVideo.scss';
 
 const videoJsLoaded = new Promise((resolve, reject) => {

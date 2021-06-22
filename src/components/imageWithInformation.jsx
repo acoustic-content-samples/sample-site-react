@@ -3,7 +3,10 @@
  LICENSE: Apache License, Version 2.0
  */
 import React from 'react';
-import { getImageUrl, getFirstCategory } from 'wch-flux-sdk';
+import {
+	getImageUrl,
+	getFirstCategory,
+} from '@acoustic-content-sdk/wch-flux-sdk';
 import 'styles/components/imageWithInformation.scss';
 
 export class ImageWithInformation extends React.Component {

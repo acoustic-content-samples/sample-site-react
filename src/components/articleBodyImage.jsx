@@ -3,7 +3,10 @@ Copyright IBM Corporation 2017.
 LICENSE: Apache License, Version 2.0
 */
 import React from 'react';
-import { getImageUrl, getFirstCategory } from 'wch-flux-sdk';
+import {
+	getImageUrl,
+	getFirstCategory,
+} from '@acoustic-content-sdk/wch-flux-sdk';
 import 'styles/components/articleBodyImage.scss';
 
 export class ArticleBodyImage extends React.Component {

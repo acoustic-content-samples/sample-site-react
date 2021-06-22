@@ -3,7 +3,7 @@ Copyright IBM Corporation 2017.
 LICENSE: Apache License, Version 2.0
 */
 import React from 'react';
-import { WchContent } from 'wch-flux-sdk/react';
+import { WchContent } from '@acoustic-content-sdk/wch-flux-sdk/react';
 import 'styles/layouts/verticalList.scss';
 import { ViewAllButton } from '../components';
 

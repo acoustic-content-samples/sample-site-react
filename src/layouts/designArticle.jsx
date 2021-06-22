@@ -3,12 +3,15 @@ Copyright IBM Corporation 2017.
 LICENSE: Apache License, Version 2.0
 */
 import React from 'react';
-import { layoutHOC } from 'wch-flux-sdk/react';
+import { layoutHOC } from '@acoustic-content-sdk/wch-flux-sdk/react';
 import 'styles/layouts/designArticle.scss';
 import { ShareSocial } from '../components/shareSocial';
 import { DesignArticleSummary } from '../components';
-import { WchContent } from 'wch-flux-sdk/react/wchContent';
-import { getImageUrl, getFirstCategory } from 'wch-flux-sdk';
+import { WchContent } from '@acoustic-content-sdk/wch-flux-sdk/react/wchContent';
+import {
+	getImageUrl,
+	getFirstCategory,
+} from '@acoustic-content-sdk/wch-flux-sdk';
 
 export class DesignArticle extends React.Component {
 	render () {
