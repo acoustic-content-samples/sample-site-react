@@ -1,14 +1,17 @@
 # sample-site-react
 
-As part of the Sites feature in Acoustic Content (formerly Watson Content Hub or WCH), a single page application was implemented to serve web sites. The Single Page Application is hosted on WCH and stored as unmanaged assets. It leverages a set of content types, pages, categories, ... to render the Oslo sample application. The default single page application was implemented with Angular. The artifacts stored in WCH for Oslo are independent of the single page application.
-This sample contains the Single Page Site Application implemented with react instead of the default angular site application. You can find more information about the default site application implemented with angular here:
+As part of the Sites feature in Acoustic Content (formerly Watson Content Hub or WCH), a single page application was implemented to serve web sites. The Single Page Application is hosted on Acoustic Content and stored as unmanaged assets. It leverages a set of content types, pages, categories, ... to render the Oslo sample application. The default single page application was implemented with Angular. The artifacts stored in WCH for Oslo are independent of the single page application.
+
+This sample contains the Single Page Site Application implemented with React instead of the default angular site application. You can find more information about the default site application implemented with angular here:
 [Angular site application](https://github.com/ibm-wch/wch-site-application/).
-You can replace the default single page application with the react implementations in this repository. Note that this will overlay the default Angular based application with the vue.js or react implementation.
+You can replace the default single page application with the react implementations in this repository. Note that this will overlay the default Angular based application with the vue.js or React implementation.
+
 See the topic on Restoring the default Angular based application in case you want to switch back.
+
 Updates:
-At the beginning of July we have added the capabilty to use inline editing as well as being able to host the site outside of Watson Content Hub, still
+At the beginning of July 2020 we have added the capabilty to use inline editing as well as being able to host the site outside of Acoustic Content, still
 leveraging the abilities to manage the content and pages of the site via the site manager.
-At the beginning of April we have added Search functionality to the React Site SPA and also support now the ability to hide a page from the
+At the beginning of April 2020 we have added Search functionality to the React Site SPA and also support now the ability to hide a page from the
 navigation.
 
 ![react sample SPA](react-spa.png)
@@ -183,8 +186,7 @@ We have shipped another sample you can install on top of this one to install a s
 
 ## Limitations and Disclaimers
 
--   This sample is intended primarily to demonstrate how the Content Hub delivery APIs can be used with any SPA framework.
--   This SPA sample and the small Flux SDK (https://github.com/acoustic-content-samples/@acoustic-content-sdk/wch-flux-sdk) it uses are available as-is and do not necessarily represent recommended coding best practices. Also note that this sample may not be updated to use the latest versions dependency libraries.
+-   This sample is intended primarily to demonstrate how the Acoustic Content delivery APIs and Sites feature can be used with any SPA framework.
 -   The CLI layout generation tool does not support the 'multiple' option for elements.
 
 ## Restoring the default Angular based application
