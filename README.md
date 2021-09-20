@@ -1,4 +1,6 @@
-# sample-site-react
+# Sample React Site
+
+This sample is intended for use with the Sites feature. For using Acoustic Content headlessly (not using the Sites feature), this sample may be more useful - https://github.com/acoustic-content-samples/sample-react-traveler-website.
 
 As part of the Sites feature in Acoustic Content (formerly Watson Content Hub or WCH), a single page application was implemented to serve web sites. The Single Page Application is hosted on Acoustic Content and stored as unmanaged assets. It leverages a set of content types, pages, categories, ... to render the Oslo sample application. The default single page application was implemented with Angular. The artifacts stored in WCH for Oslo are independent of the single page application.
 
